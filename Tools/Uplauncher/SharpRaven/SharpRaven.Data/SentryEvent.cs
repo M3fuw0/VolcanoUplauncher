@@ -21,41 +21,23 @@ namespace SharpRaven.Data
 
 		public IList<string> Fingerprint
 		{
-			get
-			{
-				return fingerprint;
-			}
-			internal set
-			{
-				fingerprint = value ?? new List<string>();
-			}
-		}
+			get => fingerprint;
+            internal set => fingerprint = value ?? new List<string>();
+        }
 
 		public ErrorLevel Level { get; set; }
 
 		public SentryMessage Message
 		{
-			get
-			{
-				return message ?? ((SentryMessage)((Exception != null) ? Exception.Message : null));
-			}
-			set
-			{
-				message = value;
-			}
-		}
+			get => message ?? ((SentryMessage)((Exception != null) ? Exception.Message : null));
+            set => message = value;
+        }
 
 		public IDictionary<string, string> Tags
 		{
-			get
-			{
-				return tags;
-			}
-			set
-			{
-				tags = value ?? new Dictionary<string, string>();
-			}
-		}
+			get => tags;
+            set => tags = value ?? new Dictionary<string, string>();
+        }
 
 		public SentryEvent(Exception exception)
 			: this()

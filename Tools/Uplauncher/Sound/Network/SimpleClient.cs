@@ -308,41 +308,41 @@ namespace Uplauncher.Sound.Network
 
 		private void OnConnected(ConnectedEventArgs e)
 		{
-			if (this.Connected != null)
+			if (Connected != null)
 			{
-				this.Connected(this, e);
+				Connected(this, e);
 			}
 		}
 
 		private void OnDisconnected(DisconnectedEventArgs e)
 		{
-			if (this.Disconnected != null)
+			if (Disconnected != null)
 			{
-				this.Disconnected(this, e);
+				Disconnected(this, e);
 			}
 		}
 
 		private void OnDataReceived(DataReceivedEventArgs e)
 		{
-			if (this.DataReceived != null)
+			if (DataReceived != null)
 			{
-				this.DataReceived(this, e);
+				DataReceived(this, e);
 			}
 		}
 
 		private void OnDataSended(DataSendedEventArgs e)
 		{
-			if (this.DataSended != null)
+			if (DataSended != null)
 			{
-				this.DataSended(this, e);
+				DataSended(this, e);
 			}
 		}
 
 		private void OnError(ErrorEventArgs e)
 		{
-			if (this.Error != null)
+			if (Error != null)
 			{
-				this.Error(this, e);
+				Error(this, e);
 			}
 		}
 	}

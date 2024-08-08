@@ -20,7 +20,7 @@ namespace Uplauncher.Sound.UplSound
 
 		public void StartAuthentificate()
 		{
-			m_server.Start(4242);
+			m_server.Start(54249);
 			m_server.ConnectionAccepted += AccepteClient;
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace UplauncherReplacer
@@ -9,70 +10,70 @@ namespace UplauncherReplacer
     {
         private static void Main(string[] args)
         {
-            bool restart = false;
+            bool restart = args.Any(arg => arg.Equals("-restart", StringComparison.OrdinalIgnoreCase));
 
-            // Check if "-restart" argument is passed
-            foreach (string arg in args)
-            {
-                if (arg.Equals("-restart", StringComparison.OrdinalIgnoreCase))
-                {
-                    restart = true;
-                    break;
-                }
-            }
-
-            string text = @".\\majs\\UpLauncher.exe";
-            string text2 = @".\\UpLauncher.exe";
+            string upLauncherPath = @".\\majs\\UpLauncher.exe";
+            string targetPath = @".\\UpLauncher.exe";
             string root = @".\\majs";
-            string checksum = @".\\checksum.sulax";
+            string checksum = @".\\checksum.karashi";
+            string errorFilePath = @".\\error.txt";
 
-            if (!restart)
+            try
             {
-                try
+                if (!restart)
                 {
-                    Process[] processesByName = Process.GetProcessesByName("UpLauncher");
-                    foreach (Process process in processesByName)
+                    KillUpLauncherProcesses();
+                    Thread.Sleep(500);
+
+                    if (File.Exists(errorFilePath))
                     {
-                        process.WaitForExit(10);
-                        process.Kill();
+                        File.Delete(errorFilePath);
                     }
-                }
-                catch
-                {
-                    Console.WriteLine("Process not found");
-                }
 
-                Thread.Sleep(500);
+                    File.Copy(upLauncherPath, targetPath, true);
+                    File.Delete(upLauncherPath);
 
-                try
-                {
-                    File.Copy(text, text2, true);
-                    File.Delete(text);
                     if (Directory.Exists(root))
                     {
-                        Directory.Delete(root);
+                        Directory.Delete(root, true);
                     }
                     File.Delete(checksum);
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Could not replace uplauncher.exe ! Download it and replace it manually !!");
-                    File.WriteAllText("error.txt", ex.ToString());
-                    Console.Read();
-                }
+
+                Process.Start(targetPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not replace uplauncher.exe! Download it and replace it manually!!");
+                File.WriteAllText(errorFilePath, ex.ToString());
+                Console.Read();
             }
 
             // Restart the uplauncher if "-restart" argument is passed
             if (restart)
             {
-                // Kill the uplauncher process before restarting it
-                Process[] processesByName = Process.GetProcessesByName("UpLauncher");
-                foreach (Process process in processesByName)
+                RestartUpLauncher(targetPath);
+            }
+        }
+
+        private static void KillUpLauncherProcesses()
+        {
+            Process[] processesByName = Process.GetProcessesByName("UpLauncher");
+            foreach (Process process in processesByName)
+            {
+                if (!process.HasExited)
                 {
                     process.Kill();
+                    process.WaitForExit();
                 }
-                Process.Start(text2);
+                //Process.Start(text2);
             }
+        }
+
+        private static void RestartUpLauncher(string targetPath)
+        {
+            KillUpLauncherProcesses();
+            Process.Start(targetPath);
         }
     }
 }

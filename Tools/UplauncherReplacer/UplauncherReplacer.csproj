@@ -82,7 +82,7 @@
     <ApplicationIcon>dofus-icon-48.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ArkalysKey.snk</AssemblyOriginatorKeyFile>

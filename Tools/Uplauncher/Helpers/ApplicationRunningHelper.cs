@@ -23,6 +23,7 @@ namespace Uplauncher.Helpers
 {
     public static class ApplicationRunningHelper
     {
+        private const int SwRestore = 9;
         [DllImport("user32.dll")]
         private static extern
         bool SetForegroundWindow(IntPtr hWnd);

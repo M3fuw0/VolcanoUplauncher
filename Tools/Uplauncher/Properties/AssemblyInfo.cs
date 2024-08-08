@@ -3,13 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("Uplauncher Sulax")]
-[assembly: AssemblyDescription("Official Sulax Uplauncher")]
+[assembly: AssemblyTitle("Uplauncher Pyrasis")]
+[assembly: AssemblyDescription("Official Pyrasis Uplauncher")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sulax Games Inc.")]
-[assembly: AssemblyProduct("Uplauncher Sulax")]
-[assembly: AssemblyCopyright("Copyright © 2023 Sulax Games Inc. - Tous droits réservés.")]
-[assembly: AssemblyTrademark("Sulax")]
+[assembly: AssemblyCompany("Pyrasis Games Inc.")]
+[assembly: AssemblyProduct("Uplauncher Pyrasis")]
+[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyTrademark("Pyrasis")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

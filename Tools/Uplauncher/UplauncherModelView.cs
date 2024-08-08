@@ -27,6 +27,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Xml.Linq;
@@ -36,7 +38,10 @@ using Uplauncher.Properties;
 using Uplauncher.Sound;
 using Uplauncher.Sound.UplSound;
 using Uplauncher.Utils;
+using Application = System.Windows.Forms.Application;
 using Clipboard = System.Windows.Forms.Clipboard;
+using ContextMenu = System.Windows.Forms.ContextMenu;
+using MenuItem = System.Windows.Forms.MenuItem;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Uplauncher
@@ -56,11 +61,12 @@ namespace Uplauncher
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly BackgroundWorker m_MD5Worker = new BackgroundWorker();
+        private MainWindow _mainWindow;
 
-        public UplauncherModelView(DateTime? lastUpdateCheck)
+        public UplauncherModelView(DateTime? lastUpdateCheck, MainWindow mainWindow)
         {
             m_lastUpdateCheck = lastUpdateCheck;
-
+            _mainWindow = mainWindow;
             NotifyIcon = new NotifyIcon
                 {
                     Visible = true,
@@ -82,7 +88,7 @@ namespace Uplauncher
         public WebClient WebClient => m_client;
 
 
-        #region PlayCommand
+        //#region PlayCommand
 
         private DelegateCommand m_playCommand;
 
@@ -93,24 +99,19 @@ namespace Uplauncher
             return !IsUpdating && IsUpToDate;
         }
 
+        public int NumberOfClientsToStart { get; set; }
+
         private void OnPlay(object parameter)
         {
             if (!CanPlay(parameter))
             {
                 return;
             }
-            int num;
-            if (m_lastUpdateCheck.HasValue)
-            {
-                DateTime now = DateTime.Now;
-                DateTime? lastUpdateCheck = m_lastUpdateCheck;
-                num = ((now - lastUpdateCheck > TimeSpan.FromMinutes(5.0)) ? 1 : 0);
-            }
-            else
-            {
-                num = 1;
-            }
-            if (num != 0)
+
+            //int numberOfClientsToStart = (int)parameter;
+            int numberOfClientsToStart = NumberOfClientsToStart;
+
+            if (!m_lastUpdateCheck.HasValue || DateTime.Now - m_lastUpdateCheck.Value > TimeSpan.FromMinutes(5.0))
             {
                 CheckUpdates();
             }
@@ -133,21 +134,63 @@ namespace Uplauncher
             {
                 StartRegApp();
             }
+            IsNumberComboBoxEnabled = true;
             IsLanguageComboBoxEnabled = true;
             IsStatusTextBoxVisible = true;
-            Process process = new Process
+            for (int i = 0; i < numberOfClientsToStart; i++)
             {
-                StartInfo = new ProcessStartInfo(Constants.DofusExePath, m_soundProxy.Started ? ("--reg-client-port=" + m_soundProxy.ClientPort) : string.Empty)
-            };
-            process.Start();
-            //process.WaitForInputIdle();
-            if (!process.Start())
-            {
-                MessageBox.Show(Resources.Cannot_Start_Dofus, Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
+                Process process = new Process
+                {
+                    StartInfo = new ProcessStartInfo(Constants.DofusExePath, m_soundProxy.Started ? ("--reg-client-port=" + m_soundProxy.ClientPort) : string.Empty)
+                };
+
+                bool started = process.Start();
+                process.WaitForInputIdle();
+
+                if (!started)
+                {
+                    MessageBox.Show(Resources.Cannot_Start_Dofus, Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+
+                // Si ce n'est pas le premier client, attendez 5 secondes
+                if (i > 1)
+                {
+                    Thread.Sleep(5000); // Attendre 5 secondes
+                }
+                string details = i == 1 ? "1 fenêtre de jeu ouverte" : $"{i} fenêtres de jeu ouvertes";
+                _mainWindow.UpdateGameDetails("En train de jouer à Pyrasis", details);
             }
             SetState("Jeu lancé.");
+            _mainWindow.InitializeProcessCheckTimer(); // Initialiser le timer après les mises à jour
             HideWindowInTrayIcon();
+        }
+
+        //public void StartClients(object parameter)
+        //{
+        //    OnPlay(parameter);
+        //}
+
+        public void StartClients(int numberOfClients)
+        {
+            OnPlay(numberOfClients);
+        }
+
+        //private void ClientNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    NumberOfClientsToStart = int.Parse(((ComboBoxItem)ClientNumberComboBox.SelectedItem).Content.ToString());
+        //    OnPlay(null);
+        //}
+
+        private DelegateCommand _openSelectDofusClientsCommand;
+
+        public DelegateCommand OpenSelectDofusClientsCommand => _openSelectDofusClientsCommand ?? (_openSelectDofusClientsCommand = new DelegateCommand(OpenSelectDofusClients));
+
+        private void OpenSelectDofusClients(object parameter)
+        {
+            SelectDofusClientsWindow selectWindow = new SelectDofusClientsWindow();
+            selectWindow.DataContext = this;
+            selectWindow.ShowDialog();
         }
 
         private void StartRegApp()
@@ -169,9 +212,9 @@ namespace Uplauncher
             }
         }
 
-        #endregion
+        //#endregion
 
-        #region VoteCommand
+        //#region VoteCommand
 
         private DelegateCommand m_voteCommand;
         private Process m_regProcess;
@@ -186,12 +229,12 @@ namespace Uplauncher
         private void OnVote(object parameter)
         {
             Process.Start(Constants.VoteURL);
-            //LastVote = DateTime.Now;
+            LastVote = DateTime.Now;
         }
 
-        #endregion
+        //#endregion
 
-        #region SiteCommand
+        //#region SiteCommand
 
         private DelegateCommand m_siteCommand;
 
@@ -209,9 +252,9 @@ namespace Uplauncher
                 Process.Start(Constants.SiteURL);
         }
 
-        #endregion
+        //#endregion
 
-        #region CloseCommand
+        //#region CloseCommand
 
         private DelegateCommand m_closeCommand;
 
@@ -230,9 +273,9 @@ namespace Uplauncher
             HideWindowInTrayIcon();
         }
 
-        #endregion
+        //#endregion
 
-        #region RepairGameCommand
+        //#region RepairGameCommand
 
         private DelegateCommand m_repairGameCommand;
 
@@ -271,7 +314,7 @@ namespace Uplauncher
             }
         }
 
-        #endregion
+        //#endregion
 
         private DelegateCommand m_deleteGameFilesCommand;
 
@@ -343,7 +386,7 @@ namespace Uplauncher
         //    MyApplication.Main(Array.Empty<string>());
         //}
 
-        #region ChangeLanguageCommand
+        //#region ChangeLanguageCommand
 
         private DelegateCommand m_changeLanguageCommand;
 
@@ -360,24 +403,30 @@ namespace Uplauncher
                 return;
         }
 
-        private bool CanConsole(object parameter)
-        {
-            return !IsUpdating;
-        }
+        //private bool CanConsole(object parameter)
+        //{
+        //    return !IsUpdating;
+        //}
 
-        private void OnConsole(object parameter)
-        {
-            if (CanConsole(parameter) && !IsUpdating)
-            {
-                MessageBox.Show("Les options sont en cours de développement.", "Sulax UpLauncher");
-            }
-        }
+        //private void OnConsole(object parameter)
+        //{
+        //    if (CanConsole(parameter) && !IsUpdating)
+        //    {
+        //        MessageBox.Show("Les options sont en cours de développement.", "Pyrasis UpLauncher");
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region TrayIcon
+        //#region TrayIcon
 
         public void HideWindowInTrayIcon()
+        {
+            View.Hide();
+	        NotifyIcon?.ShowBalloonTip(4000, Constants.ApplicationName, "La fenêtre a été placé dans la barre de notifications.", ToolTipIcon.Info);
+        }
+
+        public void HideWindowInTrayIconWinform()
         {
             View.Hide();
 	        NotifyIcon?.ShowBalloonTip(4000, Constants.ApplicationName, "La fenêtre a été placé dans la barre de notifications.", ToolTipIcon.Info);
@@ -411,9 +460,9 @@ namespace Uplauncher
             System.Windows.Application.Current.Shutdown();
         }
 
-        #endregion
+        //#endregion
 
-        #region Vote Timer
+        //#region Vote Timer
 
         private void CheckVoteTiming()
         {
@@ -427,7 +476,7 @@ namespace Uplauncher
             Task.Factory.StartNew(CheckVoteTiming);
         }
 
-        #endregion
+        //#endregion
 
         // Assume you have a list of URLs:
         List<string> serverUrls = new List<string> { Constants.UpdateSiteURL, Constants.SecondaryUpdateSiteURL /*, more URLs as needed */ };
@@ -487,6 +536,7 @@ namespace Uplauncher
                     catch (WebException)
                     {
                         // If an exception occurs, don't do anything. The loop will move on to the next server.
+						SetState("Le serveur est indisponible.");
                     }
                 }
             }
@@ -584,6 +634,7 @@ namespace Uplauncher
         private void MD5Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             SetState(string.Format(m_bytesFormatProvider, "Vérification de l'intégrité des fichiers en cours... ({0} % terminé) ({1:fs}/s)", e.ProgressPercentage, (double)e.UserState), Colors.Red);
+            _mainWindow.UpdateGameDetails("Vérification de l'intégrité des fichiers en cours...", $"{e.ProgressPercentage}% terminé"); // Mise à jour des détails
         }
 
         private void MD5Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -591,7 +642,7 @@ namespace Uplauncher
             m_MD5Worker.RunWorkerCompleted -= MD5Worker_RunWorkerCompleted;
             DownloadProgress = 100.00;
             SetState("Vérification de l'intégrité des fichiers terminé.", Colors.Red);
-
+            _mainWindow.UpdateGameDetails("Vérification de l'intégrité des fichiers terminé", $"{DownloadProgress}% terminé");
             CompareChecksums();
         }
 
@@ -671,6 +722,7 @@ namespace Uplauncher
                 {
                     File.WriteAllText(Constants.LocalChecksumFile, LocalChecksum);
                     SetState("Le jeu est à jour.", Colors.Red);
+                    _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !"); // Mise à jour des détails
                     IsUpdating = false;
                     IsUpToDate = true;
 
@@ -679,6 +731,7 @@ namespace Uplauncher
                         m_playCommand.RaiseCanExecuteChanged();
                         m_repairGameCommand.RaiseCanExecuteChanged();
                         //m_consoleCommand.RaiseCanExecuteChanged(); //
+                        IsNumberComboBoxEnabled = true;
                         IsLanguageComboBoxEnabled = true;
                         IsStatusTextBoxVisible = true;
                     }));//);
@@ -697,6 +750,7 @@ namespace Uplauncher
                     if (m_currentTasks.Count == 0)
                     {
                         OnUpdateEnded(true);
+                    _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !"); //voir si ça debug
                         return;
                     }
 
@@ -712,7 +766,7 @@ namespace Uplauncher
         {
             TotalDownloadedBytes += x.FileSize;
             DownloadProgress = ((double)TotalDownloadedBytes / (double)TotalBytesToDownload) * 100.00;
-
+            _mainWindow.UpdateGameDetails("Téléchargement en cours...", $"{DownloadProgress:F0}% terminé");
             ProcessTask();
         }
 
@@ -721,6 +775,7 @@ namespace Uplauncher
             if (success)
             {
                 SetState("Le jeu est à jour.", Colors.Red);
+                _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !"); // Mise à jour des détails
                 LocalChecksum = m_metaFile.FolderChecksum;
                 File.WriteAllText(Constants.LocalChecksumFile, LocalChecksum);
             }
@@ -729,12 +784,14 @@ namespace Uplauncher
             IsUpdating = false;
             GlobalDownloadProgress = false;
             ProgressDownloadSpeedInfo = string.Empty;
+            _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !");
 
             View.Dispatcher.BeginInvoke(new Action(() =>
             {
                 m_playCommand.RaiseCanExecuteChanged();
                 m_repairGameCommand.RaiseCanExecuteChanged();
                 //m_consoleCommand.RaiseCanExecuteChanged(); //
+                IsNumberComboBoxEnabled = true;
                 IsLanguageComboBoxEnabled = true;
                 IsStatusTextBoxVisible = true;
             }));
@@ -743,7 +800,10 @@ namespace Uplauncher
         private void HandleDownloadError(bool cancelled, Exception ex, string url)
         {
             if (cancelled)
+            {
                 SetState("Mise à jour interrompue.", Colors.Red);
+                _mainWindow.UpdateGameDetails("Erreur de mise à jour", "Veuillez réessayer"); // Mise à jour des détails
+            }
             else
             {
                 var remoteURL = url;
@@ -752,6 +812,7 @@ namespace Uplauncher
                 Clipboard.SetText(ex.ToString());
                 if (ex.InnerException != null)
                     SetState($"Erreur lors de la mise à jour : {ex.InnerException.Message}", Colors.Red);
+                _mainWindow.UpdateGameDetails("Erreur de mise à jour", "Veuillez contacter le support !");
             }
 
             OnUpdateEnded(false);
@@ -779,6 +840,9 @@ namespace Uplauncher
                     m_lastProgressChange = DateTime.Now;
                     m_lastFileDownloadedBytes = e.BytesReceived;
                 }
+                DownloadProgress = ((double)TotalDownloadedBytes / (double)TotalBytesToDownload) * 100.00;//
+                _mainWindow.UpdateGameDetails("Téléchargement en cours...", $"{DownloadProgress:F0}% terminé");//
+                //_mainWindow.UpdateGameDetails("Téléchargement en cours ...", $"{DownloadProgress:F2}% terminé");
             }
             else
             {
@@ -792,6 +856,8 @@ namespace Uplauncher
                     
                     m_lastProgressChange = DateTime.Now;
                     m_lastGlobalDownloadedBytes = TotalDownloadedBytes + e.BytesReceived;
+                    DownloadProgress = ((double)TotalDownloadedBytes / (double)TotalBytesToDownload) * 100.00;//
+                    _mainWindow.UpdateGameDetails("Vérirication en cours...", $"{DownloadProgress:F0}% terminé");//
                 }
             }
 
@@ -800,6 +866,18 @@ namespace Uplauncher
         }
 
         //Uplauncher
+		
+		private bool _isNumberComboBoxEnabled;
+
+        public bool IsNumberComboBoxEnabled
+        {
+            get => _isNumberComboBoxEnabled;
+            set
+            {
+                _isNumberComboBoxEnabled = value;
+                RaisePropertyChanged("IsNumberComboBoxEnabled");
+            }
+        }
 
         private void UpdateLanguageInConfigFile(string languageCode)
         {
@@ -860,7 +938,8 @@ namespace Uplauncher
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public DelegateCommand ConsoleCommand => m_consoleCommand ?? (m_consoleCommand = new DelegateCommand(OnConsole, CanConsole));
+
+        //public DelegateCommand ConsoleCommand => m_consoleCommand ?? (m_consoleCommand = new DelegateCommand(OnConsole, CanConsole));
         private bool VerifyVersion()
         {
             if (!File.Exists(Constants.Version))
@@ -894,6 +973,7 @@ namespace Uplauncher
             m_MD5Worker.RunWorkerCompleted -= MD5Worker_RunWorkerCompleted;
             DownloadProgress = 100.00;
             SetState($"Téléchargement terminé. L'UpLauncher va redémarrer...", Colors.Red);
+            _mainWindow.UpdateGameDetails("Téléchargement terminé", "L'uplauncher va redémarrer...");
             View.Dispatcher.BeginInvoke((Action)delegate
             {
                 m_playCommand.RaiseCanExecuteChanged();
@@ -931,6 +1011,7 @@ namespace Uplauncher
                 m_lastProgressChange = DateTime.Now;
             }
             SetState($"Téléchargement de la mise à jour de l'uplauncher...", Colors.Orange);
+            _mainWindow.UpdateGameDetails("Téléchargement de la mise à jour de l'uplauncher...", "Patientez !");
         }
 
         private void DownloadUpLauncher(string Url, string DownloadTo)
@@ -953,6 +1034,10 @@ namespace Uplauncher
         private DelegateCommand m_consoleCommand;
 
         private string currentversion;
+
+        public UplauncherModelView()
+        {
+        }
 
         //Fin
 

@@ -20,17 +20,17 @@ namespace Uplauncher
 {
     public static class Constants
     {
-        public const string SiteURL = "https://sulax.vg/";
-        public const string UpdateSiteURL = "https://update.sulax.vg/";
-        public const string SecondaryUpdateSiteURL = "https://support.sulax.vg/";
-        public static readonly Uri RSSNewsURL = new Uri("https://sulax.vg/releases/rss/rss.xml");
+        public const string SiteURL = "https://pyrasis.cc/";
+        public const string UpdateSiteURL = "https://update.karashi.cz/";
+        public const string SecondaryUpdateSiteURL = "https://support.pyrasis.cc/";
+        public static readonly Uri RSSNewsURL = new Uri("https://pyrasis.cc/rss/rss.xml");
         public const string VoteURL = "https://discord.gg/nqZhMTDeBt";
-        public const string UplauncherURL = "https://sulax.vg/releases/uplauncher/Uplauncher.exe";
-        public const string VersionURL = "https://sulax.vg/releases/version/VERSION";
+        public const string UplauncherURL = "https://update.karashi.cz/uplauncher/Uplauncher.exe";
+        public const string VersionURL = "https://update.karashi.cz/version/VERSION";
 
-        public const string DofusExePath = "sulax_app\\Dofus.exe";
-        public const string DofusRegExePath = "sulax_app\\reg\\Reg.exe";
-        public const string LocalChecksumFile = "checksum.sulax";
+        public const string DofusExePath = "pyrasis_app\\Dofus.exe";
+        public const string DofusRegExePath = "pyrasis_app\\reg\\Reg.exe";
+        public const string LocalChecksumFile = "checksum.pyrasis";
         public const string RemotePatchFile = "patch.xml";
         public const string UplauncherMaj = ".\\majs\\Uplauncher.exe";
         public const string RegExePath = "reg/Reg.exe";
@@ -38,17 +38,18 @@ namespace Uplauncher
         public const string VersionPath = ".\\VERSION";
         public const string PatchPath = ".\\UplauncherReplacer.exe";
 
-        public const string GameDirPath = ".\\sulax_app";
+        public const string GameDirPath = ".\\pyrasis_app";
         public const string ChecksumFilePath = ".\\UplauncherReplacer.exe";
         public const string ConfigFile = "config.xml";
+        public const string ConfigPath = "pyrasis_app/config.xml";
 
-        public const string ClientId = "1094708076935917630";
-        public const string GameDetails = "Joue à Sulax 2.51";
-        public const string WebsiteUrl = "Allez sur https://sulax.vg";
+        public const string ClientId = "1271168054117797940";
+        public const string GameDetails = "Joue à Pyrasis 2.51 Cheat";
+        public const string WebsiteUrl = "Allez sur https://pyrasis.cc";
         public const string LargeImageKey = "large"; //large
         public const string SmallImageKey = "small"; //small
-        public const string LabelButton1 = "Site";
-        public const string UrlButton1 = "https://sulax.vg";
+        public const string LabelButton1 = "Site \ud83d\udc12";
+        public const string UrlButton1 = "https://pyrasis.cc";
         public const string LabelButton2 = "Discord";
         public const string UrlButton2 = "https://discord.gg/nqZhMTDeBt";
 
@@ -58,6 +59,6 @@ namespace Uplauncher
 
 	    public static string ApplicationVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-	    public static string ApplicationName => "Uplauncher Sulax";
+	    public static string ApplicationName => "Uplauncher Pyrasis";
     }
 }

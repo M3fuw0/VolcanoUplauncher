@@ -98,7 +98,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ArkalysKey.snk</AssemblyOriginatorKeyFile>
@@ -241,6 +241,7 @@
     <Compile Include="DiscordRPC\RPC\RpcConnection.cs" />
     <Compile Include="DiscordRPC\User.cs" />
     <Compile Include="DiscordRPC\Web\WebRPC.cs" />
+    <Compile Include="Exceptions\ExceptionManager.cs" />
     <Compile Include="Helpers\ApplicationRunningHelper.cs" />
     <Compile Include="Helpers\HyperlinkUtility.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
@@ -518,6 +519,9 @@
     <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\IsReadOnlyAttribute.cs" />
     <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\NullableAttribute.cs" />
     <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\NullableContextAttribute.cs" />
+    <Compile Include="NumberOfDofusWindows.xaml.cs">
+      <DependentUpon>NumberOfDofusWindows.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Patcher\MetaFileEntry.cs" />
     <Compile Include="Patcher\MetaFile.cs" />
     <Compile Include="Program.cs" />
@@ -531,6 +535,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
+    <Compile Include="SelectDofusClientsWindow.xaml.cs">
+      <DependentUpon>SelectDofusClientsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SharpRaven\SharpRaven.Data\Breadcrumb.cs" />
     <Compile Include="SharpRaven\SharpRaven.Data\BreadcrumbLevel.cs" />
     <Compile Include="SharpRaven\SharpRaven.Data\BreadcrumbType.cs" />
@@ -602,6 +609,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NumberOfDofusWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectDofusClientsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -620,9 +635,6 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="ArkalysKey.snk" />
-    <None Include="debug\Azote.ilk" />
-    <None Include="debug\config.ini" />
-    <None Include="debug\moc_predefs.h.cbt" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -733,6 +745,7 @@
     <Resource Include="Resources\servers\sigma_description.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="REPARER.png" />
     <Resource Include="JOUER.png" />
     <Resource Include="DiscordRPC\Resources\link.xml" />
     <Resource Include="FOND.png" />
@@ -741,16 +754,11 @@
     <Resource Include="DISCORD.png" />
     <Resource Include="FERMER.png" />
     <Resource Include="Arrière-plan.png" />
-    <Content Include="debug\Azote.exe" />
-    <Content Include="debug\Azote.pdb" />
-    <Content Include="debug\moc_predefs.h" />
-    <Content Include="debug\Qt5Cored.dll" />
-    <Content Include="debug\Qt5Guid.dll" />
-    <Content Include="debug\Qt5Networkd.dll" />
-    <Content Include="debug\Qt5Widgetsd.dll" />
     <Resource Include="Resources\play_hover.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="debug\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">
     <ItemGroup>

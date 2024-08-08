@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PatchBuilder")]
-[assembly: AssemblyCopyright("Copyright © 2022 Sulax Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

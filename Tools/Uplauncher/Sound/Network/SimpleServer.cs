@@ -21,7 +21,7 @@ namespace Uplauncher.Sound.Network
 			socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		}
 
-		public void Start(short listenPort)
+		public void Start(int listenPort)
 		{
 			if (!runing)
 			{
@@ -51,7 +51,7 @@ namespace Uplauncher.Sound.Network
 
 		private void OnConnectionAccepted(Socket client)
 		{
-			this.ConnectionAccepted?.Invoke(client);
+			ConnectionAccepted?.Invoke(client);
 		}
 	}
 }

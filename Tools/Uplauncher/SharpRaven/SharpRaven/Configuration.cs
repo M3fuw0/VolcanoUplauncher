@@ -9,15 +9,9 @@ namespace SharpRaven
 			[ConfigurationProperty("value")]
 			public string Value
 			{
-				get
-				{
-					return (string)base["value"];
-				}
-				set
-				{
-					base["value"] = value;
-				}
-			}
+				get => (string)base["value"];
+                set => base["value"] = value;
+            }
 		}
 
 		private const string DsnKey = "dsn";

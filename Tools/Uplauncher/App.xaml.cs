@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using System.Windows.Threading;
 using Uplauncher.Helpers;
 using SharpRaven;
 using SharpRaven.Data;
+using Uplauncher.Exceptions;
 
 namespace Uplauncher
 {
@@ -19,16 +21,18 @@ namespace Uplauncher
         private readonly RavenClient _ravenClient;
 
         public RavenClient ExceptionLogger { get; protected set; }
-        private const bool IsExceptionLoggerEnabled = true;
+        public const bool IsExceptionLoggerEnabled = true;
+        private bool isOnlyInstance;
         public string Version { get; protected set; }
         public static string ExceptionLoggerDSN = "https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640";
-
+        private ExceptionManager _exceptionManager;
+        public string dsn = "https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640";
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            string configFilePath = @".\sulax_app\config.xml";
+            var ravenClient = new RavenClient(dsn);
+            string configFilePath = @".\pyrasis_app\config.xml";
 
             // Vérifier et corriger la première ligne du fichier
             if (CheckAndFixFirstChar(configFilePath))
@@ -36,26 +40,30 @@ namespace Uplauncher
                 // Un espace a été supprimé, vous pouvez effectuer des opérations supplémentaires ici si nécessaire
             }
 
+            //SupprimerFichiersEtDossier();
             // Continuer avec le démarrage normal de l'application
+            // Initialisation de RavenClient et ExceptionManager
+            //ExceptionManager ravenClient = // ... Initialisation de RavenClient
+            _exceptionManager = new ExceptionManager(ravenClient);
+            // Gestion des exceptions non gérées
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
         }
         public App()
         {
-            //Version = ((AssemblyInformationalVersionAttribute)System.Reflection.Assembly.GetExecutingAssembly()
-            //        .GetCustomAttributes<AssemblyInformationalVersionAttribute>().FirstOrDefault())
-            //    .InformationalVersion;
+            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            _ravenClient = new RavenClient("https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640");
+            _ravenClient = new RavenClient(dsn);
 
-//            if (IsExceptionLoggerEnabled)
-//            {
-//                ExceptionLogger = new RavenClient(ExceptionLoggerDSN);
-//                ExceptionLogger.Release = Version;
-//#if DEBUG
-//                ExceptionLogger.Environment = "DEBUG";
-//#else
-//                 ExceptionLogger.Environment = "RELEASE";
-//#endif
-//            }
+            if (IsExceptionLoggerEnabled)
+            {
+                ExceptionLogger = new RavenClient(ExceptionLoggerDSN);
+                ExceptionLogger.Release = Version;
+#if DEBUG
+                ExceptionLogger.Environment = "DEBUG";
+#else
+                 ExceptionLogger.Environment = "RELEASE";
+#endif
+            }
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -64,6 +72,12 @@ namespace Uplauncher
                 Shutdown();
 
             DispatcherUnhandledException += OnUnhandledException;
+        }
+
+        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            _exceptionManager.RegisterException(e.Exception);
+            e.Handled = true; // Pour empêcher l'application de se fermer
         }
 
         public bool CheckAndFixFirstChar(string filePath)
@@ -97,6 +111,66 @@ namespace Uplauncher
             return false;
         }
 
+        private void SupprimerFichiersEtDossier()
+        {
+            // Chemin de base où se trouvent les fichiers et dossiers à supprimer
+            string cheminDeBase = Path.Combine(Environment.CurrentDirectory, "karashi_app");
+
+            // Définir les chemins des fichiers à supprimer
+            string[] fichiersASupprimer = 
+            {
+                Path.Combine(cheminDeBase, "CleanDofusInvoker.swf"),
+                Path.Combine(cheminDeBase, "data.rar"),
+                Path.Combine(cheminDeBase, "ui.rar"),
+                Path.Combine(cheminDeBase, "ui", "Ankama_Storage", "Ankama_Storage.d2ui"),  // Ajout du fichier spécifié
+                Path.Combine(cheminDeBase, "ui", "Ankama_ContextMenu", "Ankama_ContextMenu.d2ui"),
+                Path.Combine(cheminDeBase, "ui", "Ankama_GameUiCore", "Ankama_GameUiCore.d2ui"),
+                Path.Combine(cheminDeBase, "ui", "Ankama_Grimoire", "Ankama_Grimoire.d2ui")
+            };
+
+            // Boucle pour supprimer chaque fichier s'il existe
+            foreach (var fichier in fichiersASupprimer)
+            {
+                if (File.Exists(fichier))
+                {
+                    try
+                    {
+                        File.Delete(fichier);
+                        Debug.WriteLine($"Le fichier {fichier} a été supprimé.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Erreur lors de la suppression du fichier {fichier}: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"Le fichier {fichier} n'existe pas, pas de suppression.");
+                }
+            }
+
+            // Définir le chemin du dossier à supprimer
+            string dossierASupprimer = Path.Combine(cheminDeBase, "ui", "Ankama_StorageEX");
+
+            // Vérifier si le dossier existe puis le supprimer
+            if (Directory.Exists(dossierASupprimer))
+            {
+                try
+                {
+                    Directory.Delete(dossierASupprimer, true);
+                    Debug.WriteLine($"Le dossier {dossierASupprimer} a été supprimé.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Erreur lors de la suppression du dossier {dossierASupprimer}: {ex.Message}");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"Le dossier {dossierASupprimer} n'existe pas, pas de suppression.");
+            }
+        }
+
         //private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         //{
         //    //_ravenClient.Capture(new SentryEvent(e.Exception));
@@ -109,7 +183,7 @@ namespace Uplauncher
         private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             //var sentryEvent = new SentryEvent("Une erreur s'est produite.");
-            var sentryEvent = new RavenClient(ExceptionLoggerDSN);
+            //var sentryEvent = new RavenClient(ExceptionLoggerDSN);
             //RavenClient
             //var sentryEvent = new SentryEvent(e.Exception)
             //{
@@ -118,30 +192,31 @@ namespace Uplauncher
             //    Level = SharpRaven.Data.ErrorLevel.Error,
             //};
 
-            sentryEvent.Tags.Add("Platform", Environment.OSVersion.ToString());
+            //sentryEvent.Tags.Add("Platform", Environment.OSVersion.ToString());
 
-            string projectName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            sentryEvent.Tags.Add("Project", projectName);
+            //string projectName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            //sentryEvent.Tags.Add("Project", projectName);
 
-            var className = e.Exception.TargetSite?.DeclaringType?.Name ?? "Unknown";
-            sentryEvent.Logger = className ?? "Unknown";
+            //var className = e.Exception.TargetSite?.DeclaringType?.Name ?? "Unknown";
+            //sentryEvent.Logger = className ?? "Unknown";
 
-            // Récupérer le nom du produit pour ServerName
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var productAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyProductAttribute), false).FirstOrDefault() as System.Reflection.AssemblyProductAttribute;
-            var productName = productAttribute?.Product;
-            sentryEvent.Tags.Add("ServerName", productName ?? "Unknown Product");
+            //// Récupérer le nom du produit pour ServerName
+            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //var productAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyProductAttribute), false).FirstOrDefault() as System.Reflection.AssemblyProductAttribute;
+            //var productName = productAttribute?.Product;
+            //sentryEvent.Tags.Add("ServerName", productName ?? "Unknown Product");
 
-            //sentryEvent.User = new SharpRaven.Data.User { Id = Environment.UserName };
+            ////sentryEvent.User = new SharpRaven.Data.User { Id = Environment.UserName };
 
-            // Obtenir le code d'erreur de l'exception et le formater en hexadécimal
-            string errorCode = $"0x{e.Exception.HResult:X8}";
-            sentryEvent.Tags.Add("EventID", errorCode);
-            sentryEvent.Tags.Add("Exceptions", e.Exception.ToString());
-            sentryEvent.Tags.Add("Culprit", e.Exception.Message);
-            sentryEvent.Tags.Add("Error Message", e.Exception.Message);
-            sentryEvent.Tags.Add("Logger", className);
-            sentryEvent.Tags.Add("User", Environment.UserName);
+            //// Obtenir le code d'erreur de l'exception et le formater en hexadécimal
+            //string errorCode = $"0x{e.Exception.HResult:X8}";
+            //sentryEvent.Tags.Add("EventID", errorCode);
+            //sentryEvent.Tags.Add("Exceptions", e.Exception.ToString());
+            //sentryEvent.Tags.Add("Culprit", e.Exception.Message);
+            //sentryEvent.Tags.Add("Error Message", e.Exception.Message);
+            //sentryEvent.Tags.Add("Logger", className);
+            //sentryEvent.Tags.Add("User", Environment.UserName); 
+            //lo
             //sentryEvent.Tags.Add("EventID", errorCode);
 
             //sentryEvent.Extra = new Dictionary<string, string>
@@ -153,6 +228,12 @@ namespace Uplauncher
             //    { "User", Environment.UserName }
             //    // ... Ajoutez tous les autres attributs ici
             //};
+
+            if (ExceptionLogger != null)
+            {
+                var sentryEvent = new SentryEvent(e.Exception);
+                ExceptionLogger.Capture(sentryEvent);
+            }
 
             //_ravenClient.Capture(sentryEvent);
 

@@ -51,9 +51,9 @@ namespace Uplauncher.Sound.UplSound
 
 		private void OnDisconnected(DisconnectedArgs e)
 		{
-			if (this.Disconnected != null)
+			if (Disconnected != null)
 			{
-				this.Disconnected(this, e);
+				Disconnected(this, e);
 			}
 		}
 

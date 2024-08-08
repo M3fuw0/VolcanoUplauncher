@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("UplauncherReplacer")]
-[assembly: AssemblyDescription("Official Sulax Uplauncher")]
+[assembly: AssemblyDescription("Official Pyrasis UplauncherReplacer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sulax Games Inc.")]
+[assembly: AssemblyCompany("Pyrasis Games Inc.")]
 [assembly: AssemblyProduct("UplauncherReplacer")]
-[assembly: AssemblyCopyright("Copyright © 2023 Sulax Games Inc. - Tous droits réservés.")]
-[assembly: AssemblyTrademark("Sulax")]
+[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyTrademark("Pyrasis")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

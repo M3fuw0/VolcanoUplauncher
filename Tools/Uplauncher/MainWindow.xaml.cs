@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using DiscordRPC;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using Uplauncher.Helpers;
+using Application = System.Windows.Application;
 using Button = DiscordRPC.Button;
 
 namespace Uplauncher
@@ -23,9 +26,41 @@ namespace Uplauncher
         private static DiscordRpcClient _client;
         private DispatcherTimer _timer;
         private static DateTime _startTime;
+        private DispatcherTimer _processCheckTimer;
+        private static string _gameDetails = "Joue à Pyrasis 2.10";
+        private static string _websiteUrl = "Allez sur https://karashi.cz";
+
         public MainWindow()
         {
-            ModelView = new UplauncherModelView(DateTime.Now) { View = this };
+            ModelView = new UplauncherModelView(DateTime.Now, this) { View = this };
+
+            //if (CheckAndHandleMultipleInstances())
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    //Process.Start(Constants.PatchPath, "-restart");
+            //}
+
+            if (ApplicationRunningHelper.AlreadyRunning())
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Une autre instance de l'Uplauncher est déjà en cours d'exécution. Voulez-vous fermer cette instance et continuer ?",
+                    "Instance déjà en cours",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+                else
+                {
+                    TerminateOtherInstances();
+                    Process.Start(Constants.PatchPath, "-restart");
+                }
+            }
 
             InitializeComponent();
             InitializeDiscordRpc();
@@ -36,14 +71,12 @@ namespace Uplauncher
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             ModelView.CheckUpdates();
+            UpdateGameDetails("Démarrage de l'uplauncher ...", "En attendant allez sur https://karashi.cz");
         }
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            if ((bool)typeof(Application)
-                    .GetProperty("IsShuttingDown",
-                        BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Static)
-                    .GetValue(null, new object[0]))
+            if ((bool)typeof(Application).GetProperty("IsShuttingDown", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Static).GetValue(null, new object[0]))
             {
                 ModelView.NotifyIcon.Visible = false;
                 return;
@@ -51,6 +84,62 @@ namespace Uplauncher
 
             e.Cancel = true;
             ModelView.HideWindowInTrayIcon();
+        }
+
+
+        private void NumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is UplauncherModelView uplauncherModelView)
+            {
+                if (NumberComboBox.SelectedItem is ComboBoxItem selectedItem)
+                {
+                    if (int.TryParse(selectedItem.Content.ToString(), out int numberOfClients))
+                    {
+                        // Add 1 to numberOfClients if it is 2 or more
+                        if (numberOfClients >= 2)
+                        {
+                            numberOfClients += 1;
+                        }
+                        // Now numberOfClients will be incremented by 1 if it was 2 or more
+                        uplauncherModelView.NumberOfClientsToStart = numberOfClients;
+                        // Uncomment if needed for debugging
+                        // MessageBox.Show($"Nombre de clients sélectionné : {numberOfClients}");
+                    }
+                }
+            }
+        }
+
+        private bool CheckAndHandleMultipleInstances()
+        {
+            if (ApplicationRunningHelper.AlreadyRunning())
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Une autre instance de l'Uplauncher est déjà en cours d'exécution. Voulez-vous fermer cette instance et continuer ?",
+                    "Instance déjà en cours",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    //Application.Current.Shutdown();
+                    //Form2.ShutdownApp();
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                    return true; // Indique que l'application doit se terminer
+                }
+                else
+                {
+                    TerminateOtherInstances();
+                }
+            }
+
+            return false; // Continuer l'exécution normale
+        }
+
+        private void OpenSelectDofusClientsWindow(object sender, RoutedEventArgs e)
+        {
+            SelectDofusClientsWindow selectWindow = new SelectDofusClientsWindow();
+            selectWindow.DataContext = ModelView;
+            selectWindow.ShowDialog();
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,8 +159,35 @@ namespace Uplauncher
                 case "Español":
                     newLanguageCode = "es";
                     break;
-                case "Poland":
+                case "Português":
+                    newLanguageCode = "pt";
+                    break;
+                case "Deutsch":
+                    newLanguageCode = "de";
+                    break;
+                case "Nederlands":
+                    newLanguageCode = "nl";
+                    break;
+                case "Čeština":
+                    newLanguageCode = "cz";
+                    break;
+                case "Slovenský":
+                    newLanguageCode = "sk";
+                    break;
+                case "Polski":
                     newLanguageCode = "pl";
+                    break;
+                case "Română":
+                    newLanguageCode = "ro";
+                    break;
+                case "Türkçe":
+                    newLanguageCode = "tr";
+                    break;
+                case "Dansk":
+                    newLanguageCode = "dk";
+                    break;
+                case "Suomalainen":
+                    newLanguageCode = "fi";
                     break;
                 // Ajoutez d'autres cas pour d'autres langues
                 default:
@@ -114,16 +230,16 @@ namespace Uplauncher
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            string gameDirectoryPath = "sulax_app";
-            string checksumFilePath = ".\\checksum.sulax";
+            string gameDirectoryPath = "pyrasis_app";
+            string checksumFilePath = ".\\checksum.pyrasis";
 
-            // Supprime le dossier sulax_app s'il existe
+            // Supprime le dossier pyrasis_app s'il existe
             if (Directory.Exists(gameDirectoryPath))
             {
                 Directory.Delete(gameDirectoryPath, true);
             }
 
-            // Supprime checksum.sulax s'il existe
+            // Supprime checksum.pyrasis s'il existe
             if (File.Exists(checksumFilePath))
             {
                 File.Delete(checksumFilePath);
@@ -151,7 +267,33 @@ namespace Uplauncher
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            UpdatePresenceWithElapsedTime(Constants.GameDetails, Constants.WebsiteUrl, Constants.LargeImageKey, Constants.SmallImageKey);
+            UpdatePresenceWithElapsedTime(_gameDetails, _websiteUrl, Constants.LargeImageKey, Constants.SmallImageKey);
+        }
+
+        // Ajoutez cette méthode pour initialiser le timer
+        public void InitializeProcessCheckTimer()
+        {
+            _processCheckTimer = new DispatcherTimer();
+            _processCheckTimer.Interval = TimeSpan.FromSeconds(5);
+            _processCheckTimer.Tick += ProcessCheckTimer_Tick;
+            _processCheckTimer.Start();
+        }
+
+        // Ajoutez cette méthode pour gérer les ticks du timer
+        private void ProcessCheckTimer_Tick(object sender, EventArgs e)
+        {
+            var dofusProcesses = Process.GetProcessesByName("Dofus");
+            int dofusCount = dofusProcesses.Length;
+
+            if (dofusCount > 0)
+            {
+                string details = dofusCount == 1 ? "1 fenêtre de jeu ouverte" : $"{dofusCount} fenêtres de jeu ouvertes";
+                UpdateGameDetails("En train de jouer à Pyrasis", details);
+            }
+            else
+            {
+                UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !");
+            }
         }
 
         private static void UpdatePresenceWithElapsedTime(string details, string state, string largeImageKey, string smallImageKey)
@@ -162,7 +304,7 @@ namespace Uplauncher
             {
                 Details = details,
                 State = state,
-                Assets = new Assets()
+                Assets = new Assets
                 {
                     LargeImageKey = largeImageKey,
                     //SmallImageKey = smallImageKey
@@ -185,6 +327,27 @@ namespace Uplauncher
                     Start = _startTime
                 }
             });
+        }
+
+        public void UpdateGameDetails(string details, string url)
+        {
+            _gameDetails = details;
+            _websiteUrl = url;
+            UpdatePresenceWithElapsedTime(_gameDetails, _websiteUrl, Constants.LargeImageKey, Constants.SmallImageKey);
+        }
+
+        private void TerminateOtherInstances()
+        {
+            var currentProcess = Process.GetCurrentProcess();
+            var uplauncherProcesses = Process.GetProcessesByName("Uplauncher");
+
+            foreach (var process in uplauncherProcesses)
+            {
+                if (process.Id != currentProcess.Id)
+                {
+                    process.Kill();
+                }
+            }
         }
 
         protected override void OnClosed(EventArgs e)

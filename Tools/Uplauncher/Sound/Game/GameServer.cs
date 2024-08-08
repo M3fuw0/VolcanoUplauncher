@@ -18,7 +18,7 @@ namespace Uplauncher.Sound.Game
 
 		public void StartAuthentificate()
 		{
-			m_server.Start(8081);
+			m_server.Start(54247);
 			m_server.ConnectionAccepted += AccepteClient;
 		}
 

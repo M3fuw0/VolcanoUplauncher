@@ -18,7 +18,7 @@ namespace Uplauncher.Sound.Reg
 
 		public void StartAuthentificate()
 		{
-			m_server.Start(8080);
+			m_server.Start(54248);
 			m_server.ConnectionAccepted += AccepteClient;
 		}
 

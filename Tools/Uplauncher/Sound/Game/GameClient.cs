@@ -52,9 +52,9 @@ namespace Uplauncher.Sound.Game
 
 		private void OnDisconnected(DisconnectedArgs e)
 		{
-			if (this.Disconnected != null)
+			if (Disconnected != null)
 			{
-				this.Disconnected(this, e);
+				Disconnected(this, e);
 			}
 		}
 
