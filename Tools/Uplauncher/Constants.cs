@@ -38,7 +38,9 @@ namespace Uplauncher
         public const string VersionPath = ".\\VERSION";
         public const string PatchPath = ".\\UplauncherReplacer.exe";
 
-        public const string ConfigFile = ".\\sulax_app\\config.xml";
+        public const string GameDirPath = ".\\sulax_app";
+        public const string ChecksumFilePath = ".\\UplauncherReplacer.exe";
+        public const string ConfigFile = "config.xml";
 
         public const string ClientId = "1094708076935917630";
         public const string GameDetails = "Joue à Sulax 2.51";

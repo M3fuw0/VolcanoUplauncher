@@ -30,9 +30,10 @@ namespace Uplauncher
     public class SoundProxy
     {
         private readonly Socket m_clientListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
-                                                    ProtocolType.Tcp);
+            ProtocolType.Tcp);
+
         private readonly Socket m_regListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
-                                                    ProtocolType.Tcp);
+            ProtocolType.Tcp);
 
         private Socket m_regClient;
         private readonly List<SoundClient> m_clients = new List<SoundClient>();
@@ -127,15 +128,37 @@ namespace Uplauncher
             {
                 if (e.BytesTransferred == 0 || e.SocketError != SocketError.Success)
                 {
-                    ((SoundClient) e.UserToken).Socket.Disconnect(false);
-                    RemoveClient((SoundClient) e.UserToken);
+                    //((SoundClient) e.UserToken).Socket.Disconnect(false);
+                    //RemoveClient((SoundClient) e.UserToken);
+                    if (e.UserToken is SoundClient client && client.Socket != null)
+                    {
+                        client.Socket.Disconnect(false);
+                        RemoveClient((SoundClient)e.UserToken);
+                    }
+                    else
+                    {
+                        // Handle the null situation
+                        Debug.WriteLine("UserToken or Socket is null");
+                    }
+
                 }
                 else
                 {
                     if (m_regClient == null || !m_regClient.Connected)
                     {
-                        ((SoundClient) e.UserToken).Socket.Disconnect(false);
-                        RemoveClient((SoundClient) e.UserToken);
+                        //((SoundClient) e.UserToken).Socket.Disconnect(false);
+                        //RemoveClient((SoundClient) e.UserToken);
+                        if (e.UserToken is SoundClient client && client.Socket != null)
+                        {
+                            client.Socket.Disconnect(false);
+                            RemoveClient((SoundClient)e.UserToken);
+                        }
+                        else
+                        {
+                            // Handle the null situation
+                            Debug.WriteLine("UserToken or Socket is null");
+                        }
+
                     }
                     else
                     {
@@ -212,12 +235,49 @@ namespace Uplauncher
 
                         var id = long.Parse(idStr);
 
-                        m_mainClient = m_clients.First(x => x.ID == id);
+                        if (m_clients.Any() && id != 0)
+                        {
+                            m_mainClient = m_clients.FirstOrDefault(x => x.ID == id);
+
+                            if (m_mainClient == null)
+                            {
+                                // Handle the situation where no matching client was found
+                                Debug.WriteLine("No client found with the specified ID");
+                            }
+                        }
+                        else
+                        {
+                            // Handle the situation where m_clients is empty or id is 0
+                            Debug.WriteLine("m_clients is empty or id is 0");
+                        }
                     }
 
                     foreach (var soundClient in m_clients)
                     {
-                        soundClient.Socket.Send(e.Buffer, e.Offset, e.BytesTransferred, SocketFlags.None);
+                        if (soundClient.Socket.Connected)
+                        {
+                            try
+                            {
+                                soundClient.Socket.Send(e.Buffer, e.Offset, e.BytesTransferred, SocketFlags.None);
+                            }
+                            catch (SocketException ex)
+                            {
+                                if (ex.SocketErrorCode == SocketError.Shutdown || ex.SocketErrorCode == SocketError.ConnectionReset)
+                                {
+                                    // The socket has been shut down or reset
+                                    Debug.WriteLine("The socket has been shut down or reset. Exception message: " + ex.Message);
+                                }
+                                else
+                                {
+                                    // Other socket error, rethrow the exception
+                                    throw;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Socket is not connected.");
+                        }
                     }
 
                     if (!((Socket) e.UserToken).ReceiveAsync(e))

@@ -258,8 +258,9 @@ namespace Uplauncher
                         item.Kill();
                     }
                     File.Delete(Constants.LocalChecksumFile);
+                    Process.Start(Constants.PatchPath, "-restart");
                     CheckUpdates();
-                    Process.Start(Application.ExecutablePath);
+                    //Process.Start(Application.ExecutablePath);
                     foreach (Process item2 in from process in Process.GetProcesses()
                                               where process.ProcessName == "Uplauncher"
                                               select process)
@@ -271,6 +272,76 @@ namespace Uplauncher
         }
 
         #endregion
+
+        private DelegateCommand m_deleteGameFilesCommand;
+
+        public DelegateCommand DeleteGameFilesCommand => m_deleteGameFilesCommand ?? (m_deleteGameFilesCommand = new DelegateCommand(OnDeleteGameFiles, CanPlay));
+
+        private void OnDeleteGameFiles(object parameter)
+        {
+            if (CanRepairGame(parameter) && !IsUpdating)
+            {
+                var dialogResult = MessageBox.Show(@"Êtes-vous sur de vouloir supprimer le jeu ? Tous les fichiers seront supprimés.", "Supprimer le jeu", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    foreach (Process item in from process in Process.GetProcesses()
+                                             where process.ProcessName == "Dofus"
+                                             select process)
+                    {
+                        item.Kill();
+                    }
+
+                    string gameDirectoryPath = Constants.GameDirPath;
+                    string checksumFilePath = Constants.ChecksumFilePath;
+
+                    if (Directory.Exists(gameDirectoryPath))
+                    {
+                        var dirInfo = new DirectoryInfo(gameDirectoryPath);
+                        int totalFiles = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Count();
+                        int totalDirs = dirInfo.EnumerateDirectories("*", SearchOption.AllDirectories).Count();
+
+                        int currentFile = 0;
+
+                        foreach (var directory in dirInfo.EnumerateDirectories("*", SearchOption.AllDirectories))
+                        {
+                            Directory.Delete(directory.FullName, true);
+                            currentFile++;
+                            SetState($"Suppression du sous-dossier {directory.FullName} ({currentFile} sur {totalFiles + totalDirs})");
+                        }
+
+                        foreach (var file in dirInfo.EnumerateFiles("*", SearchOption.TopDirectoryOnly))
+                        {
+                            File.Delete(file.FullName);
+                            currentFile++;
+                            SetState($"Suppression du fichier {file.FullName} ({currentFile} sur {totalFiles + totalDirs})");
+                        }
+                        Directory.Delete(gameDirectoryPath);
+                        SetState($"Le dossier de jeu {gameDirectoryPath} a été supprimé.");
+                    }
+
+                    if (File.Exists(Constants.LocalChecksumFile))
+                    {
+                        File.Delete(Constants.LocalChecksumFile);
+                        SetState("Le jeu a été supprimé.");
+                    }
+
+                    var restartDialogResult = MessageBox.Show("Voulez-vous redémarrer l'uplauncher maintenant ?", "Redémarrer l'uplauncher", MessageBoxButtons.YesNo);
+                    if (restartDialogResult == DialogResult.Yes)
+                    {
+                        Process.Start(Constants.PatchPath, "-restart");
+                    }
+                }
+            }
+        }
+
+        //private DelegateCommand m_multiDofusCommand;
+
+        //public DelegateCommand MultiDofusCommand => m_multiDofusCommand ?? (m_multiDofusCommand = new DelegateCommand(OpenMultiDofus, CanPlay));
+
+        //private void OpenMultiDofus(object parameter)
+        //{
+        //    MyApplication.Main(Array.Empty<string>());
+        //}
 
         #region ChangeLanguageCommand
 
@@ -615,7 +686,7 @@ namespace Uplauncher
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ex; //HandleDownloadError(false, ex, Constants.UpdateSiteURL + Constants.RemotePatchFile);
             }
         }
 
@@ -833,8 +904,9 @@ namespace Uplauncher
             StreamWriter streamWriter = File.CreateText(Constants.Version);
             streamWriter.Write(currentversion);
             streamWriter.Close();
+            //Process.Start(Constants.PatchPath, "-restart");
             Process.Start(Application.StartupPath + Constants.PatchPath);
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
         private void UpdateProgressChange(object sender, DownloadProgressChangedEventArgs e)
         {

@@ -145,9 +145,6 @@
       <HintPath>..\..\packages\PropertyChanged.Fody.1.53.0\lib\netstandard10\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SharpRaven, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpRaven.2.2.0\lib\net45\SharpRaven.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -534,6 +531,50 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\Breadcrumb.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\BreadcrumbLevel.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\BreadcrumbType.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\DefaultHttpRequestBodyConverte.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ErrorLevel.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ExceptionData.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ExceptionFrame.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\FormHttpRequestBodyConverter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\HttpRequestBodyConverter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\IHttpRequestBodyConverter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\IJsonPacketFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ISentryRequest.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ISentryRequestFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\ISentryUserFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\JsonHttpRequestBodyConverter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\JsonPacket.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\JsonPacketFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\MultiPartFormHttpRequestBodyCo.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\RequestData.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\Requester.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryEvent.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryException.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryMessage.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryRequest.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryRequestFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryStacktrace.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryUser.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Data\SentryUserFactory.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging.Filters\CreditCardFilter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging.Filters\PhoneNumberFilter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging.Filters\SocialSecurityFilter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging\IFilter.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging\IScrubber.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Logging\LogScrubber.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Serialization\LowerInvariantStringEnumConver.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Utilities\CircularBuffer.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Utilities\GzipUtil.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Utilities\PacketBuilder.cs" />
+    <Compile Include="SharpRaven\SharpRaven.Utilities\SystemUtil.cs" />
+    <Compile Include="SharpRaven\SharpRaven\Configuration.cs" />
+    <Compile Include="SharpRaven\SharpRaven\Dsn.cs" />
+    <Compile Include="SharpRaven\SharpRaven\GitVersionInformation.cs" />
+    <Compile Include="SharpRaven\SharpRaven\IRavenClient.cs" />
+    <Compile Include="SharpRaven\SharpRaven\RavenClient.cs" />
     <Compile Include="SoundClient.cs" />
     <Compile Include="SoundProxy.cs" />
     <Compile Include="Sound\Game\GameClient.cs" />

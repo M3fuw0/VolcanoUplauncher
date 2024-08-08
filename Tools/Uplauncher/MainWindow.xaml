@@ -193,6 +193,12 @@
                                          Source="/REGLAGE.png" Stretch="Fill"
                                          Style="{StaticResource GlowingImage}" />
             </Button>
+            <Button Canvas.Left="16" Canvas.Top="515" Style="{StaticResource ImageButton}"
+                    Command="{Binding DeleteGameFilesCommand}">
+                <UI:OpaqueClickableImage Width="37" Height="69"
+                                         Source="/REGLAGE.png" Stretch="Fill"
+                                         Style="{StaticResource GlowingImage}" />
+            </Button>
         </Canvas>
     </Grid>
 </Window>

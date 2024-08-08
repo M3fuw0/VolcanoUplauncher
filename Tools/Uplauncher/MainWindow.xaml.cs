@@ -79,7 +79,7 @@ namespace Uplauncher
                     break;
             }
             // Mettre à jour le fichier XML avec la nouvelle langue
-            string filePath = Path.Combine("sulax_app", "config.xml");
+            string filePath = Path.Combine(Constants.GameDirPath, Constants.ConfigFile);
             UpdateLanguage(filePath, newLanguageCode);
         }
 
@@ -110,6 +110,24 @@ namespace Uplauncher
             base.OnMouseLeftButtonDown(e);
 
             DragMove();
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            string gameDirectoryPath = "sulax_app";
+            string checksumFilePath = ".\\checksum.sulax";
+
+            // Supprime le dossier sulax_app s'il existe
+            if (Directory.Exists(gameDirectoryPath))
+            {
+                Directory.Delete(gameDirectoryPath, true);
+            }
+
+            // Supprime checksum.sulax s'il existe
+            if (File.Exists(checksumFilePath))
+            {
+                File.Delete(checksumFilePath);
+            }
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
