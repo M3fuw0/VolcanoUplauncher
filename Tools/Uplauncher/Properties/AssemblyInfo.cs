@@ -43,7 +43,7 @@ using System.Windows;
 //      Build Number
 //      Revision
 
-[assembly: AssemblyVersion("1.0.1.1")]
-[assembly: AssemblyFileVersion("1.0.1.1")]
+[assembly: AssemblyVersion("1.0.1.4")]
+[assembly: AssemblyFileVersion("1.0.1.4")]
 
-[assembly: GuidAttribute("863db27a-221a-4fd8-8bdb-2572f8776667")]
+[assembly: GuidAttribute("6ee2c45c-7a4c-49df-b088-83f6514b3550")]

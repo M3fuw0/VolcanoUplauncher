@@ -158,22 +158,12 @@ namespace Uplauncher.Properties {
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        ///   Recherche une ressource localisée de type System.Drawing.Icon semblable à (Icône).
         /// </summary>
-        internal static System.Drawing.Bitmap famileons {
+        internal static System.Drawing.Icon pyrasis_m {
             get {
-                object obj = ResourceManager.GetObject("famileons", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap news {
-            get {
-                object obj = ResourceManager.GetObject("news", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("pyrasis_m", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

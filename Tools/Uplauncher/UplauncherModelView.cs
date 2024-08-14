@@ -75,6 +75,7 @@ namespace Uplauncher
                     { 
                         new MenuItem("Ouvrir", OnTrayClickShow),
                         new MenuItem("Lancer le Jeu", OnTrayClickGame),
+                        new MenuItem("Multi-Dofus", OnTrayClickMulti),
                         new MenuItem("Discord", OnTrayClickVote),
                         new MenuItem("Quitter", OnTrayClickExit)
                     })
@@ -377,14 +378,14 @@ namespace Uplauncher
             }
         }
 
-        //private DelegateCommand m_multiDofusCommand;
+        private DelegateCommand m_multiDofusCommand;
 
-        //public DelegateCommand MultiDofusCommand => m_multiDofusCommand ?? (m_multiDofusCommand = new DelegateCommand(OpenMultiDofus, CanPlay));
+        public DelegateCommand MultiDofusCommand => m_multiDofusCommand ?? (m_multiDofusCommand = new DelegateCommand(OpenMultiDofus, CanPlay));
 
-        //private void OpenMultiDofus(object parameter)
-        //{
-        //    MyApplication.Main(Array.Empty<string>());
-        //}
+        private void OpenMultiDofus(object parameter)
+        {
+            MultiCompte2.Program.Main();
+        }
 
         //#region ChangeLanguageCommand
 
@@ -443,6 +444,14 @@ namespace Uplauncher
             View.Show();
             if (CanPlay(eventArgs))
                 OnPlay(eventArgs);
+        }
+
+        private void OnTrayClickMulti(object sender, EventArgs eventArgs)
+        {
+            if (CanPlay(eventArgs))
+            {
+                OpenMultiDofus(0);
+            }
         }
 
         private void OnTrayClickShow(object sender, EventArgs eventArgs)
@@ -537,6 +546,7 @@ namespace Uplauncher
                     {
                         // If an exception occurs, don't do anything. The loop will move on to the next server.
 						SetState("Le serveur est indisponible.");
+                        _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
                     }
                 }
             }

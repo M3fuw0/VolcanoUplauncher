@@ -21,12 +21,12 @@ namespace Uplauncher
     public static class Constants
     {
         public const string SiteURL = "https://pyrasis.cc/";
-        public const string UpdateSiteURL = "https://update.karashi.cz/";
+        public const string UpdateSiteURL = "https://update.pyrasis.cc/";
         public const string SecondaryUpdateSiteURL = "https://support.pyrasis.cc/";
-        public static readonly Uri RSSNewsURL = new Uri("https://pyrasis.cc/rss/rss.xml");
-        public const string VoteURL = "https://discord.gg/nqZhMTDeBt";
-        public const string UplauncherURL = "https://update.karashi.cz/uplauncher/Uplauncher.exe";
-        public const string VersionURL = "https://update.karashi.cz/version/VERSION";
+        //public static readonly Uri RSSNewsURL = new Uri("https://update.pyrasis.cc/rss/rss.xml");
+        public const string VoteURL = "https://discord.gg/ZYSuGp3dxY";
+        public const string UplauncherURL = "https://update.pyrasis.cc/uplauncher/Uplauncher.exe";
+        public const string VersionURL = "https://update.pyrasis.cc/version/VERSION";
 
         public const string DofusExePath = "pyrasis_app\\Dofus.exe";
         public const string DofusRegExePath = "pyrasis_app\\reg\\Reg.exe";
@@ -43,7 +43,7 @@ namespace Uplauncher
         public const string ConfigFile = "config.xml";
         public const string ConfigPath = "pyrasis_app/config.xml";
 
-        public const string ClientId = "1271168054117797940";
+        public const string ClientId = "1271211381873705164";
         public const string GameDetails = "Joue à Pyrasis 2.51 Cheat";
         public const string WebsiteUrl = "Allez sur https://pyrasis.cc";
         public const string LargeImageKey = "large"; //large
@@ -51,7 +51,7 @@ namespace Uplauncher
         public const string LabelButton1 = "Site \ud83d\udc12";
         public const string UrlButton1 = "https://pyrasis.cc";
         public const string LabelButton2 = "Discord";
-        public const string UrlButton2 = "https://discord.gg/nqZhMTDeBt";
+        public const string UrlButton2 = "https://discord.gg/ZYSuGp3dxY";
 
         public const string ExeReplaceTempPath = "temp_upl.exe";
 

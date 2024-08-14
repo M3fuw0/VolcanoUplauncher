@@ -117,60 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Empty_Captcha" xml:space="preserve">
-    <value>Veuillez entrer le texte de l'image.</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Erreur</value>
-  </data>
-  <data name="Unknown_Vote_Error" xml:space="preserve">
-    <value>Le vote a échoué. Raison inconnue.</value>
-  </data>
-  <data name="Vote_Error" xml:space="preserve">
-    <value>Le vote n'a pas été pris en compte.</value>
-  </data>
-  <data name="Vote_OK" xml:space="preserve">
-    <value>Vote pris en compte.</value>
-  </data>
-  <data name="Dofus_Not_Found" xml:space="preserve">
-    <value>{0} : fichier introuvable</value>
-  </data>
-  <data name="Cannot_Start_Dofus" xml:space="preserve">
-    <value>Lancement du jeu impossible (raison inconnue)</value>
-  </data>
-  <data name="Download_File_Error" xml:space="preserve">
-    <value>Erreur lors du téléchargement de {0} : 
-{1}
-
-(Copié dans le presse-papier)</value>
-  </data>
-  <data name="Vote_Refused_Error" xml:space="preserve">
-    <value>Captcha incorrect ou vous avez déjà votez il y a moins de 3 heures. Vote refusé.</value>
-  </data>
-  <data name="Already_Voted" xml:space="preserve">
-    <value>Vous avez déjà votez il y a moins de 3h.
- Prochain vote dans {0} minutes</value>
-  </data>
-  <data name="Unreached_Server" xml:space="preserve">
-    <value>Serveur injoignable.</value>
-  </data>
-  <data name="Error_OnLoading" xml:space="preserve">
-    <value>Erreur au chargement de la page de vote : {0}</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="arial_rounded_font" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ARLRDBD.TTF;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UplauncherReplacer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\UplauncherReplacer\bin\Debug\UplauncherReplacer.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="dofus_icon_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pyrasis.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pyrasis_m" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\pyrasis_m.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Resources\pyrasis_m.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -29,12 +29,8 @@ namespace Uplauncher
 {
     public class SoundProxy
     {
-        private readonly Socket m_clientListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
-            ProtocolType.Tcp);
-
-        private readonly Socket m_regListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
-            ProtocolType.Tcp);
-
+        private readonly Socket m_clientListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private readonly Socket m_regListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private Socket m_regClient;
         private readonly List<SoundClient> m_clients = new List<SoundClient>();
         private SoundClient m_mainClient;

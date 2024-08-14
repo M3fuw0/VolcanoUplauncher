@@ -28,7 +28,7 @@ namespace Uplauncher
         private static DateTime _startTime;
         private DispatcherTimer _processCheckTimer;
         private static string _gameDetails = "Joue à Pyrasis 2.10";
-        private static string _websiteUrl = "Allez sur https://karashi.cz";
+        private static string _websiteUrl = "Allez sur https://pyrasis.cc";
 
         public MainWindow()
         {
@@ -71,7 +71,7 @@ namespace Uplauncher
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             ModelView.CheckUpdates();
-            UpdateGameDetails("Démarrage de l'uplauncher ...", "En attendant allez sur https://karashi.cz");
+            UpdateGameDetails("Démarrage de l'uplauncher ...", "En attendant allez sur https://pyrasis.cc");
         }
 
         private void OnClosing(object sender, CancelEventArgs e)

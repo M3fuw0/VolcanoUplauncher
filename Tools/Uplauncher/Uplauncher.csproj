@@ -58,7 +58,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>dofus-icon-48.ico</ApplicationIcon>
+    <ApplicationIcon>pyrasis.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -101,7 +101,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ArkalysKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-uptodate|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -126,6 +127,7 @@
       <HintPath>..\..\packages\Google.Protobuf.3.22.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+	<Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -248,6 +250,41 @@
     <Compile Include="Helpers\SingleLineConverter.cs" />
     <Compile Include="Helpers\UI\OpaqueClickableImage.cs" />
     <Compile Include="Helpers\UI\OutlinedTextBlock.cs" />
+    <Compile Include="Icon.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icon.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MultiCompte2\Composants\Api.cs" />
+    <Compile Include="MultiCompte2\Composants\Core.cs" />
+    <Compile Include="MultiCompte2\Composants\HotKey.cs" />
+    <Compile Include="MultiCompte2\Composants\Logger.cs" />
+    <Compile Include="MultiCompte2\Composants\Struct.cs" />
+    <Compile Include="MultiCompte2\Composants\Toggle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MultiCompte2\Configuration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiCompte2\Configuration.Designer.cs">
+      <DependentUpon>Configuration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiCompte2\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiCompte2\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiCompte2\Program.cs" />
+    <Compile Include="MultiCompte2\Sound\Client.cs" />
+    <Compile Include="MultiCompte2\Sound\GameClient.cs" />
+    <Compile Include="MultiCompte2\Sound\GameServer.cs" />
+    <Compile Include="MultiCompte2\Sound\ManagerSound.cs" />
+    <Compile Include="MultiCompte2\Sound\RegClient.cs" />
+    <Compile Include="MultiCompte2\Sound\RegServer.cs" />
+    <Compile Include="MultiCompte2\Sound\Server.cs" />
+    <Compile Include="MultiCompte2\Sound\SimpleClient.cs" />
+    <Compile Include="MultiCompte2\Sound\SimpleServer.cs" />
     <Compile Include="Newtonsoft.Json\Microsoft.CodeAnalysis\EmbeddedAttribute.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonArray.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonBinary.cs" />
@@ -627,6 +664,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Icon.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Icon.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiCompte2\Configuration.resx">
+      <DependentUpon>Configuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiCompte2\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -634,56 +681,16 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="ArkalysKey.snk" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Resources\icon.icns" />
-    <None Include="Resources\servers\server.psd" />
-    <None Include="Resources\servers\server_description.psd" />
     <Resource Include="Resources\ARLRDBD.TTF" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\famileons.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\news.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="dofus-icon-48.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\background.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\close.png" />
-    <Resource Include="Resources\dofus-icon-48.ico" />
-    <Resource Include="Resources\play_button.png" />
-    <Resource Include="Resources\progressbar.png" />
-    <Resource Include="Resources\status_background.png" />
-    <Resource Include="Resources\vote_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\language_button.png" />
-    <Resource Include="Resources\site_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\news_background.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\news_icon_1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\rss.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\UplauncherReplacer.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\repair_button.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -711,53 +718,27 @@
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\artworks\epsilon.png" />
-    <Resource Include="Resources\artworks\sigma.png" />
-    <Resource Include="Resources\controls\close.png" />
-    <Resource Include="Resources\controls\close_hover.png" />
-    <Resource Include="Resources\controls\minimize.png" />
-    <Resource Include="Resources\controls\minimize_hover.png" />
-    <Resource Include="Resources\icon.ico" />
-    <Resource Include="Resources\links\changelog.png" />
-    <Resource Include="Resources\links\changelog_hover.png" />
-    <Resource Include="Resources\links\forum.png" />
-    <Resource Include="Resources\links\forum_hover.png" />
-    <Resource Include="Resources\links\shop.png" />
-    <Resource Include="Resources\links\shop_hover.png" />
-    <Resource Include="Resources\links\support.png" />
-    <Resource Include="Resources\links\support_hover.png" />
-    <Resource Include="Resources\news\big\news1.png" />
-    <Resource Include="Resources\news\big\panel.png" />
-    <Resource Include="Resources\news\big\panel_hover.png" />
-    <Resource Include="Resources\news\standard\news2.png" />
-    <Resource Include="Resources\news\standard\news3.png" />
-    <Resource Include="Resources\news\standard\panel.png" />
-    <Resource Include="Resources\news\standard\panel_hover.png" />
-    <Resource Include="Resources\ressources\background.png" />
-    <Resource Include="Resources\servers\console.png" />
-    <Resource Include="Resources\servers\epsilon.png" />
-    <Resource Include="Resources\servers\epsilon_description.png" />
-    <Resource Include="Resources\servers\home.png" />
-    <Resource Include="Resources\servers\online.png" />
-    <Resource Include="Resources\servers\server_hover.png" />
-    <Resource Include="Resources\servers\server_selected.png" />
-    <Resource Include="Resources\servers\sigma.png" />
-    <Resource Include="Resources\servers\sigma_description.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="REPARER.png" />
-    <Resource Include="JOUER.png" />
     <Resource Include="DiscordRPC\Resources\link.xml" />
-    <Resource Include="FOND.png" />
-    <Resource Include="REGLAGE.png" />
-    <Resource Include="SITE.png" />
-    <Resource Include="DISCORD.png" />
-    <Resource Include="FERMER.png" />
-    <Resource Include="Arrière-plan.png" />
-    <Resource Include="Resources\play_hover.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="debug\" />
+    <None Include="Resources\pyrasis.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pyrasis.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1.png" />
+    <Resource Include="Resources\3.png" />
+    <Resource Include="Resources\4.png" />
+    <Resource Include="Resources\5.png" />
+    <Resource Include="Resources\6.png" />
+    <Resource Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pyrasis_m.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pyrasis_m.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">
