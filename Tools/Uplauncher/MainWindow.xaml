@@ -105,7 +105,7 @@
             <ProgressBar Canvas.Left="340" Canvas.Top="333" Width="460" Height="26" Value="{Binding DownloadProgress}" Maximum="100" Minimum="0" Background="Black" Foreground="White" >
                 <ProgressBar.Template>
                     <ControlTemplate TargetType="ProgressBar">
-                        <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black">
+                        <Border BorderThickness="1" CornerRadius="10" BorderBrush="#665527">
                             <Border.Background>
                                 <SolidColorBrush Color="#77306c"/>
                             </Border.Background>
@@ -116,8 +116,8 @@
                                     </Border.Clip>
                                     <Border.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FEB713" Offset="1"/>
-                                            <GradientStop Color="#FEB713"/>
+                                            <GradientStop Color="#fc93e5" Offset="1"/>
+                                            <GradientStop Color="#fc93e5"/>
                                         </LinearGradientBrush>
                                     </Border.Background>
                                 </Border>
@@ -131,12 +131,8 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
             <Grid Canvas.Left="340" Canvas.Top="370" Width="460" Height="20" Background="Black">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35*"/>
-                    <ColumnDefinition Width="24*"/>
-                    <ColumnDefinition Width="306*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="78*"/>
-                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="219*"/>
+                    <ColumnDefinition Width="8*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding StateMessage}" Foreground="Black" FontWeight="DemiBold" Margin="5,0,5,0"
                    TextAlignment="Center" VerticalAlignment="Center" Style="{StaticResource Arial-Rounded}"
@@ -151,6 +147,12 @@
                     Command="{Binding CloseCommand}">
                 <UI:OpaqueClickableImage Width="45" Height="45" Source="/Resources/4.png" Stretch="Fill" Style="{StaticResource GlowingImage}" HorizontalAlignment="Left" Canvas.Left="1005" Canvas.Top="3" VerticalAlignment="Top"/>
             </Button>
+	        <!--<Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent"  Canvas.Left="1" Canvas.Top="207" Style="{StaticResource ImageButton}" 
+                    Command="{Binding PlayCommand}" Width="175" Height="175">
+                <UI:OpaqueClickableImage Stretch="Fill" Style="{StaticResource GlowingImage}" Margin="0,0,0,0">
+                    <UI:OpaqueClickableImage.Source>pack://application:,,,//Resources/1.png</UI:OpaqueClickableImage.Source>
+                </UI:OpaqueClickableImage>
+            </Button>-->
             <Button Canvas.Left="1" Canvas.Top="207" Style="{StaticResource ImageButton}"
                     Command="{Binding PlayCommand}">
                 <UI:OpaqueClickableImage Width="175" Height="175" Source="/Resources/1.png" Stretch="Fill" Style="{StaticResource GlowingImage}" HorizontalAlignment="Left" Canvas.Left="1" Canvas.Top="247" VerticalAlignment="Top"/>

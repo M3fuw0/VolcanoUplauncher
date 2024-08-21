@@ -50,7 +50,7 @@ namespace Uplauncher
         public const string SmallImageKey = "small"; //small
         public const string LabelButton1 = "Site \ud83d\udc12";
         public const string UrlButton1 = "https://pyrasis.cc";
-        public const string LabelButton2 = "Discord";
+        public const string LabelButton2 = "Discord ";
         public const string UrlButton2 = "https://discord.gg/ZYSuGp3dxY";
 
         public const string ExeReplaceTempPath = "temp_upl.exe";
