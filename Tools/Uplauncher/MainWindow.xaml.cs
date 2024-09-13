@@ -30,7 +30,7 @@ namespace Uplauncher
         private static string _gameDetails = "Joue à Pyrasis 2.51";
         private static string _websiteUrl = "Allez sur https://pyrasis.cc";
         //private Mutex mutex;
-        //private const string MutexId = "Global\\KarashiUplauncherMultiDofus";
+        //private const string MutexId = "Global\\PyrasisUplauncherMultiDofus";
 
         public MainWindow()
         {

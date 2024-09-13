@@ -22,6 +22,7 @@ namespace Uplauncher
     {
         public const string SiteURL = "https://pyrasis.cc/";
         public const string UpdateSiteURL = "https://update.pyrasis.cc/";
+        //public const string UpdateSiteURL = "https://support.pyrasis.cc/";
         public const string SecondaryUpdateSiteURL = "https://support.pyrasis.cc/";
         //public static readonly Uri RSSNewsURL = new Uri("https://update.pyrasis.cc/rss/rss.xml");
         public const string VoteURL = "https://pyrasis.cc/vote";

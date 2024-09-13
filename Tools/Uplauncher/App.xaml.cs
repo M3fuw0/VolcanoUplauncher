@@ -42,7 +42,7 @@ namespace Uplauncher
             SupprimerFichiersEtDossier();
             // Essayer de prendre possession du Mutex
 
-            //singleInstanceMutex = new Mutex(true, "KarashiUplauncher", out isOnlyInstance);
+            //singleInstanceMutex = new Mutex(true, "PyrasisUplauncher", out isOnlyInstance);
 
             // Vérifier si cette instance est la seule en cours d'exécution
             //if (!isOnlyInstance)

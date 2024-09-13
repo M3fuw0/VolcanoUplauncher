@@ -788,7 +788,7 @@ namespace Uplauncher
                 {
                     File.WriteAllText(Constants.LocalChecksumFile, LocalChecksum);
                     SetState("Le jeu est à jour.", Colors.Green);
-                    _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Karashi !"); // Mise à jour des détails
+                    _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !"); // Mise à jour des détails
                     IsUpdating = false;
                     IsUpToDate = true;
 
@@ -948,7 +948,7 @@ namespace Uplauncher
                 IsLanguageComboBoxEnabled = true;
                 IsStatusTextBoxVisible = true;
             }));
-            //_mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Karashi !");
+            //_mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !");
         }
 
         private void HandleDownloadError(bool cancelled, Exception ex, string url)

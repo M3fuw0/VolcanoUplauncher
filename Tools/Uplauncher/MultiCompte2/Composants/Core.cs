@@ -154,11 +154,11 @@ namespace Uplauncher.MultiCompte2.Composants
 					{
 						if (Operators.ConditionalCompareObjectEqual(param("path"), "", TextCompare: false))
 						{
-                        	DialogResult defaultPathResult = MessageBox.Show("Voulez-vous utiliser le chemin par défaut pour Karashi ?", "Chemin par défaut", MessageBoxButtons.YesNo);
+                        	DialogResult defaultPathResult = MessageBox.Show("Voulez-vous utiliser le chemin par défaut pour Pyrasis ?", "Chemin par défaut", MessageBoxButtons.YesNo);
 
                         	if (defaultPathResult == DialogResult.Yes)
                         	{
-                            	string defaultPath = @"C:\Program Files(x86)\Karashi\karashi_app";
+                            	string defaultPath = @"C:\Program Files(x86)\Pyrasis\pyrasis_app";
                             	if (File.Exists(defaultPath + @"\Dofus.exe"))
                             	{
                                 	reset();
@@ -166,7 +166,7 @@ namespace Uplauncher.MultiCompte2.Composants
                             	}
                             	else
                             	{
-                                	MessageBox.Show("Dofus.exe n'est pas trouvé dans le chemin par défaut de Karashi.");
+                                	MessageBox.Show("Dofus.exe n'est pas trouvé dans le chemin par défaut de Pyrasis.");
                                 	// Vous pouvez éventuellement demander à l'utilisateur de choisir un autre chemin ici.
                             	}
                         	}
@@ -344,11 +344,11 @@ namespace Uplauncher.MultiCompte2.Composants
                     {
                         if (Operators.ConditionalCompareObjectEqual(param("path"), "", TextCompare: false))
                         {
-                            DialogResult defaultPathResult = MessageBox.Show("Voulez-vous utiliser le chemin par défaut pour Karashi ?", "Chemin par défaut", MessageBoxButtons.YesNo);
+                            DialogResult defaultPathResult = MessageBox.Show("Voulez-vous utiliser le chemin par défaut pour Pyrasis ?", "Chemin par défaut", MessageBoxButtons.YesNo);
 
                             if (defaultPathResult == DialogResult.Yes)
                             {
-                                string defaultPath = @"C:\Program Files(x86)\Karashi\karashi_app";
+                                string defaultPath = @"C:\Program Files(x86)\Pyrasis\pyrasis_app";
                                 if (File.Exists(defaultPath + @"\Dofus.exe"))
                                 {
                                     reset();
@@ -356,7 +356,7 @@ namespace Uplauncher.MultiCompte2.Composants
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Dofus.exe n'est pas trouvé dans le chemin par défaut de Karashi.");
+                                    MessageBox.Show("Dofus.exe n'est pas trouvé dans le chemin par défaut de Pyrasis.");
                                     // Vous pouvez éventuellement demander à l'utilisateur de choisir un autre chemin ici.
                                 }
                             }
