@@ -16,27 +16,15 @@ namespace Newtonsoft.Json.Converters
 
 		public string Encoding
 		{
-			get
-			{
-				return Declaration.Encoding;
-			}
-			set
-			{
-				Declaration.Encoding = value;
-			}
-		}
+			get => Declaration.Encoding;
+            set => Declaration.Encoding = value;
+        }
 
 		public string Standalone
 		{
-			get
-			{
-				return Declaration.Standalone;
-			}
-			set
-			{
-				Declaration.Standalone = value;
-			}
-		}
+			get => Declaration.Standalone;
+            set => Declaration.Standalone = value;
+        }
 
 		public XDeclarationWrapper(XDeclaration declaration)
 			: base(null)

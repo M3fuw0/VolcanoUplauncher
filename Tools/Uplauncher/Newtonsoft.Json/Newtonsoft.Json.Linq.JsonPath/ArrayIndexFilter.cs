@@ -16,7 +16,7 @@ namespace Newtonsoft.Json.Linq.JsonPath
 			{
 				if (Index.HasValue)
 				{
-					JToken tokenIndex = PathFilter.GetTokenIndex(item, errorWhenNoMatch, Index.GetValueOrDefault());
+					JToken tokenIndex = GetTokenIndex(item, errorWhenNoMatch, Index.GetValueOrDefault());
 					if (tokenIndex != null)
 					{
 						yield return tokenIndex;

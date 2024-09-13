@@ -11,7 +11,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public Exception Error { get; }
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public object OriginalObject
 		{
@@ -19,7 +19,7 @@ namespace Newtonsoft.Json.Serialization
 			get;
 		}
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public object Member
 		{
@@ -31,7 +31,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public bool Handled { get; set; }
 
-		internal ErrorContext(/*[Nullable(2)]*/ object originalObject, /*[Nullable(2)]*/ object member, string path, Exception error)
+		internal ErrorContext( object originalObject,  object member, string path, Exception error)
 		{
 			OriginalObject = originalObject;
 			Member = member;

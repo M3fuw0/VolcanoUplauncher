@@ -18,7 +18,7 @@ namespace Newtonsoft.Json.Utilities
 
 		private readonly TextWriter _writer;
 
-		/*[Nullable(2)]*/
+		
 		private byte[] _leftOverBytes;
 
 		private int _leftOverBytesCount;

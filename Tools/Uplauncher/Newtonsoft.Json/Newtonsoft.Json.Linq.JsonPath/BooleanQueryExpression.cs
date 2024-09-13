@@ -15,17 +15,17 @@ namespace Newtonsoft.Json.Linq.JsonPath
 	{
 		public readonly object Left;
 
-		/*[Nullable(2)]*/
+		
 		public readonly object Right;
 
-		public BooleanQueryExpression(QueryOperator @operator, object left, /*[Nullable(2)]*/ object right)
+		public BooleanQueryExpression(QueryOperator @operator, object left,  object right)
 			: base(@operator)
 		{
 			Left = left;
 			Right = right;
 		}
 
-		private IEnumerable<JToken> GetResult(JToken root, JToken t, /*[Nullable(2)]*/ object o)
+		private IEnumerable<JToken> GetResult(JToken root, JToken t,  object o)
 		{
 			if (o is JToken jToken)
 			{

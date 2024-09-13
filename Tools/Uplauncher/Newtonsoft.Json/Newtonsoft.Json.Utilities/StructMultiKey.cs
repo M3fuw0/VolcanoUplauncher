@@ -5,7 +5,7 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal readonly struct StructMultiKey</*[Nullable(2)]*/ T1, /*[Nullable(2)]*/ T2> : IEquatable<StructMultiKey<T1, T2>>
+	internal readonly struct StructMultiKey< T1,  T2> : IEquatable<StructMultiKey<T1, T2>>
 	{
 		public readonly T1 Value1;
 
@@ -33,9 +33,9 @@ namespace Newtonsoft.Json.Utilities
 
 		public bool Equals(/*[Nullable(new byte[] { 0, 1, 1 })]*/ StructMultiKey<T1, T2> other)
 		{
-			if (object.Equals(Value1, other.Value1))
+			if (Equals(Value1, other.Value1))
 			{
-				return object.Equals(Value2, other.Value2);
+				return Equals(Value2, other.Value2);
 			}
 			return false;
 		}

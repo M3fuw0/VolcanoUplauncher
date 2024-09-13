@@ -11,7 +11,7 @@ namespace Newtonsoft.Json.Utilities
 	internal abstract class ReflectionDelegateFactory
 	{
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public Func<T, object> CreateGet</*[Nullable(2)]*/ T>(MemberInfo memberInfo)
+		public Func<T, object> CreateGet< T>(MemberInfo memberInfo)
 		{
 			if (memberInfo is PropertyInfo propertyInfo)
 			{
@@ -29,7 +29,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public Action<T, object> CreateSet</*[Nullable(2)]*/ T>(MemberInfo memberInfo)
+		public Action<T, object> CreateSet< T>(MemberInfo memberInfo)
 		{
 			if (memberInfo is PropertyInfo propertyInfo)
 			{
@@ -43,22 +43,22 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public abstract MethodCall<T, object> CreateMethodCall</*[Nullable(2)]*/ T>(MethodBase method);
+		public abstract MethodCall<T, object> CreateMethodCall< T>(MethodBase method);
 
 		public abstract ObjectConstructor<object> CreateParameterizedConstructor(MethodBase method);
 
-		public abstract Func<T> CreateDefaultConstructor</*[Nullable(2)]*/ T>(Type type);
+		public abstract Func<T> CreateDefaultConstructor< T>(Type type);
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public abstract Func<T, object> CreateGet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo);
+		public abstract Func<T, object> CreateGet< T>(PropertyInfo propertyInfo);
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public abstract Func<T, object> CreateGet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo);
+		public abstract Func<T, object> CreateGet< T>(FieldInfo fieldInfo);
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public abstract Action<T, object> CreateSet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo);
+		public abstract Action<T, object> CreateSet< T>(FieldInfo fieldInfo);
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public abstract Action<T, object> CreateSet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo);
+		public abstract Action<T, object> CreateSet< T>(PropertyInfo propertyInfo);
 	}
 }

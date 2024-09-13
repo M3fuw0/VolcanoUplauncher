@@ -9,7 +9,7 @@ namespace Newtonsoft.Json
 	/*[Nullable(0)]*/
 	public class JsonWriterException : JsonException
 	{
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public string Path
 		{
@@ -36,18 +36,18 @@ namespace Newtonsoft.Json
 		{
 		}
 
-		public JsonWriterException(string message, string path, /*[Nullable(2)]*/ Exception innerException)
+		public JsonWriterException(string message, string path,  Exception innerException)
 			: base(message, innerException)
 		{
 			Path = path;
 		}
 
-		internal static JsonWriterException Create(JsonWriter writer, string message, /*[Nullable(2)]*/ Exception ex)
+		internal static JsonWriterException Create(JsonWriter writer, string message,  Exception ex)
 		{
 			return Create(writer.ContainerPath, message, ex);
 		}
 
-		internal static JsonWriterException Create(string path, string message, /*[Nullable(2)]*/ Exception ex)
+		internal static JsonWriterException Create(string path, string message,  Exception ex)
 		{
 			message = JsonPosition.FormatMessage(null, path, message);
 			return new JsonWriterException(message, path, ex);

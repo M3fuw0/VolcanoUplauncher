@@ -37,22 +37,22 @@ namespace Newtonsoft.Json
 
 		internal MetadataPropertyHandling _metadataPropertyHandling;
 
-		/*[Nullable(2)]*/
+		
 		internal JsonConverterCollection _converters;
 
 		internal IContractResolver _contractResolver;
 
-		/*[Nullable(2)]*/
+		
 		internal ITraceWriter _traceWriter;
 
-		/*[Nullable(2)]*/
+		
 		internal IEqualityComparer _equalityComparer;
 
 		internal ISerializationBinder _serializationBinder;
 
 		internal StreamingContext _context;
 
-		/*[Nullable(2)]*/
+		
 		private IReferenceResolver _referenceResolver;
 
 		private Formatting? _formatting;
@@ -77,12 +77,12 @@ namespace Newtonsoft.Json
 
 		private bool? _checkAdditionalContent;
 
-		/*[Nullable(2)]*/
+		
 		private string _dateFormatString;
 
 		private bool _dateFormatStringSet;
 
-		/*[Nullable(2)]*/
+		
 		public virtual IReferenceResolver ReferenceResolver
 		{
 			/*[NullableContext(2)]*/
@@ -142,7 +142,7 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public virtual ITraceWriter TraceWriter
 		{
 			/*[NullableContext(2)]*/
@@ -157,7 +157,7 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public virtual IEqualityComparer EqualityComparer
 		{
 			/*[NullableContext(2)]*/
@@ -526,7 +526,7 @@ namespace Newtonsoft.Json
 		/*[Nullable(new byte[] { 2, 1 })]*/
 		/*[method: Nullable(new byte[] { 2, 1 })]*/
 		/*[Nullable(new byte[] { 2, 1 })]*/
-		public virtual event EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs> Error;
+		public virtual event EventHandler<Serialization.ErrorEventArgs> Error;
 
 		internal bool IsCheckAdditionalContentSet()
 		{
@@ -555,7 +555,7 @@ namespace Newtonsoft.Json
 			return new JsonSerializer();
 		}
 
-		public static JsonSerializer Create(/*[Nullable(2)]*/ JsonSerializerSettings settings)
+		public static JsonSerializer Create( JsonSerializerSettings settings)
 		{
 			JsonSerializer jsonSerializer = Create();
 			if (settings != null)
@@ -570,7 +570,7 @@ namespace Newtonsoft.Json
 			return Create(JsonConvert.DefaultSettings?.Invoke());
 		}
 
-		public static JsonSerializer CreateDefault(/*[Nullable(2)]*/ JsonSerializerSettings settings)
+		public static JsonSerializer CreateDefault( JsonSerializerSettings settings)
 		{
 			JsonSerializer jsonSerializer = CreateDefault();
 			if (settings != null)
@@ -745,9 +745,8 @@ namespace Newtonsoft.Json
 			return Deserialize(new JsonTextReader(reader), objectType);
 		}
 
-		[DebuggerStepThrough]
-		[return: MaybeNull]
-		public T Deserialize</*[Nullable(2)]*/ T>(JsonReader reader)
+		
+		public T Deserialize< T>(JsonReader reader)
 		{
 			return (T)Deserialize(reader, typeof(T));
 		}
@@ -870,7 +869,7 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		public void Serialize(TextWriter textWriter, /*[Nullable(2)]*/ object value)
+		public void Serialize(TextWriter textWriter,  object value)
 		{
 			Serialize(new JsonTextWriter(textWriter), value);
 		}
@@ -881,12 +880,12 @@ namespace Newtonsoft.Json
 			SerializeInternal(jsonWriter, value, objectType);
 		}
 
-		public void Serialize(TextWriter textWriter, /*[Nullable(2)]*/ object value, Type objectType)
+		public void Serialize(TextWriter textWriter,  object value, Type objectType)
 		{
 			Serialize(new JsonTextWriter(textWriter), value, objectType);
 		}
 
-		public void Serialize(JsonWriter jsonWriter, /*[Nullable(2)]*/ object value)
+		public void Serialize(JsonWriter jsonWriter,  object value)
 		{
 			SerializeInternal(jsonWriter, value, null);
 		}
@@ -1015,9 +1014,9 @@ namespace Newtonsoft.Json
 			return null;
 		}
 
-		internal void OnError(Newtonsoft.Json.Serialization.ErrorEventArgs e)
+		internal void OnError(Serialization.ErrorEventArgs e)
 		{
-			this.Error?.Invoke(this, e);
+			Error?.Invoke(this, e);
 		}
 	}
 }

@@ -18,7 +18,7 @@ namespace Newtonsoft.Json.Serialization
 			_memberInfo = memberInfo;
 		}
 
-		public void SetValue(object target, /*[Nullable(2)]*/ object value)
+		public void SetValue(object target,  object value)
 		{
 			try
 			{

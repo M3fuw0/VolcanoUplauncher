@@ -24,7 +24,7 @@ namespace Newtonsoft.Json.Serialization
 			_lock = new object();
 		}
 
-		public void Trace(TraceLevel level, string message, /*[Nullable(2)]*/ Exception ex)
+		public void Trace(TraceLevel level, string message,  Exception ex)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.Append(DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff", CultureInfo.InvariantCulture));

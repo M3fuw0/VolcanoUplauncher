@@ -33,22 +33,22 @@ namespace Newtonsoft.Json.Utilities
 		public const char Tab = '\t';
 
 		/*[NullableContext(2)]*/
-		public static bool IsNullOrEmpty([NotNullWhen(false)] string value)
+		public static bool IsNullOrEmpty(string value)
 		{
 			return string.IsNullOrEmpty(value);
 		}
 
-		public static string FormatWith(this string format, IFormatProvider provider, /*[Nullable(2)]*/ object arg0)
+		public static string FormatWith(this string format, IFormatProvider provider,  object arg0)
 		{
 			return format.FormatWith(provider, new object[1] { arg0 });
 		}
 
-		public static string FormatWith(this string format, IFormatProvider provider, /*[Nullable(2)]*/ object arg0, /*[Nullable(2)]*/ object arg1)
+		public static string FormatWith(this string format, IFormatProvider provider,  object arg0,  object arg1)
 		{
 			return format.FormatWith(provider, new object[2] { arg0, arg1 });
 		}
 
-		public static string FormatWith(this string format, IFormatProvider provider, /*[Nullable(2)]*/ object arg0, /*[Nullable(2)]*/ object arg1, /*[Nullable(2)]*/ object arg2)
+		public static string FormatWith(this string format, IFormatProvider provider,  object arg0,  object arg1,  object arg2)
 		{
 			return format.FormatWith(provider, new object[3] { arg0, arg1, arg2 });
 		}
@@ -101,7 +101,7 @@ namespace Newtonsoft.Json.Utilities
 			buffer[5] = MathUtils.IntToHex(c & 0xF);
 		}
 
-		public static TSource ForgivingCaseSensitiveFind</*[Nullable(2)]*/ TSource>(this IEnumerable<TSource> source, Func<TSource, string> valueSelector, string testValue)
+		public static TSource ForgivingCaseSensitiveFind< TSource>(this IEnumerable<TSource> source, Func<TSource, string> valueSelector, string testValue)
 		{
 			if (source == null)
 			{

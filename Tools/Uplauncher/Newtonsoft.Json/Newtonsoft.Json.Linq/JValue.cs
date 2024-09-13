@@ -19,7 +19,7 @@ namespace Newtonsoft.Json.Linq
 		/*[Nullable(new byte[] { 0, 1 })]*/
 		private class JValueDynamicProxy : DynamicProxy<JValue>
 		{
-			public override bool TryConvert(JValue instance, ConvertBinder binder, /*[Nullable(2)]*/[NotNullWhen(true)] out object result)
+			public override bool TryConvert(JValue instance, ConvertBinder binder, out object result)
 			{
 				if (binder.Type == typeof(JValue) || binder.Type == typeof(JToken))
 				{
@@ -36,7 +36,7 @@ namespace Newtonsoft.Json.Linq
 				return true;
 			}
 
-			public override bool TryBinaryOperation(JValue instance, BinaryOperationBinder binder, object arg, /*[Nullable(2)]*/[NotNullWhen(true)] out object result)
+			public override bool TryBinaryOperation(JValue instance, BinaryOperationBinder binder, object arg, out object result)
 			{
 				object objB = ((arg is JValue jValue) ? jValue.Value : arg);
 				switch (binder.Operation)
@@ -81,14 +81,14 @@ namespace Newtonsoft.Json.Linq
 
 		private JTokenType _valueType;
 
-		/*[Nullable(2)]*/
+		
 		private object _value;
 
 		public override bool HasValues => false;
 
 		public override JTokenType Type => _valueType;
 
-		/*[Nullable(2)]*/
+		
 		public new object Value
 		{
 			/*[NullableContext(2)]*/
@@ -562,12 +562,12 @@ namespace Newtonsoft.Json.Linq
 			return new JValue(this);
 		}
 
-		public static JValue CreateComment(/*[Nullable(2)]*/ string value)
+		public static JValue CreateComment( string value)
 		{
 			return new JValue(value, JTokenType.Comment);
 		}
 
-		public static JValue CreateString(/*[Nullable(2)]*/ string value)
+		public static JValue CreateString( string value)
 		{
 			return new JValue(value, JTokenType.String);
 		}
@@ -776,7 +776,7 @@ namespace Newtonsoft.Json.Linq
 			return true;
 		}
 
-		public bool Equals([AllowNull] JValue other)
+		public bool Equals(JValue other)
 		{
 			if (other == null)
 			{
@@ -822,7 +822,7 @@ namespace Newtonsoft.Json.Linq
 			return ToString(null, formatProvider);
 		}
 
-		public string ToString(/*[Nullable(2)]*/ string format, IFormatProvider formatProvider)
+		public string ToString( string format, IFormatProvider formatProvider)
 		{
 			if (_value == null)
 			{

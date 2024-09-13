@@ -50,7 +50,7 @@ namespace Newtonsoft.Json.Serialization
 			{
 				if (_creatorParameters == null)
 				{
-					_creatorParameters = new JsonPropertyCollection(base.UnderlyingType);
+					_creatorParameters = new JsonPropertyCollection(UnderlyingType);
 				}
 				return _creatorParameters;
 			}
@@ -145,7 +145,7 @@ namespace Newtonsoft.Json.Serialization
 			: base(underlyingType)
 		{
 			ContractType = JsonContractType.Object;
-			Properties = new JsonPropertyCollection(base.UnderlyingType);
+			Properties = new JsonPropertyCollection(UnderlyingType);
 		}
 
 		/*[NullableContext(1)]*/

@@ -23,7 +23,7 @@ namespace Newtonsoft.Json
 
 		private readonly TextReader _reader;
 
-		/*[Nullable(2)]*/
+		
 		private char[] _chars;
 
 		private int _charsUsed;
@@ -40,10 +40,10 @@ namespace Newtonsoft.Json
 
 		private StringReference _stringReference;
 
-		/*[Nullable(2)]*/
+		
 		private IArrayPool<char> _arrayPool;
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public JsonNameTable PropertyNameTable
 		{
@@ -53,7 +53,7 @@ namespace Newtonsoft.Json
 			set;
 		}
 
-		/*[Nullable(2)]*/
+		
 		public IArrayPool<char> ArrayPool
 		{
 			/*[NullableContext(2)]*/
@@ -76,7 +76,7 @@ namespace Newtonsoft.Json
 		{
 			get
 			{
-				if (base.CurrentState == State.Start && LinePosition == 0 && TokenType != JsonToken.Comment)
+				if (CurrentState == State.Start && LinePosition == 0 && TokenType != JsonToken.Comment)
 				{
 					return 0;
 				}
@@ -123,7 +123,7 @@ namespace Newtonsoft.Json
 				case State.Finished:
 					return ReadFromFinishedAsync(cancellationToken);
 				default:
-					throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+					throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 				}
 			}
 			while (!task.Result);
@@ -199,7 +199,7 @@ namespace Newtonsoft.Json
 					_charPos++;
 					continue;
 				}
-				if (base.SupportMultipleContent && Depth == 0)
+				if (SupportMultipleContent && Depth == 0)
 				{
 					SetStateBasedOnCurrent();
 					return false;
@@ -738,7 +738,7 @@ namespace Newtonsoft.Json
 			return IsSeparator(_chars[_charPos]) || _chars[_charPos] == '\0';
 		}
 
-		private async Task MatchAndSetAsync(string value, JsonToken newToken, /*[Nullable(2)]*/ object tokenValue, CancellationToken cancellationToken)
+		private async Task MatchAndSetAsync(string value, JsonToken newToken,  object tokenValue, CancellationToken cancellationToken)
 		{
 			if (await MatchValueWithTrailingSeparatorAsync(value, cancellationToken).ConfigureAwait(continueOnCapturedContext: false))
 			{
@@ -1117,7 +1117,7 @@ namespace Newtonsoft.Json
 				await ReadFinishedAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -1219,7 +1219,7 @@ namespace Newtonsoft.Json
 				await ReadFinishedAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -1334,7 +1334,7 @@ namespace Newtonsoft.Json
 				await ReadFinishedAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -1445,7 +1445,7 @@ namespace Newtonsoft.Json
 				await ReadFinishedAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -1637,13 +1637,13 @@ namespace Newtonsoft.Json
 				DateTimeOffset dt2;
 				if (dateParseHandling == DateParseHandling.DateTime)
 				{
-					if (DateTimeUtils.TryParseDateTime(_stringReference, base.DateTimeZoneHandling, base.DateFormatString, base.Culture, out var dt))
+					if (DateTimeUtils.TryParseDateTime(_stringReference, DateTimeZoneHandling, DateFormatString, Culture, out var dt))
 					{
 						SetToken(JsonToken.Date, dt, updateIndex: false);
 						return;
 					}
 				}
-				else if (DateTimeUtils.TryParseDateTimeOffset(_stringReference, base.DateFormatString, base.Culture, out dt2))
+				else if (DateTimeUtils.TryParseDateTimeOffset(_stringReference, DateFormatString, Culture, out dt2))
 				{
 					SetToken(JsonToken.Date, dt2, updateIndex: false);
 					return;
@@ -1806,7 +1806,7 @@ namespace Newtonsoft.Json
 					SetToken(JsonToken.None);
 					return false;
 				default:
-					throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+					throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 				}
 			}
 			while (!ParsePostValue(ignoreComments: false));
@@ -1926,7 +1926,7 @@ namespace Newtonsoft.Json
 				ReadFinished();
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -2049,7 +2049,7 @@ namespace Newtonsoft.Json
 				ReadFinished();
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -2186,7 +2186,7 @@ namespace Newtonsoft.Json
 				ReadFinished();
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -2301,7 +2301,7 @@ namespace Newtonsoft.Json
 				ReadFinished();
 				return null;
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, base.CurrentState));
+				throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
 			}
 		}
 
@@ -2707,7 +2707,7 @@ namespace Newtonsoft.Json
 					_charPos++;
 					continue;
 				}
-				if (base.SupportMultipleContent && Depth == 0)
+				if (SupportMultipleContent && Depth == 0)
 				{
 					SetStateBasedOnCurrent();
 					return false;
@@ -3303,7 +3303,7 @@ namespace Newtonsoft.Json
 			SetToken(newToken, value, updateIndex: false);
 		}
 
-		private JsonReaderException ThrowReaderError(string message, /*[Nullable(2)]*/ Exception ex = null)
+		private JsonReaderException ThrowReaderError(string message,  Exception ex = null)
 		{
 			SetToken(JsonToken.Undefined, null, updateIndex: false);
 			return JsonReaderException.Create(this, message, ex);
@@ -3462,7 +3462,7 @@ namespace Newtonsoft.Json
 				return true;
 			}
 			case ')':
-				if (base.CurrentState == State.Constructor || base.CurrentState == State.ConstructorStart)
+				if (CurrentState == State.Constructor || CurrentState == State.ConstructorStart)
 				{
 					return true;
 				}
@@ -3614,7 +3614,7 @@ namespace Newtonsoft.Json
 				BufferUtils.ReturnBuffer(_arrayPool, _chars);
 				_chars = null;
 			}
-			if (base.CloseInput)
+			if (CloseInput)
 			{
 				_reader?.Close();
 			}

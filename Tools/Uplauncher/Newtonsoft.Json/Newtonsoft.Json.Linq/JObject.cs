@@ -23,7 +23,7 @@ namespace Newtonsoft.Json.Linq
 		/*[Nullable(new byte[] { 0, 1 })]*/
 		private class JObjectDynamicProxy : DynamicProxy<JObject>
 		{
-			public override bool TryGetMember(JObject instance, GetMemberBinder binder, /*[Nullable(2)]*/ out object result)
+			public override bool TryGetMember(JObject instance, GetMemberBinder binder,  out object result)
 			{
 				result = instance[binder.Name];
 				return true;
@@ -53,7 +53,7 @@ namespace Newtonsoft.Json.Linq
 
 		public override JTokenType Type => JTokenType.Object;
 
-		/*[Nullable(2)]*/
+		
 		public override JToken this[object key]
 		{
 			/*[return: Nullable(2)]*/
@@ -78,7 +78,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public JToken this[string propertyName]
 		{
 			/*[return: Nullable(2)]*/
@@ -116,12 +116,12 @@ namespace Newtonsoft.Json.Linq
 
 		bool ICollection<KeyValuePair<string, JToken>>.IsReadOnly => false;
 
-		/*[Nullable(2)]*/
+		
 		/*[method: NullableContext(2)]*/
 		/*[field: Nullable(2)]*/
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		/*[Nullable(2)]*/
+		
 		/*[method: NullableContext(2)]*/
 		/*[field: Nullable(2)]*/
 		public event PropertyChangingEventHandler PropertyChanging;
@@ -159,7 +159,7 @@ namespace Newtonsoft.Json.Linq
 			return LoadAsync(reader, null, cancellationToken);
 		}
 
-		public new static async Task<JObject> LoadAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public new static async Task<JObject> LoadAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			if (reader.TokenType == JsonToken.None && !(await reader.ReadAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false)))
@@ -224,7 +224,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		internal override void ValidateToken(JToken o, /*[Nullable(2)]*/ JToken existing)
+		internal override void ValidateToken(JToken o,  JToken existing)
 		{
 			ValidationUtils.ArgumentNotNull(o, "o");
 			if (o.Type != JTokenType.Property)
@@ -246,7 +246,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		internal override void MergeItem(object content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		internal override void MergeItem(object content,  JsonMergeSettings settings)
 		{
 			if (!(content is JObject jObject))
 			{
@@ -364,7 +364,7 @@ namespace Newtonsoft.Json.Linq
 			return Load(reader, null);
 		}
 
-		public new static JObject Load(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JObject Load(JsonReader reader,  JsonLoadSettings settings)
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			if (reader.TokenType == JsonToken.None && !reader.Read())
@@ -387,7 +387,7 @@ namespace Newtonsoft.Json.Linq
 			return Parse(json, null);
 		}
 
-		public new static JObject Parse(string json, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JObject Parse(string json,  JsonLoadSettings settings)
 		{
 			using (JsonReader jsonReader = new JsonTextReader(new StringReader(json)))
 			{
@@ -406,7 +406,7 @@ namespace Newtonsoft.Json.Linq
 
 		public new static JObject FromObject(object o, JsonSerializer jsonSerializer)
 		{
-			JToken jToken = JToken.FromObjectInternal(o, jsonSerializer);
+			JToken jToken = FromObjectInternal(o, jsonSerializer);
 			if (jToken.Type != JTokenType.Object)
 			{
 				throw new ArgumentException("Object serialized to {0}. JObject instance expected.".FormatWith(CultureInfo.InvariantCulture, jToken.Type));
@@ -440,13 +440,13 @@ namespace Newtonsoft.Json.Linq
 			return Property(propertyName, comparison)?.Value;
 		}
 
-		public bool TryGetValue(string propertyName, StringComparison comparison, /*[Nullable(2)]*/[NotNullWhen(true)] out JToken value)
+		public bool TryGetValue(string propertyName, StringComparison comparison, out JToken value)
 		{
 			value = GetValue(propertyName, comparison);
 			return value != null;
 		}
 
-		public void Add(string propertyName, /*[Nullable(2)]*/ JToken value)
+		public void Add(string propertyName,  JToken value)
 		{
 			Add(new JProperty(propertyName, value));
 		}
@@ -468,7 +468,7 @@ namespace Newtonsoft.Json.Linq
 			return true;
 		}
 
-		public bool TryGetValue(string propertyName, /*[Nullable(2)]*/[NotNullWhen(true)] out JToken value)
+		public bool TryGetValue(string propertyName, out JToken value)
 		{
 			JProperty jProperty = Property(propertyName, StringComparison.Ordinal);
 			if (jProperty == null)
@@ -514,7 +514,7 @@ namespace Newtonsoft.Json.Linq
 			{
 				throw new ArgumentException("arrayIndex is equal to or greater than the length of array.");
 			}
-			if (base.Count > array.Length - arrayIndex)
+			if (Count > array.Length - arrayIndex)
 			{
 				throw new ArgumentException("The number of elements in the source JObject is greater than the available space from arrayIndex to the end of the destination array.");
 			}
@@ -552,12 +552,12 @@ namespace Newtonsoft.Json.Linq
 
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
-			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		protected virtual void OnPropertyChanging(string propertyName)
 		{
-			this.PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 		}
 
 		PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
@@ -567,7 +567,7 @@ namespace Newtonsoft.Json.Linq
 
 		PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[] attributes)
 		{
-			PropertyDescriptor[] array = new PropertyDescriptor[base.Count];
+			PropertyDescriptor[] array = new PropertyDescriptor[Count];
 			int num = 0;
 			using (IEnumerator<KeyValuePair<string, JToken>> enumerator = GetEnumerator())
 			{

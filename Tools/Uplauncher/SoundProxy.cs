@@ -29,8 +29,12 @@ namespace Uplauncher
 {
     public class SoundProxy
     {
-        private readonly Socket m_clientListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private readonly Socket m_regListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private readonly Socket m_clientListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
+            ProtocolType.Tcp);
+
+        private readonly Socket m_regListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
+            ProtocolType.Tcp);
+
         private Socket m_regClient;
         private readonly List<SoundClient> m_clients = new List<SoundClient>();
         private SoundClient m_mainClient;
@@ -55,7 +59,7 @@ namespace Uplauncher
             catch (SocketException)
             {
                 MessageBox.Show(
-                    $"Le port {ClientPort} est déjà utilisé. Impossible de lancer le proxy du son. Le son sera coupé.", 
+                    $"Le port {ClientPort} est déjà utilisé. Impossible de lancer le proxy du son. Le son sera coupé.",
                     Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -160,22 +164,23 @@ namespace Uplauncher
                     {
                         var message = Encoding.ASCII.GetString(e.Buffer, e.Offset, e.BytesTransferred);
 
-                        if (((SoundClient) e.UserToken).ID == 0 && message.Contains("sayHello"))
+                        if (((SoundClient)e.UserToken).ID == 0 && message.Contains("sayHello"))
                         {
                             // example: 1366402807812=>sayHello(1366402807812,C:\Users\Bouh2\Desktop\Dofus\Dofus 2.10\app/config.xml)|
                             var index = message.IndexOf("sayHello", StringComparison.Ordinal) + ("sayHello").Length;
                             var idStr = message.Substring(index + 1, message.IndexOf(",", index, StringComparison.Ordinal) - (index + 1));
 
-                            ((SoundClient) e.UserToken).ID = long.Parse(idStr);
+                            ((SoundClient)e.UserToken).ID = long.Parse(idStr);
                         }
 
                         Debug.WriteLine("CLIENT : " + message);
                         m_regClient.Send(e.Buffer, e.Offset, e.BytesTransferred, SocketFlags.None);
 
-                        if (!((SoundClient) e.UserToken).Socket.ReceiveAsync(e))
+                        if (!((SoundClient)e.UserToken).Socket.ReceiveAsync(e))
                             continue;
                     }
                 }
+
                 break;
             }
         }
@@ -205,6 +210,7 @@ namespace Uplauncher
                     e = listenArgs;
                     continue;
                 }
+
                 break;
             }
         }
@@ -215,7 +221,7 @@ namespace Uplauncher
             {
                 if (e.BytesTransferred == 0 || e.SocketError != SocketError.Success)
                 {
-                    ((Socket) e.UserToken).Disconnect(false);
+                    ((Socket)e.UserToken).Disconnect(false);
                 }
                 else
                 {
@@ -276,12 +282,14 @@ namespace Uplauncher
                         }
                     }
 
-                    if (!((Socket) e.UserToken).ReceiveAsync(e))
+                    if (!((Socket)e.UserToken).ReceiveAsync(e))
                         continue;
                 }
+
                 break;
             }
         }
+
 
         public int RegPort
         {

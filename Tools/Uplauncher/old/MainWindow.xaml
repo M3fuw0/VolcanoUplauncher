@@ -1,0 +1,185 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Uplauncher="clr-namespace:Uplauncher" xmlns:System="clr-namespace:System;assembly=System"
+    xmlns:Helpers="clr-namespace:Uplauncher.Helpers" xmlns:UI="clr-namespace:Uplauncher.Helpers.UI" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" 
+    mc:Ignorable="d"  x:Class="Uplauncher.MainWindow"
+    WindowStartupLocation="CenterScreen"
+    DataContext="{Binding ModelView, RelativeSource={RelativeSource Self}}"
+    Title="{x:Static Uplauncher:Constants.ApplicationName}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Icon="pack://application:,,,/pyrasis.ico" ShowInTaskbar="True"
+    Closing="OnClosing" Loaded="OnLoaded" WindowStyle="None"
+    AllowsTransparency="True" Background="Transparent" >
+    <Window.Resources>
+        <!--<XmlDataProvider x:Key="News"
+                     Source="{x:Static Uplauncher:Constants.RSSNewsURL}"
+                     XPath="/rss/channel"/>-->
+        <Helpers:SingleLineTextConverter x:Key="SingleLineTextConverter"/>
+        <Style x:Key="Arial-Rounded" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Resources/#Arial Rounded MT" />
+        </Style>
+        <Style x:Key="GlowingImage" TargetType="UI:OpaqueClickableImage">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ImageButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="257*"/>
+            <RowDefinition Height="362*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Resources/background.png" Height="600" Grid.RowSpan="2" />
+        <Canvas Grid.RowSpan="2">
+            <!-- Menu déroulant nombre dofus-->
+            <!--<ComboBox x:Name="NumberComboBox" 
+                      Visibility="{Binding IsStatusTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      IsEnabled="{Binding IsNumberComboBoxEnabled}"
+                      IsReadOnly="True"
+                      Width="50" 
+                      Canvas.Left="707" Canvas.Top="557" 
+                      SelectionChanged="NumberComboBox_SelectionChanged">
+                <ComboBoxItem Content="1" IsSelected="True"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+                <ComboBoxItem Content="6"/>
+                <ComboBoxItem Content="7"/>
+                <ComboBoxItem Content="8"/>
+            </ComboBox>-->
+            <!-- Menu déroulant langue-->
+            <ComboBox x:Name="LanguageComboBox" 
+                      Visibility="{Binding IsStatusTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      IsEnabled="{Binding IsLanguageComboBoxEnabled}"
+                      IsReadOnly="True"
+                      Width="150" 
+                      Canvas.Left="877" Canvas.Top="557" 
+                      SelectionChanged="LanguageComboBox_SelectionChanged" >
+                <ComboBoxItem Content="Français" IsSelected="True"/>
+                <ComboBoxItem Content="English"/>
+                <ComboBoxItem Content="Español"/>
+                <ComboBoxItem Content="Português"/>
+                <ComboBoxItem Content="Deutsch"/>
+                <ComboBoxItem Content="Nederlands"/>
+                <ComboBoxItem Content="Čeština"/>
+                <ComboBoxItem Content="Slovenský"/>
+                <ComboBoxItem Content="Polski"/>
+                <ComboBoxItem Content="Română"/>
+                <ComboBoxItem Content="Türkçe"/>
+                <ComboBoxItem Content="Dansk"/>
+                <ComboBoxItem Content="Suomalainen"/>
+            </ComboBox>
+
+            <!--<Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Canvas.Right="130" Canvas.Top="175" Style="{StaticResource ImageButton}" Command="{Binding CloseCommand}"/>
+            <Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Canvas.Left="8" Canvas.Top="587" Style="{StaticResource ImageButton}" Command="{Binding RepairGameCommand}"/>
+            <Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Style="{StaticResource ImageButton}" Canvas.Left="117" Canvas.Top="587" Command="{Binding SiteCommand}"/>
+            <Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Canvas.Left="545" Canvas.Top="353" Style="{StaticResource ImageButton}" Command="{Binding VoteCommand}" Width="150"/>-->
+            <ProgressBar Canvas.Left="340" Canvas.Top="333" Width="460" Height="26" Value="{Binding DownloadProgress}" Maximum="100" Minimum="0" Background="Black" Foreground="White" >
+                <ProgressBar.Template>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border BorderThickness="1" CornerRadius="10" BorderBrush="#665527">
+                            <Border.Background>
+                                <SolidColorBrush Color="#77306c"/>
+                            </Border.Background>
+                            <Grid x:Name="PART_Track" >
+                                <Border x:Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="9,0,0,9" >
+                                    <Border.Clip>
+                                        <RectangleGeometry RadiusX="9" RadiusY="9" Rect="0,0,459,24"/>
+                                    </Border.Clip>
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#fc93e5" Offset="1"/>
+                                            <GradientStop Color="#fc93e5"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </ProgressBar.Template>
+            </ProgressBar>
+            <TextBlock Text="{Binding ProgressDownloadSpeedInfo}" Canvas.Left="340" Canvas.Top="340" FontSize="11" Foreground="#FFEAFFEE"
+                       Width="460" Style="{StaticResource Arial-Rounded}" FontWeight="Light"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+            <Grid Canvas.Left="340" Canvas.Top="370" Width="460" Height="20" Background="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="219*"/>
+                    <ColumnDefinition Width="8*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding StateMessage}" Foreground="Black" FontWeight="DemiBold" Margin="5,0,5,0"
+                   TextAlignment="Center" VerticalAlignment="Center" Style="{StaticResource Arial-Rounded}"
+                   ToolTip="{Binding StateMessage}" Grid.ColumnSpan="6" Background="#fc67d6">
+                </TextBlock>
+            </Grid>
+
+            <!--<TextBlock Canvas.Left="10" Canvas.Top="563" TextWrapping="Wrap" 
+                       Text="{Binding Source={x:Static Uplauncher:Constants.ApplicationVersion}}" Width="166" TextAlignment="Right"/>-->
+            <!--<Image Height="604" Width="84" Source="/FOND.png" HorizontalAlignment="Left" Canvas.Left="816" Canvas.Top="0" VerticalAlignment="Center"/>-->
+            <Button Canvas.Left="997" Canvas.Top="7" Style="{StaticResource ImageButton}"
+                    Command="{Binding CloseCommand}">
+                <UI:OpaqueClickableImage Width="45" Height="45" Source="/Resources/4.png" Stretch="Fill" Style="{StaticResource GlowingImage}" HorizontalAlignment="Left" Canvas.Left="1005" Canvas.Top="3" VerticalAlignment="Top"/>
+            </Button>
+	        <!--<Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent"  Canvas.Left="1" Canvas.Top="207" Style="{StaticResource ImageButton}" 
+                    Command="{Binding PlayCommand}" Width="175" Height="175">
+                <UI:OpaqueClickableImage Stretch="Fill" Style="{StaticResource GlowingImage}" Margin="0,0,0,0">
+                    <UI:OpaqueClickableImage.Source>pack://application:,,,//Resources/1.png</UI:OpaqueClickableImage.Source>
+                </UI:OpaqueClickableImage>
+            </Button>-->
+            <Button Canvas.Left="1" Canvas.Top="207" Style="{StaticResource ImageButton}"
+                    Command="{Binding PlayCommand}">
+                <UI:OpaqueClickableImage Width="175" Height="175" Source="/Resources/1.png" Stretch="Fill" Style="{StaticResource GlowingImage}" HorizontalAlignment="Left" Canvas.Left="1" Canvas.Top="247" VerticalAlignment="Top"/>
+            </Button>
+            <Button Canvas.Left="27" Canvas.Top="533" Style="{StaticResource ImageButton}"
+                    Command="{Binding VoteCommand}" >
+                <UI:OpaqueClickableImage Width="55" Height="55" Source="/Resources/7.png" Stretch="Fill" Style="{StaticResource GlowingImage}" />
+            </Button>
+            <!--<UI:OpaqueClickableImage Source="/SITE.png" Stretch="Fill" Style="{StaticResource GlowingImage}" Width="49" Height="51" Canvas.Left="11" Canvas.Top="188"/>-->
+            <Button Style="{StaticResource ImageButton}" Canvas.Left="97" Canvas.Top="533"
+                    Command="{Binding SiteCommand}">
+                <UI:OpaqueClickableImage Width="55" Height="55" Source="/Resources/3.png" Stretch="Fill" Style="{StaticResource GlowingImage}" />
+            </Button>
+            <!--<UI:OpaqueClickableImage Width="37" Height="69" Source="/REGLAGE.png" Stretch="Fill" Style="{StaticResource GlowingImage}" Grid.IsSharedSizeScope="True" HorizontalAlignment="Left" Canvas.Left="536" Canvas.Top="517" VerticalAlignment="Top"/>-->
+            <Button Canvas.Left="27" Canvas.Top="467" Style="{StaticResource ImageButton}"
+                    Command="{Binding RepairGameCommand}">
+                <UI:OpaqueClickableImage Width="55" Height="55" Source="/Resources/5.png" Stretch="Fill" Style="{StaticResource GlowingImage}" />
+            </Button>
+            <Button Canvas.Left="97" Canvas.Top="467" Style="{StaticResource ImageButton}"
+                    Command="{Binding DeleteGameFilesCommand}">
+                <UI:OpaqueClickableImage Width="55" Height="55" Source="/Resources/6.png" Stretch="Fill" Style="{StaticResource GlowingImage}" />
+            </Button>
+            <!--Source="/SELECT_DOFUS_CLIENTS.png" Stretch="Fill"-->
+            <!--<Button Canvas.Left="953" Canvas.Top="503" Style="{StaticResource ImageButton}"
+                    Command="{Binding MultiDofusCommand}">
+                <UI:OpaqueClickableImage Width="80" Height="80" Source="/Resources/pyrasis_m.png" Stretch="Fill" Style="{StaticResource GlowingImage}" />
+            </Button>-->
+        </Canvas>
+    </Grid>
+</Window>

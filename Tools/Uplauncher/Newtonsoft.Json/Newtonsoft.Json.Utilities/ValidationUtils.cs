@@ -7,7 +7,7 @@ namespace Newtonsoft.Json.Utilities
 	internal static class ValidationUtils
 	{
 		/*[NullableContext(1)]*/
-		public static void ArgumentNotNull(/*[Nullable(2)]*/[NotNull] object value, string parameterName)
+		public static void ArgumentNotNull( object value, string parameterName)
 		{
 			if (value == null)
 			{

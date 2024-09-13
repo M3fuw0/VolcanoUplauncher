@@ -41,7 +41,7 @@ namespace Newtonsoft.Json.Serialization
 		/*[Nullable(new byte[] { 1, 1, 2 })]*/
 		private static readonly ThreadSafeStore<Type, Type> AssociatedMetadataTypesCache = new ThreadSafeStore<Type, Type>(GetAssociateMetadataTypeFromAttribute);
 
-		/*[Nullable(2)]*/
+		
 		private static ReflectionObject _metadataTypeAttributeReflectionObject;
 
 		public static bool DynamicCodeGeneration

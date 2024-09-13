@@ -149,7 +149,7 @@ namespace Newtonsoft.Json.Linq
 
 		protected override void RemoveItem(int index)
 		{
-			string keyForItem = GetKeyForItem(base.Items[index]);
+			string keyForItem = GetKeyForItem(Items[index]);
 			RemoveKey(keyForItem);
 			base.RemoveItem(index);
 		}
@@ -162,7 +162,7 @@ namespace Newtonsoft.Json.Linq
 		protected override void SetItem(int index, JToken item)
 		{
 			string keyForItem = GetKeyForItem(item);
-			string keyForItem2 = GetKeyForItem(base.Items[index]);
+			string keyForItem2 = GetKeyForItem(Items[index]);
 			if (Comparer.Equals(keyForItem2, keyForItem))
 			{
 				if (_dictionary != null)
@@ -181,7 +181,7 @@ namespace Newtonsoft.Json.Linq
 			base.SetItem(index, item);
 		}
 
-		public bool TryGetValue(string key, /*[Nullable(2)]*/[NotNullWhen(true)] out JToken value)
+		public bool TryGetValue(string key, out JToken value)
 		{
 			if (_dictionary == null)
 			{
@@ -193,7 +193,7 @@ namespace Newtonsoft.Json.Linq
 
 		public int IndexOfReference(JToken t)
 		{
-			return ((List<JToken>)base.Items).IndexOfReference(t);
+			return ((List<JToken>)Items).IndexOfReference(t);
 		}
 
 		public bool Compare(JPropertyKeyedCollection other)

@@ -22,7 +22,7 @@ namespace Newtonsoft.Json
 
 		internal int Position;
 
-		/*[Nullable(2)]*/
+		
 		internal string PropertyName;
 
 		internal bool HasIndex;
@@ -123,7 +123,7 @@ namespace Newtonsoft.Json
 			return stringBuilder.ToString();
 		}
 
-		internal static string FormatMessage(/*[Nullable(2)]*/ IJsonLineInfo lineInfo, string path, string message)
+		internal static string FormatMessage( IJsonLineInfo lineInfo, string path, string message)
 		{
 			if (!message.EndsWith(Environment.NewLine, StringComparison.Ordinal))
 			{

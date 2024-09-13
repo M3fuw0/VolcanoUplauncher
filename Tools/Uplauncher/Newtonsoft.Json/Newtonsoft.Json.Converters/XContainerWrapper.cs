@@ -11,7 +11,7 @@ namespace Newtonsoft.Json.Converters
 		/*[Nullable(new byte[] { 2, 1 })]*/
 		private List<IXmlNode> _childNodes;
 
-		private XContainer Container => (XContainer)base.WrappedNode;
+		private XContainer Container => (XContainer)WrappedNode;
 
 		public override List<IXmlNode> ChildNodes
 		{
@@ -38,7 +38,7 @@ namespace Newtonsoft.Json.Converters
 
 		protected virtual bool HasChildNodes => Container.LastNode != null;
 
-		/*[Nullable(2)]*/
+		
 		public override IXmlNode ParentNode
 		{
 			/*[NullableContext(2)]*/

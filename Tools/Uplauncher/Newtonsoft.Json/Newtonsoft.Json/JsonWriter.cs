@@ -33,7 +33,7 @@ namespace Newtonsoft.Json
 
 		internal static readonly State[][] StateArrayTempate;
 
-		/*[Nullable(2)]*/
+		
 		private List<JsonPosition> _stack;
 
 		private JsonPosition _currentPosition;
@@ -50,10 +50,10 @@ namespace Newtonsoft.Json
 
 		private FloatFormatHandling _floatFormatHandling;
 
-		/*[Nullable(2)]*/
+		
 		private string _dateFormatString;
 
-		/*[Nullable(2)]*/
+		
 		private CultureInfo _culture;
 
 		public bool CloseOutput { get; set; }
@@ -208,7 +208,7 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public string DateFormatString
 		{
 			/*[NullableContext(2)]*/
@@ -360,7 +360,7 @@ namespace Newtonsoft.Json
 			return AsyncUtils.CompletedTask;
 		}
 
-		public virtual Task WriteRawAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteRawAsync( string json, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -565,7 +565,7 @@ namespace Newtonsoft.Json
 			Push(container);
 		}
 
-		public virtual Task WriteCommentAsync(/*[Nullable(2)]*/ string text, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteCommentAsync( string text, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -580,7 +580,7 @@ namespace Newtonsoft.Json
 			return AutoCompleteAsync(JsonToken.Comment, cancellationToken);
 		}
 
-		public virtual Task WriteRawValueAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteRawValueAsync( string json, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -626,7 +626,7 @@ namespace Newtonsoft.Json
 			return WriteTokenAsync(token, null, cancellationToken);
 		}
 
-		public Task WriteTokenAsync(JsonToken token, /*[Nullable(2)]*/ object value, CancellationToken cancellationToken = default(CancellationToken))
+		public Task WriteTokenAsync(JsonToken token,  object value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -823,7 +823,7 @@ namespace Newtonsoft.Json
 			return AsyncUtils.CompletedTask;
 		}
 
-		public virtual Task WriteValueAsync(/*[Nullable(2)]*/ byte[] value, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteValueAsync( byte[] value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -1013,7 +1013,7 @@ namespace Newtonsoft.Json
 			return AsyncUtils.CompletedTask;
 		}
 
-		public virtual Task WriteValueAsync(/*[Nullable(2)]*/ object value, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteValueAsync( object value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -1065,7 +1065,7 @@ namespace Newtonsoft.Json
 			return AsyncUtils.CompletedTask;
 		}
 
-		public virtual Task WriteValueAsync(/*[Nullable(2)]*/ string value, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteValueAsync( string value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{
@@ -1139,7 +1139,7 @@ namespace Newtonsoft.Json
 			return AsyncUtils.CompletedTask;
 		}
 
-		public virtual Task WriteValueAsync(/*[Nullable(2)]*/ Uri value, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task WriteValueAsync( Uri value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (cancellationToken.IsCancellationRequested)
 			{

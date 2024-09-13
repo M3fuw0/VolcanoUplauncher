@@ -127,7 +127,7 @@
       <HintPath>..\..\packages\Google.Protobuf.3.22.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-	<Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -285,7 +285,6 @@
     <Compile Include="MultiCompte2\Sound\Server.cs" />
     <Compile Include="MultiCompte2\Sound\SimpleClient.cs" />
     <Compile Include="MultiCompte2\Sound\SimpleServer.cs" />
-    <Compile Include="Newtonsoft.Json\Microsoft.CodeAnalysis\EmbeddedAttribute.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonArray.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonBinary.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonBinaryType.cs" />
@@ -548,14 +547,6 @@
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json\TypeNameAssemblyFormatHandling.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json\TypeNameHandling.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json\WriteState.cs" />
-    <Compile Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\AllowNullAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\DoesNotReturnIfAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\MaybeNullAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\NotNullAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\NotNullWhenAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\IsReadOnlyAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\NullableAttribute.cs" />
-    <Compile Include="Newtonsoft.Json\System.Runtime.CompilerService\NullableContextAttribute.cs" />
     <Compile Include="NumberOfDofusWindows.xaml.cs">
       <DependentUpon>NumberOfDofusWindows.xaml</DependentUpon>
     </Compile>
@@ -739,6 +730,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pyrasis_m.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Newtonsoft.Json\Microsoft.CodeAnalysis\" />
+    <Folder Include="Newtonsoft.Json\System.Diagnostics.CodeAnalysi\" />
+    <Folder Include="Newtonsoft.Json\System.Runtime.CompilerService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\8.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">

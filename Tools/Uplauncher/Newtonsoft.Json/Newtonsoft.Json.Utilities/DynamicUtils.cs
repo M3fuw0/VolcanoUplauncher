@@ -26,16 +26,16 @@ namespace Newtonsoft.Json.Utilities
 
 			private const string CSharpBinderFlagsTypeName = "Microsoft.CSharp.RuntimeBinder.CSharpBinderFlags, Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
 
-			/*[Nullable(2)]*/
+			
 			private static object _getCSharpArgumentInfoArray;
 
-			/*[Nullable(2)]*/
+			
 			private static object _setCSharpArgumentInfoArray;
 
-			/*[Nullable(2)]*/
+			
 			private static MethodCall<object, object> _getMemberCall;
 
-			/*[Nullable(2)]*/
+			
 			private static MethodCall<object, object> _setMemberCall;
 
 			private static bool _init;

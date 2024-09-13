@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using Uplauncher.Helpers;
 using SharpRaven;
 using SharpRaven.Data;
-using Uplauncher.Exceptions;
+using System.Diagnostics;
 
 namespace Uplauncher
 {
@@ -21,17 +21,16 @@ namespace Uplauncher
         private readonly RavenClient _ravenClient;
 
         public RavenClient ExceptionLogger { get; protected set; }
-        public const bool IsExceptionLoggerEnabled = true;
+        private const bool IsExceptionLoggerEnabled = true;
         private bool isOnlyInstance;
         public string Version { get; protected set; }
         public static string ExceptionLoggerDSN = "https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640";
-        private ExceptionManager _exceptionManager;
-        public string dsn = "https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640";
+        private static Mutex singleInstanceMutex = new Mutex(true, "PyrasisUplauncher");
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var ravenClient = new RavenClient(dsn);
+
             string configFilePath = @".\pyrasis_app\config.xml";
 
             // Vérifier et corriger la première ligne du fichier
@@ -40,30 +39,42 @@ namespace Uplauncher
                 // Un espace a été supprimé, vous pouvez effectuer des opérations supplémentaires ici si nécessaire
             }
 
-            //SupprimerFichiersEtDossier();
+            SupprimerFichiersEtDossier();
+            // Essayer de prendre possession du Mutex
+
+            //singleInstanceMutex = new Mutex(true, "KarashiUplauncher", out isOnlyInstance);
+
+            // Vérifier si cette instance est la seule en cours d'exécution
+            //if (!isOnlyInstance)
+            //{
+            //    MessageBox.Show("Une instance de l'Uplauncher est déjà en cours d'exécution.", "Instance déjà en cours", MessageBoxButton.OK, MessageBoxImage.Information);
+            //    Shutdown();
+            //    return;
+            //}
+
+            // Continuer avec le reste de la logique de démarrage
+            //DispatcherUnhandledException += OnUnhandledException;
+
             // Continuer avec le démarrage normal de l'application
-            // Initialisation de RavenClient et ExceptionManager
-            //ExceptionManager ravenClient = // ... Initialisation de RavenClient
-            _exceptionManager = new ExceptionManager(ravenClient);
-            // Gestion des exceptions non gérées
-            DispatcherUnhandledException += App_DispatcherUnhandledException;
         }
         public App()
         {
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //Version = ((AssemblyInformationalVersionAttribute)System.Reflection.Assembly.GetExecutingAssembly()
+            //        .GetCustomAttributes<AssemblyInformationalVersionAttribute>().FirstOrDefault())
+            //    .InformationalVersion;
 
-            _ravenClient = new RavenClient(dsn);
+            _ravenClient = new RavenClient("https://64af200c775b802f211a18ab4b92b995:fea6e72c623ece463fbb5a3c14f565d4@o375233.ingest.sentry.io/4505646529904640");
 
-            if (IsExceptionLoggerEnabled)
-            {
-                ExceptionLogger = new RavenClient(ExceptionLoggerDSN);
-                ExceptionLogger.Release = Version;
-#if DEBUG
-                ExceptionLogger.Environment = "DEBUG";
-#else
-                 ExceptionLogger.Environment = "RELEASE";
-#endif
-            }
+//            if (IsExceptionLoggerEnabled)
+//            {
+//                ExceptionLogger = new RavenClient(ExceptionLoggerDSN);
+//                ExceptionLogger.Release = Version;
+//#if DEBUG
+//                ExceptionLogger.Environment = "DEBUG";
+//#else
+//                 ExceptionLogger.Environment = "RELEASE";
+//#endif
+//            }
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -74,13 +85,24 @@ namespace Uplauncher
             DispatcherUnhandledException += OnUnhandledException;
         }
 
-        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            _exceptionManager.RegisterException(e.Exception);
-            e.Handled = true; // Pour empêcher l'application de se fermer
-        }
+        //public static bool IsOnlyInstance()
+        //{
+        //    try
+        //    {
+        //        return singleInstanceMutex.WaitOne(TimeSpan.Zero, true);
+        //    }
+        //    catch (AbandonedMutexException)
+        //    {
+        //        // Le Mutex a été abandonné. Traiter ce cas si nécessaire.
+        //        return true; // On considère que c'est la seule instance.
+        //    }
+        //}
 
-        public bool CheckAndFixFirstChar(string filePath)
+        //public static void ReleaseInstance()
+        //{
+        //    singleInstanceMutex.ReleaseMutex();
+        
+        private bool CheckAndFixFirstChar(string filePath)
         {
             // Vérifier si le fichier existe
             if (!File.Exists(filePath))
@@ -180,10 +202,21 @@ namespace Uplauncher
         //    _ravenClient.Capture(new SentryEvent(e.Exception));
         //}
 
+        // Assurez-vous de libérer le Mutex lors de la fermeture de l'application
+        //protected override void OnExit(ExitEventArgs e)
+        //{
+        //    if (singleInstanceMutex != null)
+        //    {
+        //        singleInstanceMutex.ReleaseMutex();
+        //        singleInstanceMutex = null;
+        //    }
+        //    base.OnExit(e);
+        //}
+
         private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             //var sentryEvent = new SentryEvent("Une erreur s'est produite.");
-            //var sentryEvent = new RavenClient(ExceptionLoggerDSN);
+            var sentryEvent = new RavenClient(ExceptionLoggerDSN);
             //RavenClient
             //var sentryEvent = new SentryEvent(e.Exception)
             //{
@@ -192,31 +225,30 @@ namespace Uplauncher
             //    Level = SharpRaven.Data.ErrorLevel.Error,
             //};
 
-            //sentryEvent.Tags.Add("Platform", Environment.OSVersion.ToString());
+            sentryEvent.Tags.Add("Platform", Environment.OSVersion.ToString());
 
-            //string projectName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            //sentryEvent.Tags.Add("Project", projectName);
+            string projectName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            sentryEvent.Tags.Add("Project", projectName);
 
-            //var className = e.Exception.TargetSite?.DeclaringType?.Name ?? "Unknown";
-            //sentryEvent.Logger = className ?? "Unknown";
+            var className = e.Exception.TargetSite?.DeclaringType?.Name ?? "Unknown";
+            sentryEvent.Logger = className ?? "Unknown";
 
-            //// Récupérer le nom du produit pour ServerName
-            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            //var productAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyProductAttribute), false).FirstOrDefault() as System.Reflection.AssemblyProductAttribute;
-            //var productName = productAttribute?.Product;
-            //sentryEvent.Tags.Add("ServerName", productName ?? "Unknown Product");
+            // Récupérer le nom du produit pour ServerName
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var productAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyProductAttribute), false).FirstOrDefault() as System.Reflection.AssemblyProductAttribute;
+            var productName = productAttribute?.Product;
+            sentryEvent.Tags.Add("ServerName", productName ?? "Unknown Product");
 
-            ////sentryEvent.User = new SharpRaven.Data.User { Id = Environment.UserName };
+            //sentryEvent.User = new SharpRaven.Data.User { Id = Environment.UserName };
 
-            //// Obtenir le code d'erreur de l'exception et le formater en hexadécimal
-            //string errorCode = $"0x{e.Exception.HResult:X8}";
-            //sentryEvent.Tags.Add("EventID", errorCode);
-            //sentryEvent.Tags.Add("Exceptions", e.Exception.ToString());
-            //sentryEvent.Tags.Add("Culprit", e.Exception.Message);
-            //sentryEvent.Tags.Add("Error Message", e.Exception.Message);
-            //sentryEvent.Tags.Add("Logger", className);
-            //sentryEvent.Tags.Add("User", Environment.UserName); 
-            //lo
+            // Obtenir le code d'erreur de l'exception et le formater en hexadécimal
+            string errorCode = $"0x{e.Exception.HResult:X8}";
+            sentryEvent.Tags.Add("EventID", errorCode);
+            sentryEvent.Tags.Add("Exceptions", e.Exception.ToString());
+            sentryEvent.Tags.Add("Culprit", e.Exception.Message);
+            sentryEvent.Tags.Add("Error Message", e.Exception.Message);
+            sentryEvent.Tags.Add("Logger", className);
+            sentryEvent.Tags.Add("User", Environment.UserName);
             //sentryEvent.Tags.Add("EventID", errorCode);
 
             //sentryEvent.Extra = new Dictionary<string, string>
@@ -229,16 +261,11 @@ namespace Uplauncher
             //    // ... Ajoutez tous les autres attributs ici
             //};
 
-            if (ExceptionLogger != null)
-            {
-                var sentryEvent = new SentryEvent(e.Exception);
-                ExceptionLogger.Capture(sentryEvent);
-            }
-
             //_ravenClient.Capture(sentryEvent);
 
             Clipboard.SetText(e.Exception.ToString());
             MessageBox.Show("Erreur (copié) : " + e.Exception);
         }
+
     }
 }

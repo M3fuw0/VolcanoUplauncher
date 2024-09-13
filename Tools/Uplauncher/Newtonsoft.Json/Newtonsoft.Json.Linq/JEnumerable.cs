@@ -46,7 +46,7 @@ namespace Newtonsoft.Json.Linq
 
 		public bool Equals(/*[Nullable(new byte[] { 0, 1 })]*/ JEnumerable<T> other)
 		{
-			return object.Equals(_enumerable, other._enumerable);
+			return Equals(_enumerable, other._enumerable);
 		}
 
 		public override bool Equals(object obj)

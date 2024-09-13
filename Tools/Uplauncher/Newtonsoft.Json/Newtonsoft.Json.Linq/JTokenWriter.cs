@@ -275,7 +275,7 @@ namespace Newtonsoft.Json.Linq
 		public override void WriteValue(DateTime value)
 		{
 			base.WriteValue(value);
-			value = DateTimeUtils.EnsureDateTime(value, base.DateTimeZoneHandling);
+			value = DateTimeUtils.EnsureDateTime(value, DateTimeZoneHandling);
 			AddValue(value, JsonToken.Date);
 		}
 

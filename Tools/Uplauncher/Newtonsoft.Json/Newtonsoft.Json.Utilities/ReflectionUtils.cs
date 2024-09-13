@@ -72,7 +72,7 @@ namespace Newtonsoft.Json.Utilities
 			return v?.GetType();
 		}
 
-		public static string GetTypeName(Type t, TypeNameAssemblyFormatHandling assemblyFormat, /*[Nullable(2)]*/ ISerializationBinder binder)
+		public static string GetTypeName(Type t, TypeNameAssemblyFormatHandling assemblyFormat,  ISerializationBinder binder)
 		{
 			string fullyQualifiedTypeName = GetFullyQualifiedTypeName(t, binder);
 			switch (assemblyFormat)
@@ -86,7 +86,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		private static string GetFullyQualifiedTypeName(Type t, /*[Nullable(2)]*/ ISerializationBinder binder)
+		private static string GetFullyQualifiedTypeName(Type t,  ISerializationBinder binder)
 		{
 			if (binder != null)
 			{
@@ -211,7 +211,7 @@ namespace Newtonsoft.Json.Utilities
 			return ImplementsGenericDefinition(type, genericInterfaceDefinition, out implementingType);
 		}
 
-		public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, /*[Nullable(2)]*/[NotNullWhen(true)] out Type implementingType)
+		public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
 		{
 			ValidationUtils.ArgumentNotNull(type, "type");
 			ValidationUtils.ArgumentNotNull(genericInterfaceDefinition, "genericInterfaceDefinition");
@@ -251,7 +251,7 @@ namespace Newtonsoft.Json.Utilities
 			return InheritsGenericDefinition(type, genericClassDefinition, out implementingType);
 		}
 
-		public static bool InheritsGenericDefinition(Type type, Type genericClassDefinition, /*[Nullable(2)]*/ out Type implementingType)
+		public static bool InheritsGenericDefinition(Type type, Type genericClassDefinition,  out Type implementingType)
 		{
 			ValidationUtils.ArgumentNotNull(type, "type");
 			ValidationUtils.ArgumentNotNull(genericClassDefinition, "genericClassDefinition");
@@ -262,7 +262,7 @@ namespace Newtonsoft.Json.Utilities
 			return InheritsGenericDefinitionInternal(type, genericClassDefinition, out implementingType);
 		}
 
-		private static bool InheritsGenericDefinitionInternal(Type currentType, Type genericClassDefinition, /*[Nullable(2)]*/ out Type implementingType)
+		private static bool InheritsGenericDefinitionInternal(Type currentType, Type genericClassDefinition,  out Type implementingType)
 		{
 			do
 			{
@@ -389,7 +389,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		public static void SetMemberValue(MemberInfo member, object target, /*[Nullable(2)]*/ object value)
+		public static void SetMemberValue(MemberInfo member, object target,  object value)
 		{
 			ValidationUtils.ArgumentNotNull(member, "member");
 			ValidationUtils.ArgumentNotNull(target, "target");
@@ -575,7 +575,7 @@ namespace Newtonsoft.Json.Utilities
 			return attributes.Cast<T>().ToArray();
 		}
 
-		public static Attribute[] GetAttributes(object attributeProvider, /*[Nullable(2)]*/ Type attributeType, bool inherit)
+		public static Attribute[] GetAttributes(object attributeProvider,  Type attributeType, bool inherit)
 		{
 			ValidationUtils.ArgumentNotNull(attributeProvider, "attributeProvider");
 			if (!(attributeProvider is Type type))

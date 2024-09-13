@@ -43,38 +43,33 @@ namespace Uplauncher.Helpers
         /// -------------------------------------------------------------------------------------------------
         public static bool AlreadyRunning()
         {
-            
-            /*const int SW_HIDE = 0;
-            const int SW_SHOWNORMAL = 1;
-            const int SW_SHOWMINIMIZED = 2;
-            const int SW_SHOWMAXIMIZED = 3;
-            const int SW_SHOWNOACTIVATE = 4;
-            //const int SW_RESTORE = 9;
-            const int SW_SHOWDEFAULT = 10;*/
-            
-            const int swRestore = 9;
+            Process currentProcess = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(currentProcess.ProcessName);
 
-            var me = Process.GetCurrentProcess();
-            var arrProcesses = Process.GetProcessesByName(me.ProcessName);
-
-            if (arrProcesses.Length > 1)
+            if (processes.Length <= 1)
             {
-                foreach (var hWnd in from t in arrProcesses where t.Id != me.Id select t.MainWindowHandle)
+                return false;
+            }
+
+            foreach (var process in processes)
+            {
+                if (process.Id != currentProcess.Id)
                 {
-                    // if iconic, we need to restore the window
+                    IntPtr hWnd = process.MainWindowHandle;
+
+                    // Restore the window if it is minimized.
                     if (IsIconic(hWnd))
                     {
-                        ShowWindowAsync(hWnd, swRestore);
+                        ShowWindowAsync(hWnd, SwRestore);
                     }
 
-                    // bring it to the foreground
+                    // Bring the window to the foreground.
                     SetForegroundWindow(hWnd);
                     break;
                 }
-                return true;
             }
 
-            return false;
+            return true;
         }
     }
 }

@@ -8,26 +8,15 @@ namespace Newtonsoft.Json.Converters
 	internal class XCommentWrapper : XObjectWrapper
 	{
 		/*[Nullable(1)]*/
-		private XComment Text
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return (XComment)base.WrappedNode;
-			}
-		}
+		private XComment Text =>
+            /*[NullableContext(1)]*/
+            (XComment)WrappedNode;
 
-		public override string Value
+        public override string Value
 		{
-			get
-			{
-				return Text.Value;
-			}
-			set
-			{
-				Text.Value = value;
-			}
-		}
+			get => Text.Value;
+            set => Text.Value = value;
+        }
 
 		public override IXmlNode ParentNode
 		{

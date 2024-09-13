@@ -19,7 +19,7 @@ namespace Newtonsoft.Json.Serialization
 	public class DefaultContractResolver : IContractResolver
 	{
 		/*[NullableContext(0)]*/
-		internal class EnumerableDictionaryWrapper</*[Nullable(2)]*/ TEnumeratorKey, /*[Nullable(2)]*/ TEnumeratorValue> : IEnumerable<KeyValuePair<object, object>>, IEnumerable
+		internal class EnumerableDictionaryWrapper< TEnumeratorKey,  TEnumeratorValue> : IEnumerable<KeyValuePair<object, object>>, IEnumerable
 		{
 			/*[Nullable(new byte[] { 1, 0, 1, 1 })]*/
 			private readonly IEnumerable<KeyValuePair<TEnumeratorKey, TEnumeratorValue>> _e;
@@ -85,7 +85,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public bool IgnoreShouldSerializeMembers { get; set; }
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public NamingStrategy NamingStrategy
 		{
@@ -327,7 +327,7 @@ namespace Newtonsoft.Json.Serialization
 					methodInfo = implementingType.GetProperty("Item", BindingFlags.Instance | BindingFlags.Public, null, type2, new Type[1] { type }, null)?.GetSetMethod();
 				}
 				MethodCall<object, object> setExtensionDataDictionaryValue = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(methodInfo);
-				ExtensionDataSetter extensionDataSetter2 = (contract.ExtensionDataSetter = delegate(object o, string key, /*[Nullable(2)]*/ object value)
+				ExtensionDataSetter extensionDataSetter2 = (contract.ExtensionDataSetter = delegate(object o, string key,  object value)
 				{
 					object obj2 = getExtensionDataDictionary(o);
 					if (obj2 == null)
@@ -461,7 +461,7 @@ namespace Newtonsoft.Json.Serialization
 			return closestMatchProperty;
 		}
 
-		protected virtual JsonProperty CreatePropertyFromConstructorParameter(/*[Nullable(2)]*/ JsonProperty matchingMemberProperty, ParameterInfo parameterInfo)
+		protected virtual JsonProperty CreatePropertyFromConstructorParameter( JsonProperty matchingMemberProperty, ParameterInfo parameterInfo)
 		{
 			JsonProperty jsonProperty = new JsonProperty();
 			jsonProperty.PropertyType = parameterInfo.ParameterType;
@@ -867,7 +867,7 @@ namespace Newtonsoft.Json.Serialization
 			return false;
 		}
 
-		private static bool IsValidCallback(MethodInfo method, ParameterInfo[] parameters, Type attributeType, /*[Nullable(2)]*/ MethodInfo currentCallback, /*[Nullable(2)]*/ ref Type prevAttributeType)
+		private static bool IsValidCallback(MethodInfo method, ParameterInfo[] parameters, Type attributeType,  MethodInfo currentCallback,  ref Type prevAttributeType)
 		{
 			if (!method.IsDefined(attributeType, inherit: false))
 			{

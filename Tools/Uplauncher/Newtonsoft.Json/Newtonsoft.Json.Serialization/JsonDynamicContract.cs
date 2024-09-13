@@ -41,10 +41,10 @@ namespace Newtonsoft.Json.Serialization
 			: base(underlyingType)
 		{
 			ContractType = JsonContractType.Dynamic;
-			Properties = new JsonPropertyCollection(base.UnderlyingType);
+			Properties = new JsonPropertyCollection(UnderlyingType);
 		}
 
-		internal bool TryGetMember(IDynamicMetaObjectProvider dynamicProvider, string name, /*[Nullable(2)]*/ out object value)
+		internal bool TryGetMember(IDynamicMetaObjectProvider dynamicProvider, string name,  out object value)
 		{
 			ValidationUtils.ArgumentNotNull(dynamicProvider, "dynamicProvider");
 			CallSite<Func<CallSite, object, object>> callSite = _callSiteGetters.Get(name);
@@ -58,7 +58,7 @@ namespace Newtonsoft.Json.Serialization
 			return false;
 		}
 
-		internal bool TrySetMember(IDynamicMetaObjectProvider dynamicProvider, string name, /*[Nullable(2)]*/ object value)
+		internal bool TrySetMember(IDynamicMetaObjectProvider dynamicProvider, string name,  object value)
 		{
 			ValidationUtils.ArgumentNotNull(dynamicProvider, "dynamicProvider");
 			CallSite<Func<CallSite, object, object, object>> callSite = _callSiteSetters.Get(name);

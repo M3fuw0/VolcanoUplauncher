@@ -13,27 +13,15 @@ namespace Newtonsoft.Json.Converters
 
 		public string Encoding
 		{
-			get
-			{
-				return _declaration.Encoding;
-			}
-			set
-			{
-				_declaration.Encoding = value;
-			}
-		}
+			get => _declaration.Encoding;
+            set => _declaration.Encoding = value;
+        }
 
 		public string Standalone
 		{
-			get
-			{
-				return _declaration.Standalone;
-			}
-			set
-			{
-				_declaration.Standalone = value;
-			}
-		}
+			get => _declaration.Standalone;
+            set => _declaration.Standalone = value;
+        }
 
 		public XmlDeclarationWrapper(XmlDeclaration declaration)
 			: base(declaration)

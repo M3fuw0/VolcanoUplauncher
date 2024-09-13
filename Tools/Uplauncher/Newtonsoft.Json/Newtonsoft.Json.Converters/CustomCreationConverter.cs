@@ -5,17 +5,17 @@ namespace Newtonsoft.Json.Converters
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	public abstract class CustomCreationConverter</*[Nullable(2)]*/ T> : JsonConverter
+	public abstract class CustomCreationConverter< T> : JsonConverter
 	{
 		public override bool CanWrite => false;
 
-		public override void WriteJson(JsonWriter writer, /*[Nullable(2)]*/ object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
 		{
 			throw new NotSupportedException("CustomCreationConverter should only be used while deserializing.");
 		}
 
 		/*[return: Nullable(2)]*/
-		public override object ReadJson(JsonReader reader, Type objectType, /*[Nullable(2)]*/ object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType,  object existingValue, JsonSerializer serializer)
 		{
 			if (reader.TokenType == JsonToken.Null)
 			{

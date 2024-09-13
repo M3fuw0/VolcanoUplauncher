@@ -8,26 +8,15 @@ namespace Newtonsoft.Json.Converters
 	internal class XTextWrapper : XObjectWrapper
 	{
 		/*[Nullable(1)]*/
-		private XText Text
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return (XText)base.WrappedNode;
-			}
-		}
+		private XText Text =>
+            /*[NullableContext(1)]*/
+            (XText)WrappedNode;
 
-		public override string Value
+        public override string Value
 		{
-			get
-			{
-				return Text.Value;
-			}
-			set
-			{
-				Text.Value = value;
-			}
-		}
+			get => Text.Value;
+            set => Text.Value = value;
+        }
 
 		public override IXmlNode ParentNode
 		{

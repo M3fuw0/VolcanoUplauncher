@@ -24,14 +24,18 @@ namespace Uplauncher
         public const string UpdateSiteURL = "https://update.pyrasis.cc/";
         public const string SecondaryUpdateSiteURL = "https://support.pyrasis.cc/";
         //public static readonly Uri RSSNewsURL = new Uri("https://update.pyrasis.cc/rss/rss.xml");
-        public const string VoteURL = "https://discord.gg/ZYSuGp3dxY";
+        public const string VoteURL = "https://pyrasis.cc/vote";
+        public const string DiscordURL = "https://discord.gg/ZYSuGp3dxY";
         public const string UplauncherURL = "https://update.pyrasis.cc/uplauncher/Uplauncher.exe";
+        public const string UplauncherURLs = "uplauncher/Uplauncher.exe";
         public const string VersionURL = "https://update.pyrasis.cc/version/VERSION";
+        public const string VersionURLs = "version/VERSION";
 
         public const string DofusExePath = "pyrasis_app\\Dofus.exe";
         public const string DofusRegExePath = "pyrasis_app\\reg\\Reg.exe";
         public const string LocalChecksumFile = "checksum.pyrasis";
         public const string RemotePatchFile = "patch.xml";
+        public const string RemotePatchURL = "/patch.xml";
         public const string UplauncherMaj = ".\\majs\\Uplauncher.exe";
         public const string RegExePath = "reg/Reg.exe";
         public const string Version = "VERSION";

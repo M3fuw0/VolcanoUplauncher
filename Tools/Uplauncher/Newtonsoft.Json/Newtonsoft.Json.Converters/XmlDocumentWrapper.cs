@@ -9,7 +9,7 @@ namespace Newtonsoft.Json.Converters
 	{
 		private readonly XmlDocument _document;
 
-		/*[Nullable(2)]*/
+		
 		public IXmlElement DocumentElement
 		{
 			/*[NullableContext(2)]*/
@@ -29,27 +29,27 @@ namespace Newtonsoft.Json.Converters
 			_document = document;
 		}
 
-		public IXmlNode CreateComment(/*[Nullable(2)]*/ string data)
+		public IXmlNode CreateComment( string data)
 		{
 			return new XmlNodeWrapper(_document.CreateComment(data));
 		}
 
-		public IXmlNode CreateTextNode(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateTextNode( string text)
 		{
 			return new XmlNodeWrapper(_document.CreateTextNode(text));
 		}
 
-		public IXmlNode CreateCDataSection(/*[Nullable(2)]*/ string data)
+		public IXmlNode CreateCDataSection( string data)
 		{
 			return new XmlNodeWrapper(_document.CreateCDataSection(data));
 		}
 
-		public IXmlNode CreateWhitespace(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateWhitespace( string text)
 		{
 			return new XmlNodeWrapper(_document.CreateWhitespace(text));
 		}
 
-		public IXmlNode CreateSignificantWhitespace(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateSignificantWhitespace( string text)
 		{
 			return new XmlNodeWrapper(_document.CreateSignificantWhitespace(text));
 		}
@@ -68,7 +68,7 @@ namespace Newtonsoft.Json.Converters
 			return new XmlDocumentTypeWrapper(_document.CreateDocumentType(name, publicId, systemId, null));
 		}
 
-		public IXmlNode CreateProcessingInstruction(string target, /*[Nullable(2)]*/ string data)
+		public IXmlNode CreateProcessingInstruction(string target,  string data)
 		{
 			return new XmlNodeWrapper(_document.CreateProcessingInstruction(target, data));
 		}
@@ -83,7 +83,7 @@ namespace Newtonsoft.Json.Converters
 			return new XmlElementWrapper(_document.CreateElement(qualifiedName, namespaceUri));
 		}
 
-		public IXmlNode CreateAttribute(string name, /*[Nullable(2)]*/ string value)
+		public IXmlNode CreateAttribute(string name,  string value)
 		{
 			return new XmlNodeWrapper(_document.CreateAttribute(name))
 			{
@@ -91,7 +91,7 @@ namespace Newtonsoft.Json.Converters
 			};
 		}
 
-		public IXmlNode CreateAttribute(string qualifiedName, string namespaceUri, /*[Nullable(2)]*/ string value)
+		public IXmlNode CreateAttribute(string qualifiedName, string namespaceUri,  string value)
 		{
 			return new XmlNodeWrapper(_document.CreateAttribute(qualifiedName, namespaceUri))
 			{

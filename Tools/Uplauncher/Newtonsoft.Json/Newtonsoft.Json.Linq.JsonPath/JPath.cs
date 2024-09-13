@@ -151,7 +151,7 @@ namespace Newtonsoft.Json.Linq.JsonPath
 			return flag4;
 		}
 
-		private static PathFilter CreatePathFilter(/*[Nullable(2)]*/ string member, bool scan)
+		private static PathFilter CreatePathFilter( string member, bool scan)
 		{
 			if (!scan)
 			{

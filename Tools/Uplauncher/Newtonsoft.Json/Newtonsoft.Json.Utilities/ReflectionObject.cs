@@ -34,7 +34,7 @@ namespace Newtonsoft.Json.Utilities
 			return Members[member].Getter(target);
 		}
 
-		public void SetValue(object target, string member, /*[Nullable(2)]*/ object value)
+		public void SetValue(object target, string member,  object value)
 		{
 			Members[member].Setter(target, value);
 		}
@@ -49,7 +49,7 @@ namespace Newtonsoft.Json.Utilities
 			return Create(t, null, memberNames);
 		}
 
-		public static ReflectionObject Create(Type t, /*[Nullable(2)]*/ MethodBase creator, params string[] memberNames)
+		public static ReflectionObject Create(Type t,  MethodBase creator, params string[] memberNames)
 		{
 			ReflectionDelegateFactory reflectionDelegateFactory = JsonTypeReflector.ReflectionDelegateFactory;
 			ObjectConstructor<object> creator2 = null;
@@ -103,7 +103,7 @@ namespace Newtonsoft.Json.Utilities
 					else if (parameters.Length == 1 && methodInfo.ReturnType == typeof(void))
 					{
 						call = reflectionDelegateFactory.CreateMethodCall<object>(methodInfo);
-						reflectionMember.Setter = delegate(object target, /*[Nullable(2)]*/ object arg)
+						reflectionMember.Setter = delegate(object target,  object arg)
 						{
 							call(target, arg);
 						};

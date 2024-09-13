@@ -26,7 +26,7 @@ namespace Newtonsoft.Json.Serialization
 		}
 
 		/*[NullableContext(1)]*/
-		public void Trace(TraceLevel level, string message, /*[Nullable(2)]*/ Exception ex)
+		public void Trace(TraceLevel level, string message,  Exception ex)
 		{
 			if (level == TraceLevel.Off)
 			{

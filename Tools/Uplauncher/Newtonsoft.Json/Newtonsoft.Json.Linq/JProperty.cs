@@ -17,7 +17,7 @@ namespace Newtonsoft.Json.Linq
 		/*[Nullable(0)]*/
 		private class JPropertyList : IList<JToken>, ICollection<JToken>, IEnumerable<JToken>, IEnumerable
 		{
-			/*[Nullable(2)]*/
+			
 			internal JToken _token;
 
 			public int Count
@@ -203,7 +203,7 @@ namespace Newtonsoft.Json.Linq
 			return LoadAsync(reader, null, cancellationToken);
 		}
 
-		public new static async Task<JProperty> LoadAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public new static async Task<JProperty> LoadAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (reader.TokenType == JsonToken.None && !(await reader.ReadAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false)))
 			{
@@ -242,11 +242,11 @@ namespace Newtonsoft.Json.Linq
 			{
 				throw new ArgumentOutOfRangeException();
 			}
-			if (!JContainer.IsTokenUnchanged(Value, item))
+			if (!IsTokenUnchanged(Value, item))
 			{
-				((JObject)base.Parent)?.InternalPropertyChanging(this);
+				((JObject)Parent)?.InternalPropertyChanging(this);
 				base.SetItem(0, item);
-				((JObject)base.Parent)?.InternalPropertyChanged(this);
+				((JObject)Parent)?.InternalPropertyChanged(this);
 			}
 		}
 
@@ -290,7 +290,7 @@ namespace Newtonsoft.Json.Linq
 			return Value == item;
 		}
 
-		internal override void MergeItem(object content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		internal override void MergeItem(object content,  JsonMergeSettings settings)
 		{
 			JToken jToken = (content as JProperty)?.Value;
 			if (jToken != null && jToken.Type != JTokenType.Null)
@@ -329,11 +329,11 @@ namespace Newtonsoft.Json.Linq
 		{
 		}
 
-		public JProperty(string name, /*[Nullable(2)]*/ object content)
+		public JProperty(string name,  object content)
 		{
 			ValidationUtils.ArgumentNotNull(name, "name");
 			_name = name;
-			Value = (IsMultiContent(content) ? new JArray(content) : JContainer.CreateFromContent(content));
+			Value = (IsMultiContent(content) ? new JArray(content) : CreateFromContent(content));
 		}
 
 		public override void WriteTo(JsonWriter writer, params JsonConverter[] converters)
@@ -360,7 +360,7 @@ namespace Newtonsoft.Json.Linq
 			return Load(reader, null);
 		}
 
-		public new static JProperty Load(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JProperty Load(JsonReader reader,  JsonLoadSettings settings)
 		{
 			if (reader.TokenType == JsonToken.None && !reader.Read())
 			{

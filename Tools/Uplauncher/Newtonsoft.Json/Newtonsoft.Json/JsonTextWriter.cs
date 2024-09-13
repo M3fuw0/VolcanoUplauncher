@@ -19,7 +19,7 @@ namespace Newtonsoft.Json
 
 		private readonly TextWriter _writer;
 
-		/*[Nullable(2)]*/
+		
 		private Base64Encoder _base64Encoder;
 
 		private char _indentChar;
@@ -30,16 +30,16 @@ namespace Newtonsoft.Json
 
 		private bool _quoteName;
 
-		/*[Nullable(2)]*/
+		
 		private bool[] _charEscapeFlags;
 
-		/*[Nullable(2)]*/
+		
 		private char[] _writeBuffer;
 
-		/*[Nullable(2)]*/
+		
 		private IArrayPool<char> _arrayPool;
 
-		/*[Nullable(2)]*/
+		
 		private char[] _indentChars;
 
 		private Base64Encoder Base64Encoder
@@ -54,7 +54,7 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public IArrayPool<char> ArrayPool
 		{
 			/*[NullableContext(2)]*/
@@ -197,11 +197,11 @@ namespace Newtonsoft.Json
 
 		internal async Task DoCloseAsync(CancellationToken cancellationToken)
 		{
-			if (base.Top == 0)
+			if (Top == 0)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
 			}
-			while (base.Top > 0)
+			while (Top > 0)
 			{
 				await WriteEndAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 			}
@@ -228,7 +228,7 @@ namespace Newtonsoft.Json
 
 		internal Task DoWriteIndentAsync(CancellationToken cancellationToken)
 		{
-			int num = base.Top * _indentation;
+			int num = Top * _indentation;
 			int num2 = SetIndentChars();
 			if (num <= 12)
 			{
@@ -282,7 +282,7 @@ namespace Newtonsoft.Json
 			return _writer.WriteAsync(' ', cancellationToken);
 		}
 
-		public override Task WriteRawAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteRawAsync( string json, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -291,7 +291,7 @@ namespace Newtonsoft.Json
 			return DoWriteRawAsync(json, cancellationToken);
 		}
 
-		internal Task DoWriteRawAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken)
+		internal Task DoWriteRawAsync( string json, CancellationToken cancellationToken)
 		{
 			return _writer.WriteAsync(json, cancellationToken);
 		}
@@ -353,7 +353,7 @@ namespace Newtonsoft.Json
 
 		private Task WriteEscapedStringAsync(string value, bool quote, CancellationToken cancellationToken)
 		{
-			return JavaScriptUtils.WriteEscapedJavaScriptStringAsync(_writer, value, _quoteChar, quote, _charEscapeFlags, base.StringEscapeHandling, this, _writeBuffer, cancellationToken);
+			return JavaScriptUtils.WriteEscapedJavaScriptStringAsync(_writer, value, _quoteChar, quote, _charEscapeFlags, StringEscapeHandling, this, _writeBuffer, cancellationToken);
 		}
 
 		public override Task WritePropertyNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -584,7 +584,7 @@ namespace Newtonsoft.Json
 			return DoWriteNullAsync(cancellationToken);
 		}
 
-		public override Task WriteValueAsync(/*[Nullable(2)]*/ byte[] value, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteValueAsync( byte[] value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -650,8 +650,8 @@ namespace Newtonsoft.Json
 		internal async Task DoWriteValueAsync(DateTime value, CancellationToken cancellationToken)
 		{
 			await InternalWriteValueAsync(JsonToken.Date, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-			value = DateTimeUtils.EnsureDateTime(value, base.DateTimeZoneHandling);
-			if (StringUtils.IsNullOrEmpty(base.DateFormatString))
+			value = DateTimeUtils.EnsureDateTime(value, DateTimeZoneHandling);
+			if (StringUtils.IsNullOrEmpty(DateFormatString))
 			{
 				int count = WriteValueToBuffer(value);
 				await _writer.WriteAsync(_writeBuffer, 0, count, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
@@ -659,7 +659,7 @@ namespace Newtonsoft.Json
 			else
 			{
 				await _writer.WriteAsync(_quoteChar).ConfigureAwait(continueOnCapturedContext: false);
-				await _writer.WriteAsync(value.ToString(base.DateFormatString, base.Culture), cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+				await _writer.WriteAsync(value.ToString(DateFormatString, Culture), cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				await _writer.WriteAsync(_quoteChar).ConfigureAwait(continueOnCapturedContext: false);
 			}
 		}
@@ -694,7 +694,7 @@ namespace Newtonsoft.Json
 		internal async Task DoWriteValueAsync(DateTimeOffset value, CancellationToken cancellationToken)
 		{
 			await InternalWriteValueAsync(JsonToken.Date, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-			if (StringUtils.IsNullOrEmpty(base.DateFormatString))
+			if (StringUtils.IsNullOrEmpty(DateFormatString))
 			{
 				int count = WriteValueToBuffer(value);
 				await _writer.WriteAsync(_writeBuffer, 0, count, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
@@ -702,7 +702,7 @@ namespace Newtonsoft.Json
 			else
 			{
 				await _writer.WriteAsync(_quoteChar).ConfigureAwait(continueOnCapturedContext: false);
-				await _writer.WriteAsync(value.ToString(base.DateFormatString, base.Culture), cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+				await _writer.WriteAsync(value.ToString(DateFormatString, Culture), cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 				await _writer.WriteAsync(_quoteChar).ConfigureAwait(continueOnCapturedContext: false);
 			}
 		}
@@ -768,7 +768,7 @@ namespace Newtonsoft.Json
 
 		internal Task WriteValueAsync(double value, bool nullable, CancellationToken cancellationToken)
 		{
-			return WriteValueInternalAsync(JsonToken.Float, JsonConvert.ToString(value, base.FloatFormatHandling, QuoteChar, nullable), cancellationToken);
+			return WriteValueInternalAsync(JsonToken.Float, JsonConvert.ToString(value, FloatFormatHandling, QuoteChar, nullable), cancellationToken);
 		}
 
 		public override Task WriteValueAsync(double? value, CancellationToken cancellationToken = default(CancellationToken))
@@ -795,7 +795,7 @@ namespace Newtonsoft.Json
 
 		internal Task WriteValueAsync(float value, bool nullable, CancellationToken cancellationToken)
 		{
-			return WriteValueInternalAsync(JsonToken.Float, JsonConvert.ToString(value, base.FloatFormatHandling, QuoteChar, nullable), cancellationToken);
+			return WriteValueInternalAsync(JsonToken.Float, JsonConvert.ToString(value, FloatFormatHandling, QuoteChar, nullable), cancellationToken);
 		}
 
 		public override Task WriteValueAsync(float? value, CancellationToken cancellationToken = default(CancellationToken))
@@ -905,7 +905,7 @@ namespace Newtonsoft.Json
 			return WriteValueInternalAsync(JsonToken.Integer, value.ToString(CultureInfo.InvariantCulture), cancellationToken);
 		}
 
-		public override Task WriteValueAsync(/*[Nullable(2)]*/ object value, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteValueAsync( object value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (_safeAsync)
 			{
@@ -978,7 +978,7 @@ namespace Newtonsoft.Json
 			return DoWriteNullAsync(cancellationToken);
 		}
 
-		public override Task WriteValueAsync(/*[Nullable(2)]*/ string value, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteValueAsync( string value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -987,7 +987,7 @@ namespace Newtonsoft.Json
 			return DoWriteValueAsync(value, cancellationToken);
 		}
 
-		internal Task DoWriteValueAsync(/*[Nullable(2)]*/ string value, CancellationToken cancellationToken)
+		internal Task DoWriteValueAsync( string value, CancellationToken cancellationToken)
 		{
 			Task task = InternalWriteValueAsync(JsonToken.String, cancellationToken);
 			if (task.IsCompletedSucessfully())
@@ -1001,7 +1001,7 @@ namespace Newtonsoft.Json
 			return DoWriteValueAsync(task, value, cancellationToken);
 		}
 
-		private async Task DoWriteValueAsync(Task task, /*[Nullable(2)]*/ string value, CancellationToken cancellationToken)
+		private async Task DoWriteValueAsync(Task task,  string value, CancellationToken cancellationToken)
 		{
 			await task.ConfigureAwait(continueOnCapturedContext: false);
 			await ((value == null) ? _writer.WriteAsync(JsonConvert.Null, cancellationToken) : WriteEscapedStringAsync(value, quote: true, cancellationToken)).ConfigureAwait(continueOnCapturedContext: false);
@@ -1100,7 +1100,7 @@ namespace Newtonsoft.Json
 			return DoWriteNullAsync(cancellationToken);
 		}
 
-		public override Task WriteValueAsync(/*[Nullable(2)]*/ Uri value, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteValueAsync( Uri value, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -1158,7 +1158,7 @@ namespace Newtonsoft.Json
 			return DoWriteNullAsync(cancellationToken);
 		}
 
-		public override Task WriteCommentAsync(/*[Nullable(2)]*/ string text, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteCommentAsync( string text, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -1167,7 +1167,7 @@ namespace Newtonsoft.Json
 			return DoWriteCommentAsync(text, cancellationToken);
 		}
 
-		internal async Task DoWriteCommentAsync(/*[Nullable(2)]*/ string text, CancellationToken cancellationToken)
+		internal async Task DoWriteCommentAsync( string text, CancellationToken cancellationToken)
 		{
 			await InternalWriteCommentAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 			await _writer.WriteAsync("/*", cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
@@ -1202,7 +1202,7 @@ namespace Newtonsoft.Json
 			return InternalWriteEndAsync(JsonContainerType.Object, cancellationToken);
 		}
 
-		public override Task WriteRawValueAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken = default(CancellationToken))
+		public override Task WriteRawValueAsync( string json, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (!_safeAsync)
 			{
@@ -1211,7 +1211,7 @@ namespace Newtonsoft.Json
 			return DoWriteRawValueAsync(json, cancellationToken);
 		}
 
-		internal Task DoWriteRawValueAsync(/*[Nullable(2)]*/ string json, CancellationToken cancellationToken)
+		internal Task DoWriteRawValueAsync( string json, CancellationToken cancellationToken)
 		{
 			UpdateScopeWithFinishedValue();
 			Task task = AutoCompleteAsync(JsonToken.Undefined, cancellationToken);
@@ -1222,7 +1222,7 @@ namespace Newtonsoft.Json
 			return DoWriteRawValueAsync(task, json, cancellationToken);
 		}
 
-		private async Task DoWriteRawValueAsync(Task task, /*[Nullable(2)]*/ string json, CancellationToken cancellationToken)
+		private async Task DoWriteRawValueAsync(Task task,  string json, CancellationToken cancellationToken)
 		{
 			await task.ConfigureAwait(continueOnCapturedContext: false);
 			await WriteRawAsync(json, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
@@ -1286,7 +1286,7 @@ namespace Newtonsoft.Json
 				BufferUtils.ReturnBuffer(_arrayPool, _writeBuffer);
 				_writeBuffer = null;
 			}
-			if (base.CloseOutput)
+			if (CloseOutput)
 			{
 				_writer?.Close();
 			}
@@ -1366,12 +1366,12 @@ namespace Newtonsoft.Json
 
 		private void UpdateCharEscapeFlags()
 		{
-			_charEscapeFlags = JavaScriptUtils.GetCharEscapeFlags(base.StringEscapeHandling, _quoteChar);
+			_charEscapeFlags = JavaScriptUtils.GetCharEscapeFlags(StringEscapeHandling, _quoteChar);
 		}
 
 		protected override void WriteIndent()
 		{
-			int num = base.Top * _indentation;
+			int num = Top * _indentation;
 			int num2 = SetIndentChars();
 			_writer.Write(_indentChars, 0, num2 + Math.Min(num, 12));
 			while ((num -= 12) > 0)
@@ -1468,7 +1468,7 @@ namespace Newtonsoft.Json
 		private void WriteEscapedString(string value, bool quote)
 		{
 			EnsureWriteBuffer();
-			JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags, base.StringEscapeHandling, _arrayPool, ref _writeBuffer);
+			JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags, StringEscapeHandling, _arrayPool, ref _writeBuffer);
 		}
 
 		public override void WriteValue(int value)
@@ -1500,7 +1500,7 @@ namespace Newtonsoft.Json
 		public override void WriteValue(float value)
 		{
 			InternalWriteValue(JsonToken.Float);
-			WriteValueInternal(JsonConvert.ToString(value, base.FloatFormatHandling, QuoteChar, nullable: false), JsonToken.Float);
+			WriteValueInternal(JsonConvert.ToString(value, FloatFormatHandling, QuoteChar, nullable: false), JsonToken.Float);
 		}
 
 		public override void WriteValue(float? value)
@@ -1511,13 +1511,13 @@ namespace Newtonsoft.Json
 				return;
 			}
 			InternalWriteValue(JsonToken.Float);
-			WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), base.FloatFormatHandling, QuoteChar, nullable: true), JsonToken.Float);
+			WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, nullable: true), JsonToken.Float);
 		}
 
 		public override void WriteValue(double value)
 		{
 			InternalWriteValue(JsonToken.Float);
-			WriteValueInternal(JsonConvert.ToString(value, base.FloatFormatHandling, QuoteChar, nullable: false), JsonToken.Float);
+			WriteValueInternal(JsonConvert.ToString(value, FloatFormatHandling, QuoteChar, nullable: false), JsonToken.Float);
 		}
 
 		public override void WriteValue(double? value)
@@ -1528,7 +1528,7 @@ namespace Newtonsoft.Json
 				return;
 			}
 			InternalWriteValue(JsonToken.Float);
-			WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), base.FloatFormatHandling, QuoteChar, nullable: true), JsonToken.Float);
+			WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, nullable: true), JsonToken.Float);
 		}
 
 		public override void WriteValue(bool value)
@@ -1578,8 +1578,8 @@ namespace Newtonsoft.Json
 		public override void WriteValue(DateTime value)
 		{
 			InternalWriteValue(JsonToken.Date);
-			value = DateTimeUtils.EnsureDateTime(value, base.DateTimeZoneHandling);
-			if (StringUtils.IsNullOrEmpty(base.DateFormatString))
+			value = DateTimeUtils.EnsureDateTime(value, DateTimeZoneHandling);
+			if (StringUtils.IsNullOrEmpty(DateFormatString))
 			{
 				int count = WriteValueToBuffer(value);
 				_writer.Write(_writeBuffer, 0, count);
@@ -1587,7 +1587,7 @@ namespace Newtonsoft.Json
 			else
 			{
 				_writer.Write(_quoteChar);
-				_writer.Write(value.ToString(base.DateFormatString, base.Culture));
+				_writer.Write(value.ToString(DateFormatString, Culture));
 				_writer.Write(_quoteChar);
 			}
 		}
@@ -1597,7 +1597,7 @@ namespace Newtonsoft.Json
 			EnsureWriteBuffer();
 			int start = 0;
 			_writeBuffer[start++] = _quoteChar;
-			start = DateTimeUtils.WriteDateTimeString(_writeBuffer, start, value, null, value.Kind, base.DateFormatHandling);
+			start = DateTimeUtils.WriteDateTimeString(_writeBuffer, start, value, null, value.Kind, DateFormatHandling);
 			_writeBuffer[start++] = _quoteChar;
 			return start;
 		}
@@ -1620,7 +1620,7 @@ namespace Newtonsoft.Json
 		public override void WriteValue(DateTimeOffset value)
 		{
 			InternalWriteValue(JsonToken.Date);
-			if (StringUtils.IsNullOrEmpty(base.DateFormatString))
+			if (StringUtils.IsNullOrEmpty(DateFormatString))
 			{
 				int count = WriteValueToBuffer(value);
 				_writer.Write(_writeBuffer, 0, count);
@@ -1628,7 +1628,7 @@ namespace Newtonsoft.Json
 			else
 			{
 				_writer.Write(_quoteChar);
-				_writer.Write(value.ToString(base.DateFormatString, base.Culture));
+				_writer.Write(value.ToString(DateFormatString, Culture));
 				_writer.Write(_quoteChar);
 			}
 		}
@@ -1638,7 +1638,7 @@ namespace Newtonsoft.Json
 			EnsureWriteBuffer();
 			int start = 0;
 			_writeBuffer[start++] = _quoteChar;
-			start = DateTimeUtils.WriteDateTimeString(_writeBuffer, start, (base.DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, base.DateFormatHandling);
+			start = DateTimeUtils.WriteDateTimeString(_writeBuffer, start, (DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, DateFormatHandling);
 			_writeBuffer[start++] = _quoteChar;
 			return start;
 		}

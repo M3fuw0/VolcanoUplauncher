@@ -12,14 +12,14 @@ namespace Newtonsoft.Json.Linq
 	/*[Nullable(0)]*/
 	public class JConstructor : JContainer
 	{
-		/*[Nullable(2)]*/
+		
 		private string _name;
 
 		private readonly List<JToken> _values = new List<JToken>();
 
 		protected override IList<JToken> ChildrenTokens => _values;
 
-		/*[Nullable(2)]*/
+		
 		public string Name
 		{
 			/*[NullableContext(2)]*/
@@ -36,7 +36,7 @@ namespace Newtonsoft.Json.Linq
 
 		public override JTokenType Type => JTokenType.Constructor;
 
-		/*[Nullable(2)]*/
+		
 		public override JToken this[object key]
 		{
 			/*[return: Nullable(2)]*/
@@ -76,7 +76,7 @@ namespace Newtonsoft.Json.Linq
 			return LoadAsync(reader, null, cancellationToken);
 		}
 
-		public new static async Task<JConstructor> LoadAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public new static async Task<JConstructor> LoadAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (reader.TokenType == JsonToken.None && !(await reader.ReadAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false)))
 			{
@@ -103,7 +103,7 @@ namespace Newtonsoft.Json.Linq
 			return _values.IndexOfReference(item);
 		}
 
-		internal override void MergeItem(object content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		internal override void MergeItem(object content,  JsonMergeSettings settings)
 		{
 			if (content is JConstructor jConstructor)
 			{
@@ -111,7 +111,7 @@ namespace Newtonsoft.Json.Linq
 				{
 					Name = jConstructor.Name;
 				}
-				JContainer.MergeEnumerableContent(this, jConstructor, settings);
+				MergeEnumerableContent(this, jConstructor, settings);
 			}
 		}
 
@@ -184,7 +184,7 @@ namespace Newtonsoft.Json.Linq
 			return Load(reader, null);
 		}
 
-		public new static JConstructor Load(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JConstructor Load(JsonReader reader,  JsonLoadSettings settings)
 		{
 			if (reader.TokenType == JsonToken.None && !reader.Read())
 			{

@@ -25,7 +25,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override MethodCall<T, object> CreateMethodCall</*[Nullable(2)]*/ T>(MethodBase method)
+		public override MethodCall<T, object> CreateMethodCall< T>(MethodBase method)
 		{
 			ValidationUtils.ArgumentNotNull(method, "method");
 			ConstructorInfo c = method as ConstructorInfo;
@@ -36,7 +36,7 @@ namespace Newtonsoft.Json.Utilities
 			return (T o, /*[Nullable(new byte[] { 1, 2 })]*/ object[] a) => method.Invoke(o, a);
 		}
 
-		public override Func<T> CreateDefaultConstructor</*[Nullable(2)]*/ T>(Type type)
+		public override Func<T> CreateDefaultConstructor< T>(Type type)
 		{
 			ValidationUtils.ArgumentNotNull(type, "type");
 			if (type.IsValueType())
@@ -48,34 +48,34 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Func<T, object> CreateGet< T>(PropertyInfo propertyInfo)
 		{
 			ValidationUtils.ArgumentNotNull(propertyInfo, "propertyInfo");
 			return (T o) => propertyInfo.GetValue(o, null);
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Func<T, object> CreateGet< T>(FieldInfo fieldInfo)
 		{
 			ValidationUtils.ArgumentNotNull(fieldInfo, "fieldInfo");
 			return (T o) => fieldInfo.GetValue(o);
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Action<T, object> CreateSet< T>(FieldInfo fieldInfo)
 		{
 			ValidationUtils.ArgumentNotNull(fieldInfo, "fieldInfo");
-			return delegate(T o, /*[Nullable(2)]*/ object v)
+			return delegate(T o,  object v)
 			{
 				fieldInfo.SetValue(o, v);
 			};
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Action<T, object> CreateSet< T>(PropertyInfo propertyInfo)
 		{
 			ValidationUtils.ArgumentNotNull(propertyInfo, "propertyInfo");
-			return delegate(T o, /*[Nullable(2)]*/ object v)
+			return delegate(T o,  object v)
 			{
 				propertyInfo.SetValue(o, v, null);
 			};

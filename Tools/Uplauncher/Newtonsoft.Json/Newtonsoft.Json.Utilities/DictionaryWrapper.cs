@@ -10,10 +10,10 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal class DictionaryWrapper</*[Nullable(2)]*/ TKey, /*[Nullable(2)]*/ TValue> : IDictionary<TKey, TValue>, ICollection<KeyValuePair<TKey, TValue>>, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable, IWrappedDictionary, IDictionary, ICollection
+	internal class DictionaryWrapper< TKey,  TValue> : IDictionary<TKey, TValue>, ICollection<KeyValuePair<TKey, TValue>>, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable, IWrappedDictionary, IDictionary, ICollection
 	{
 		/*[Nullable(0)]*/
-		private readonly struct DictionaryEnumerator</*[Nullable(2)]*/ TEnumeratorKey, /*[Nullable(2)]*/ TEnumeratorValue> : IDictionaryEnumerator, IEnumerator
+		private readonly struct DictionaryEnumerator< TEnumeratorKey,  TEnumeratorValue> : IDictionaryEnumerator, IEnumerator
 		{
 			/*[Nullable(new byte[] { 1, 0, 1, 1 })]*/
 			private readonly IEnumerator<KeyValuePair<TEnumeratorKey, TEnumeratorValue>> _e;
@@ -43,7 +43,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		private readonly IDictionary _dictionary;
 
 		/*[Nullable(new byte[] { 2, 1, 1 })]*/
@@ -52,7 +52,7 @@ namespace Newtonsoft.Json.Utilities
 		/*[Nullable(new byte[] { 2, 1, 1 })]*/
 		private readonly IReadOnlyDictionary<TKey, TValue> _readOnlyDictionary;
 
-		/*[Nullable(2)]*/
+		
 		private object _syncRoot;
 
 		internal IDictionary<TKey, TValue> GenericDictionary => _genericDictionary;
@@ -150,7 +150,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		object IDictionary.this[object key]
 		{
 			/*[return: Nullable(2)]*/
@@ -334,7 +334,7 @@ namespace Newtonsoft.Json.Utilities
 			return GenericDictionary.Remove(key);
 		}
 
-		public bool TryGetValue(TKey key, [MaybeNull] out TValue value)
+		public bool TryGetValue(TKey key, out TValue value)
 		{
 			if (_dictionary != null)
 			{
@@ -417,7 +417,7 @@ namespace Newtonsoft.Json.Utilities
 			{
 				if (_dictionary.Contains(item.Key))
 				{
-					if (object.Equals(_dictionary[item.Key], item.Value))
+					if (Equals(_dictionary[item.Key], item.Value))
 					{
 						_dictionary.Remove(item.Key);
 						return true;

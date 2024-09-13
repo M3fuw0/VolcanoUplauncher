@@ -11,7 +11,7 @@ namespace Newtonsoft.Json.Converters
 	{
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-		public override void WriteJson(JsonWriter writer, /*[Nullable(2)]*/ object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
 		{
 			long num;
 			if (value is DateTime dateTime)
@@ -34,7 +34,7 @@ namespace Newtonsoft.Json.Converters
 		}
 
 		/*[return: Nullable(2)]*/
-		public override object ReadJson(JsonReader reader, Type objectType, /*[Nullable(2)]*/ object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType,  object existingValue, JsonSerializer serializer)
 		{
 			bool flag = ReflectionUtils.IsNullable(objectType);
 			if (reader.TokenType == JsonToken.Null)

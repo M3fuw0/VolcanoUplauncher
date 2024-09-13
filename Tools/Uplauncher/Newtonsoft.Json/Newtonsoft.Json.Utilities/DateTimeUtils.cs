@@ -274,7 +274,7 @@ namespace Newtonsoft.Json.Utilities
 			return result;
 		}
 
-		internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling, /*[Nullable(2)]*/ string dateFormatString, CultureInfo culture, out DateTime dt)
+		internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling,  string dateFormatString, CultureInfo culture, out DateTime dt)
 		{
 			if (s.Length > 0)
 			{
@@ -299,7 +299,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling, /*[Nullable(2)]*/ string dateFormatString, CultureInfo culture, out DateTime dt)
+		internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling,  string dateFormatString, CultureInfo culture, out DateTime dt)
 		{
 			if (s.Length > 0)
 			{
@@ -324,7 +324,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		internal static bool TryParseDateTimeOffset(StringReference s, /*[Nullable(2)]*/ string dateFormatString, CultureInfo culture, out DateTimeOffset dt)
+		internal static bool TryParseDateTimeOffset(StringReference s,  string dateFormatString, CultureInfo culture, out DateTimeOffset dt)
 		{
 			if (s.Length > 0)
 			{
@@ -349,7 +349,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		internal static bool TryParseDateTimeOffset(string s, /*[Nullable(2)]*/ string dateFormatString, CultureInfo culture, out DateTimeOffset dt)
+		internal static bool TryParseDateTimeOffset(string s,  string dateFormatString, CultureInfo culture, out DateTimeOffset dt)
 		{
 			if (s.Length > 0)
 			{
@@ -477,7 +477,7 @@ namespace Newtonsoft.Json.Utilities
 			return true;
 		}
 
-		internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format, /*[Nullable(2)]*/ string formatString, CultureInfo culture)
+		internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format,  string formatString, CultureInfo culture)
 		{
 			if (StringUtils.IsNullOrEmpty(formatString))
 			{
@@ -590,7 +590,7 @@ namespace Newtonsoft.Json.Utilities
 			return start;
 		}
 
-		internal static void WriteDateTimeOffsetString(TextWriter writer, DateTimeOffset value, DateFormatHandling format, /*[Nullable(2)]*/ string formatString, CultureInfo culture)
+		internal static void WriteDateTimeOffsetString(TextWriter writer, DateTimeOffset value, DateFormatHandling format,  string formatString, CultureInfo culture)
 		{
 			if (StringUtils.IsNullOrEmpty(formatString))
 			{

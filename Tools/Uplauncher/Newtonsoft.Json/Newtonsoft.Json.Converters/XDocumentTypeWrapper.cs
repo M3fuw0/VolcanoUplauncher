@@ -17,17 +17,12 @@ namespace Newtonsoft.Json.Converters
 
 		public string InternalSubset => _documentType.InternalSubset;
 
-		/*[Nullable(2)]*/
-		public override string LocalName
-		{
-			/*[NullableContext(2)]*/
-			get
-			{
-				return "DOCTYPE";
-			}
-		}
+		
+		public override string LocalName =>
+            /*[NullableContext(2)]*/
+            "DOCTYPE";
 
-		public XDocumentTypeWrapper(XDocumentType documentType)
+        public XDocumentTypeWrapper(XDocumentType documentType)
 			: base(documentType)
 		{
 			_documentType = documentType;

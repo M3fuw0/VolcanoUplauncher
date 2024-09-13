@@ -6,7 +6,7 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal class ThreadSafeStore</*[Nullable(2)]*/ TKey, /*[Nullable(2)]*/ TValue>
+	internal class ThreadSafeStore< TKey,  TValue>
 	{
 		private readonly ConcurrentDictionary<TKey, TValue> _concurrentStore;
 

@@ -15,10 +15,10 @@ namespace Newtonsoft.Json.Serialization
 
 		private readonly JsonISerializableContract _contract;
 
-		/*[Nullable(2)]*/
+		
 		private readonly JsonProperty _member;
 
-		public JsonFormatterConverter(JsonSerializerInternalReader reader, JsonISerializableContract contract, /*[Nullable(2)]*/ JsonProperty member)
+		public JsonFormatterConverter(JsonSerializerInternalReader reader, JsonISerializableContract contract,  JsonProperty member)
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			ValidationUtils.ArgumentNotNull(contract, "contract");
@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Serialization
 			_member = member;
 		}
 
-		private T GetTokenValue</*[Nullable(2)]*/ T>(object value)
+		private T GetTokenValue< T>(object value)
 		{
 			ValidationUtils.ArgumentNotNull(value, "value");
 			return (T)System.Convert.ChangeType(((JValue)value).Value, typeof(T), CultureInfo.InvariantCulture);

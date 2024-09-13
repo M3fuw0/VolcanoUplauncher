@@ -15,7 +15,7 @@ namespace Newtonsoft.Json.Serialization
 			SerializationBinder = serializationBinder;
 		}
 
-		public Type BindToType(/*[Nullable(2)]*/ string assemblyName, string typeName)
+		public Type BindToType( string assemblyName, string typeName)
 		{
 			return SerializationBinder.BindToType(assemblyName, typeName);
 		}

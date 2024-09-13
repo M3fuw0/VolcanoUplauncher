@@ -33,7 +33,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public override JsonToken TokenType => _innerReader.TokenType;
 
-		/*[Nullable(2)]*/
+		
 		public override object Value
 		{
 			/*[NullableContext(2)]*/
@@ -43,7 +43,7 @@ namespace Newtonsoft.Json.Serialization
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public override Type ValueType
 		{
 			/*[NullableContext(2)]*/

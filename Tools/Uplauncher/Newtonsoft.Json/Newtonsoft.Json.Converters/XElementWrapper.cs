@@ -12,7 +12,7 @@ namespace Newtonsoft.Json.Converters
 		/*[Nullable(new byte[] { 2, 1 })]*/
 		private List<IXmlNode> _attributes;
 
-		private XElement Element => (XElement)base.WrappedNode;
+		private XElement Element => (XElement)WrappedNode;
 
 		public override List<IXmlNode> Attributes
 		{
@@ -42,42 +42,26 @@ namespace Newtonsoft.Json.Converters
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public override string Value
 		{
 			/*[NullableContext(2)]*/
-			get
-			{
-				return Element.Value;
-			}
-			/*[NullableContext(2)]*/
-			set
-			{
-				Element.Value = value;
-			}
-		}
+			get => Element.Value;
+            /*[NullableContext(2)]*/
+			set => Element.Value = value;
+        }
 
-		/*[Nullable(2)]*/
-		public override string LocalName
-		{
-			/*[NullableContext(2)]*/
-			get
-			{
-				return Element.Name.LocalName;
-			}
-		}
+		
+		public override string LocalName =>
+            /*[NullableContext(2)]*/
+            Element.Name.LocalName;
 
-		/*[Nullable(2)]*/
-		public override string NamespaceUri
-		{
-			/*[NullableContext(2)]*/
-			get
-			{
-				return Element.Name.NamespaceName;
-			}
-		}
+        
+		public override string NamespaceUri =>
+            /*[NullableContext(2)]*/
+            Element.Name.NamespaceName;
 
-		public bool IsEmpty => Element.IsEmpty;
+        public bool IsEmpty => Element.IsEmpty;
 
 		public XElementWrapper(XElement element)
 			: base(element)

@@ -49,7 +49,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[NullableContext(1)]*/
-		public void Append(/*[Nullable(2)]*/ IArrayPool<char> bufferPool, char[] buffer, int startIndex, int count)
+		public void Append( IArrayPool<char> bufferPool, char[] buffer, int startIndex, int count)
 		{
 			if (_position + count >= _buffer.Length)
 			{

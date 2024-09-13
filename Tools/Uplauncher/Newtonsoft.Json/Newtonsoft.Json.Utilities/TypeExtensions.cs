@@ -85,7 +85,7 @@ namespace Newtonsoft.Json.Utilities
 			return type.IsPrimitive;
 		}
 
-		public static bool AssignableToTypeName(this Type type, string fullTypeName, bool searchInterfaces, /*[Nullable(2)]*/[NotNullWhen(true)] out Type match)
+		public static bool AssignableToTypeName(this Type type, string fullTypeName, bool searchInterfaces, out Type match)
 		{
 			Type type2 = type;
 			while (type2 != null)

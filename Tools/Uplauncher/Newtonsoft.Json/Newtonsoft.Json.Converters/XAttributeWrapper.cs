@@ -8,26 +8,15 @@ namespace Newtonsoft.Json.Converters
 	internal class XAttributeWrapper : XObjectWrapper
 	{
 		/*[Nullable(1)]*/
-		private XAttribute Attribute
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return (XAttribute)base.WrappedNode;
-			}
-		}
+		private XAttribute Attribute =>
+            /*[NullableContext(1)]*/
+            (XAttribute)WrappedNode;
 
-		public override string Value
+        public override string Value
 		{
-			get
-			{
-				return Attribute.Value;
-			}
-			set
-			{
-				Attribute.Value = value;
-			}
-		}
+			get => Attribute.Value;
+            set => Attribute.Value = value;
+        }
 
 		public override string LocalName => Attribute.Name.LocalName;
 

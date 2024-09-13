@@ -13,7 +13,7 @@ namespace Newtonsoft.Json.Utilities
 	{
 		private static readonly object Lock = new object();
 
-		/*[Nullable(2)]*/
+		
 		private static FSharpUtils _instance;
 
 		private MethodInfo _ofSeq;
@@ -150,7 +150,7 @@ namespace Newtonsoft.Json.Utilities
 			MethodInfo method = methodWithNonPublicFallback.ReturnType.GetMethod("Invoke", BindingFlags.Instance | BindingFlags.Public);
 			MethodCall<object, object> call = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(methodWithNonPublicFallback);
 			MethodCall<object, object> invoke = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(method);
-			return (/*[Nullable(2)]*/ object target, /*[Nullable(new byte[] { 1, 2 })]*/ object[] args) => new FSharpFunction(call(target, args), invoke);
+			return ( object target, /*[Nullable(new byte[] { 1, 2 })]*/ object[] args) => new FSharpFunction(call(target, args), invoke);
 		}
 
 		public ObjectConstructor<object> CreateSeq(Type t)

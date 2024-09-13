@@ -102,9 +102,9 @@ namespace Newtonsoft.Json.Serialization
 			{
 				keyType = _genericCollectionDefinitionType.GetGenericArguments()[0];
 				valueType = _genericCollectionDefinitionType.GetGenericArguments()[1];
-				if (ReflectionUtils.IsGenericDefinition(base.UnderlyingType, typeof(IDictionary<, >)))
+				if (ReflectionUtils.IsGenericDefinition(UnderlyingType, typeof(IDictionary<, >)))
 				{
-					base.CreatedType = typeof(Dictionary<, >).MakeGenericType(keyType, valueType);
+					CreatedType = typeof(Dictionary<, >).MakeGenericType(keyType, valueType);
 				}
 				else if (underlyingType.IsGenericType() && underlyingType.GetGenericTypeDefinition().FullName == "System.Collections.Concurrent.ConcurrentDictionary`2")
 				{
@@ -116,30 +116,30 @@ namespace Newtonsoft.Json.Serialization
 			{
 				keyType = _genericCollectionDefinitionType.GetGenericArguments()[0];
 				valueType = _genericCollectionDefinitionType.GetGenericArguments()[1];
-				if (ReflectionUtils.IsGenericDefinition(base.UnderlyingType, typeof(IReadOnlyDictionary<, >)))
+				if (ReflectionUtils.IsGenericDefinition(UnderlyingType, typeof(IReadOnlyDictionary<, >)))
 				{
-					base.CreatedType = typeof(ReadOnlyDictionary<, >).MakeGenericType(keyType, valueType);
+					CreatedType = typeof(ReadOnlyDictionary<, >).MakeGenericType(keyType, valueType);
 				}
 				IsReadOnlyOrFixedSize = true;
 			}
 			else
 			{
-				ReflectionUtils.GetDictionaryKeyValueTypes(base.UnderlyingType, out keyType, out valueType);
-				if (base.UnderlyingType == typeof(IDictionary))
+				ReflectionUtils.GetDictionaryKeyValueTypes(UnderlyingType, out keyType, out valueType);
+				if (UnderlyingType == typeof(IDictionary))
 				{
-					base.CreatedType = typeof(Dictionary<object, object>);
+					CreatedType = typeof(Dictionary<object, object>);
 				}
 			}
 			if (keyType != null && valueType != null)
 			{
-				_parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(base.CreatedType, typeof(KeyValuePair<, >).MakeGenericType(keyType, valueType), typeof(IDictionary<, >).MakeGenericType(keyType, valueType));
+				_parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(CreatedType, typeof(KeyValuePair<, >).MakeGenericType(keyType, valueType), typeof(IDictionary<, >).MakeGenericType(keyType, valueType));
 				if (!HasParameterizedCreatorInternal && underlyingType.Name == "FSharpMap`2")
 				{
 					FSharpUtils.EnsureInitialized(underlyingType.Assembly());
 					_parameterizedCreator = FSharpUtils.Instance.CreateMap(keyType, valueType);
 				}
 			}
-			if (!typeof(IDictionary).IsAssignableFrom(base.CreatedType))
+			if (!typeof(IDictionary).IsAssignableFrom(CreatedType))
 			{
 				ShouldCreateWrapper = true;
 			}
@@ -147,7 +147,7 @@ namespace Newtonsoft.Json.Serialization
 			DictionaryValueType = valueType;
 			if (DictionaryKeyType != null && DictionaryValueType != null && ImmutableCollectionsUtils.TryBuildImmutableForDictionaryContract(underlyingType, DictionaryKeyType, DictionaryValueType, out var createdType, out var parameterizedCreator))
 			{
-				base.CreatedType = createdType;
+				CreatedType = createdType;
 				_parameterizedCreator = parameterizedCreator;
 				IsReadOnlyOrFixedSize = true;
 			}

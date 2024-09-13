@@ -80,12 +80,12 @@ namespace Newtonsoft.Json.Utilities
 			return list;
 		}
 
-		public static bool TryToString(Type enumType, object value, bool camelCase, /*[Nullable(2)]*/[NotNullWhen(true)] out string name)
+		public static bool TryToString(Type enumType, object value, bool camelCase, out string name)
 		{
 			return TryToString(enumType, value, camelCase ? _camelCaseNamingStrategy : null, out name);
 		}
 
-		public static bool TryToString(Type enumType, object value, /*[Nullable(2)]*/ NamingStrategy namingStrategy, /*[Nullable(2)]*/[NotNullWhen(true)] out string name)
+		public static bool TryToString(Type enumType, object value,  NamingStrategy namingStrategy, out string name)
 		{
 			EnumInfo enumInfo = ValuesAndNamesPerEnum.Get(new StructMultiKey<Type, NamingStrategy>(enumType, namingStrategy));
 			ulong num = ToUInt64(value);
@@ -178,7 +178,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		public static object ParseEnum(Type enumType, /*[Nullable(2)]*/ NamingStrategy namingStrategy, string value, bool disallowNumber)
+		public static object ParseEnum(Type enumType,  NamingStrategy namingStrategy, string value, bool disallowNumber)
 		{
 			ValidationUtils.ArgumentNotNull(enumType, "enumType");
 			ValidationUtils.ArgumentNotNull(value, "value");

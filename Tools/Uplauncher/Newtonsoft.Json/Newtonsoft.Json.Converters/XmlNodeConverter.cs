@@ -30,7 +30,7 @@ namespace Newtonsoft.Json.Converters
 
 		private const string JsonNamespaceUri = "http://james.newtonking.com/projects/json";
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public string DeserializeRootElementName
 		{
@@ -46,7 +46,7 @@ namespace Newtonsoft.Json.Converters
 
 		public bool EncodeSpecialCharacters { get; set; }
 
-		public override void WriteJson(JsonWriter writer, /*[Nullable(2)]*/ object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
 		{
 			if (value == null)
 			{
@@ -435,7 +435,7 @@ namespace Newtonsoft.Json.Converters
 		}
 
 		/*[return: Nullable(2)]*/
-		public override object ReadJson(JsonReader reader, Type objectType, /*[Nullable(2)]*/ object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType,  object existingValue, JsonSerializer serializer)
 		{
 			switch (reader.TokenType)
 			{
@@ -585,7 +585,7 @@ namespace Newtonsoft.Json.Converters
 			CreateElement(reader, document, currentNode, propertyName, manager, elementPrefix, attributeNameValues);
 		}
 
-		private void CreateElement(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string elementName, XmlNamespaceManager manager, /*[Nullable(2)]*/ string elementPrefix, /*[Nullable(new byte[] { 2, 1, 2 })]*/ Dictionary<string, string> attributeNameValues)
+		private void CreateElement(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string elementName, XmlNamespaceManager manager,  string elementPrefix, /*[Nullable(new byte[] { 2, 1, 2 })]*/ Dictionary<string, string> attributeNameValues)
 		{
 			IXmlElement xmlElement = CreateElement(elementName, document, elementPrefix, manager);
 			currentNode.AppendChild(xmlElement);
@@ -629,7 +629,7 @@ namespace Newtonsoft.Json.Converters
 			}
 		}
 
-		private static void AddAttribute(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string propertyName, string attributeName, XmlNamespaceManager manager, /*[Nullable(2)]*/ string attributePrefix)
+		private static void AddAttribute(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string propertyName, string attributeName, XmlNamespaceManager manager,  string attributePrefix)
 		{
 			if (currentNode.NodeType == XmlNodeType.Document)
 			{
@@ -921,7 +921,7 @@ namespace Newtonsoft.Json.Converters
 			currentNode.AppendChild(newChild);
 		}
 
-		private IXmlElement CreateElement(string elementName, IXmlDocument document, /*[Nullable(2)]*/ string elementPrefix, XmlNamespaceManager manager)
+		private IXmlElement CreateElement(string elementName, IXmlDocument document,  string elementPrefix, XmlNamespaceManager manager)
 		{
 			string text = (EncodeSpecialCharacters ? XmlConvert.EncodeLocalName(elementName) : XmlConvert.EncodeName(elementName));
 			string text2 = (StringUtils.IsNullOrEmpty(elementPrefix) ? manager.DefaultNamespace : manager.LookupNamespace(elementPrefix));
@@ -997,7 +997,7 @@ namespace Newtonsoft.Json.Converters
 			while (reader.Read());
 		}
 
-		private bool IsNamespaceAttribute(string attributeName, /*[Nullable(2)]*/[NotNullWhen(true)] out string prefix)
+		private bool IsNamespaceAttribute(string attributeName, out string prefix)
 		{
 			if (attributeName.StartsWith("xmlns", StringComparison.Ordinal))
 			{

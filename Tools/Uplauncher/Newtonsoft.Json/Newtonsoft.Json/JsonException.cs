@@ -18,7 +18,7 @@ namespace Newtonsoft.Json
 		{
 		}
 
-		public JsonException(string message, /*[Nullable(2)]*/ Exception innerException)
+		public JsonException(string message,  Exception innerException)
 			: base(message, innerException)
 		{
 		}

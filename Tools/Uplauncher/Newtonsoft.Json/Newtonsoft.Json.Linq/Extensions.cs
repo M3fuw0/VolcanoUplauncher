@@ -42,7 +42,7 @@ namespace Newtonsoft.Json.Linq
 			return source.SelectMany((JObject d) => d.Properties()).AsJEnumerable();
 		}
 
-		public static IJEnumerable<JToken> Values(this IEnumerable<JToken> source, /*[Nullable(2)]*/ object key)
+		public static IJEnumerable<JToken> Values(this IEnumerable<JToken> source,  object key)
 		{
 			return source.Values<JToken, JToken>(key).AsJEnumerable();
 		}
@@ -52,28 +52,28 @@ namespace Newtonsoft.Json.Linq
 			return source.Values(null);
 		}
 
-		public static IEnumerable<U> Values</*[Nullable(2)]*/ U>(this IEnumerable<JToken> source, object key)
+		public static IEnumerable<U> Values< U>(this IEnumerable<JToken> source, object key)
 		{
 			return source.Values<JToken, U>(key);
 		}
 
-		public static IEnumerable<U> Values</*[Nullable(2)]*/ U>(this IEnumerable<JToken> source)
+		public static IEnumerable<U> Values< U>(this IEnumerable<JToken> source)
 		{
 			return source.Values<JToken, U>(null);
 		}
 
-		public static U Value</*[Nullable(2)]*/ U>(this IEnumerable<JToken> value)
+		public static U Value< U>(this IEnumerable<JToken> value)
 		{
 			return value.Value<JToken, U>();
 		}
 
-		public static U Value</*[Nullable(0)]*/ T, /*[Nullable(2)]*/ U>(this IEnumerable<T> value) where T : JToken
+		public static U Value</*[Nullable(0)]*/ T,  U>(this IEnumerable<T> value) where T : JToken
 		{
 			ValidationUtils.ArgumentNotNull(value, "value");
 			return ((value as JToken) ?? throw new ArgumentException("Source value must be a JToken.")).Convert<JToken, U>();
 		}
 
-		internal static IEnumerable<U> Values</*[Nullable(0)]*/ T, /*[Nullable(2)]*/ U>(this IEnumerable<T> source, /*[Nullable(2)]*/ object key) where T : JToken
+		internal static IEnumerable<U> Values</*[Nullable(0)]*/ T,  U>(this IEnumerable<T> source,  object key) where T : JToken
 		{
 			ValidationUtils.ArgumentNotNull(source, "source");
 			if (key == null)
@@ -107,13 +107,13 @@ namespace Newtonsoft.Json.Linq
 			return source.Children<T, JToken>().AsJEnumerable();
 		}
 
-		public static IEnumerable<U> Children</*[Nullable(0)]*/ T, /*[Nullable(2)]*/ U>(this IEnumerable<T> source) where T : JToken
+		public static IEnumerable<U> Children</*[Nullable(0)]*/ T,  U>(this IEnumerable<T> source) where T : JToken
 		{
 			ValidationUtils.ArgumentNotNull(source, "source");
 			return source.SelectMany((T c) => c.Children()).Convert<JToken, U>();
 		}
 
-		internal static IEnumerable<U> Convert</*[Nullable(0)]*/ T, /*[Nullable(2)]*/ U>(this IEnumerable<T> source) where T : JToken
+		internal static IEnumerable<U> Convert</*[Nullable(0)]*/ T,  U>(this IEnumerable<T> source) where T : JToken
 		{
 			ValidationUtils.ArgumentNotNull(source, "source");
 			foreach (T item in source)
@@ -122,8 +122,8 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		[return: MaybeNull]
-		internal static U Convert</*[Nullable(0)]*/ T, /*[Nullable(2)]*/ U>(this T token) where T : /*[Nullable(2)]*/ JToken
+		
+		internal static U Convert</*[Nullable(0)]*/ T,  U>(this T token) where T :  JToken
 		{
 			if (token == null)
 			{

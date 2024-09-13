@@ -13,52 +13,34 @@ namespace Newtonsoft.Json.Converters
 
 		private DateTimeStyles _dateTimeStyles = DateTimeStyles.RoundtripKind;
 
-		/*[Nullable(2)]*/
+		
 		private string _dateTimeFormat;
 
-		/*[Nullable(2)]*/
+		
 		private CultureInfo _culture;
 
 		public DateTimeStyles DateTimeStyles
 		{
-			get
-			{
-				return _dateTimeStyles;
-			}
-			set
-			{
-				_dateTimeStyles = value;
-			}
-		}
+			get => _dateTimeStyles;
+            set => _dateTimeStyles = value;
+        }
 
-		/*[Nullable(2)]*/
+		
 		public string DateTimeFormat
 		{
 			/*[NullableContext(2)]*/
-			get
-			{
-				return _dateTimeFormat ?? string.Empty;
-			}
-			/*[NullableContext(2)]*/
-			set
-			{
-				_dateTimeFormat = (StringUtils.IsNullOrEmpty(value) ? null : value);
-			}
-		}
+			get => _dateTimeFormat ?? string.Empty;
+            /*[NullableContext(2)]*/
+			set => _dateTimeFormat = (StringUtils.IsNullOrEmpty(value) ? null : value);
+        }
 
 		public CultureInfo Culture
 		{
-			get
-			{
-				return _culture ?? CultureInfo.CurrentCulture;
-			}
-			set
-			{
-				_culture = value;
-			}
-		}
+			get => _culture ?? CultureInfo.CurrentCulture;
+            set => _culture = value;
+        }
 
-		public override void WriteJson(JsonWriter writer, /*[Nullable(2)]*/ object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
 		{
 			string value2;
 			if (value is DateTime dateTime)
@@ -85,7 +67,7 @@ namespace Newtonsoft.Json.Converters
 		}
 
 		/*[return: Nullable(2)]*/
-		public override object ReadJson(JsonReader reader, Type objectType, /*[Nullable(2)]*/ object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType,  object existingValue, JsonSerializer serializer)
 		{
 			bool flag = ReflectionUtils.IsNullableType(objectType);
 			if (reader.TokenType == JsonToken.Null)

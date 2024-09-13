@@ -8,28 +8,17 @@ namespace Newtonsoft.Json.Converters
 	internal class XProcessingInstructionWrapper : XObjectWrapper
 	{
 		/*[Nullable(1)]*/
-		private XProcessingInstruction ProcessingInstruction
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return (XProcessingInstruction)base.WrappedNode;
-			}
-		}
+		private XProcessingInstruction ProcessingInstruction =>
+            /*[NullableContext(1)]*/
+            (XProcessingInstruction)WrappedNode;
 
-		public override string LocalName => ProcessingInstruction.Target;
+        public override string LocalName => ProcessingInstruction.Target;
 
 		public override string Value
 		{
-			get
-			{
-				return ProcessingInstruction.Data;
-			}
-			set
-			{
-				ProcessingInstruction.Data = value;
-			}
-		}
+			get => ProcessingInstruction.Data;
+            set => ProcessingInstruction.Data = value;
+        }
 
 		/*[NullableContext(1)]*/
 		public XProcessingInstructionWrapper(XProcessingInstruction processingInstruction)

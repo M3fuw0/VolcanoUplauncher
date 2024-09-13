@@ -180,7 +180,7 @@ namespace Newtonsoft.Json.Bson
 		public override void Close()
 		{
 			base.Close();
-			if (base.CloseInput)
+			if (CloseInput)
 			{
 				_reader?.Close();
 			}
@@ -201,7 +201,7 @@ namespace Newtonsoft.Json.Bson
 				return true;
 			case BsonReaderState.CodeWScopeScope:
 			{
-				if (base.CurrentState == State.PostValue)
+				if (CurrentState == State.PostValue)
 				{
 					SetToken(JsonToken.PropertyName, "$scope");
 					return true;
@@ -233,7 +233,7 @@ namespace Newtonsoft.Json.Bson
 
 		private bool ReadReference()
 		{
-			switch (base.CurrentState)
+			switch (CurrentState)
 			{
 			case State.ObjectStart:
 				SetToken(JsonToken.PropertyName, "$ref");
@@ -266,13 +266,13 @@ namespace Newtonsoft.Json.Bson
 				}
 				throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + _bsonReaderState);
 			default:
-				throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + base.CurrentState);
+				throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + CurrentState);
 			}
 		}
 
 		private bool ReadNormal()
 		{
-			switch (base.CurrentState)
+			switch (CurrentState)
 			{
 			case State.Start:
 			{
@@ -297,7 +297,7 @@ namespace Newtonsoft.Json.Bson
 				ContainerContext currentContext = _currentContext;
 				if (currentContext == null)
 				{
-					if (!base.SupportMultipleContent)
+					if (!SupportMultipleContent)
 					{
 						return false;
 					}

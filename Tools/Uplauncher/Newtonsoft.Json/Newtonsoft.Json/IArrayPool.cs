@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 namespace Newtonsoft.Json
 {
 	/*[NullableContext(1)]*/
-	public interface IArrayPool</*[Nullable(2)]*/ T>
+	public interface IArrayPool< T>
 	{
 		T[] Rent(int minimumLength);
 

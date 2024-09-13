@@ -22,7 +22,7 @@ namespace Newtonsoft.Json.Linq.JsonPath
 				while (true)
 				{
 					JContainer container = value as JContainer;
-					value = PathFilter.GetNextScanValue(c, container, value);
+					value = GetNextScanValue(c, container, value);
 					if (value == null)
 					{
 						break;

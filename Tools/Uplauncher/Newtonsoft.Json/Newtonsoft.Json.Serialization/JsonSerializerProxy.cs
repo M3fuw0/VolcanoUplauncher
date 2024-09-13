@@ -12,15 +12,15 @@ namespace Newtonsoft.Json.Serialization
 	/*[Nullable(0)]*/
 	internal class JsonSerializerProxy : JsonSerializer
 	{
-		/*[Nullable(2)]*/
+		
 		private readonly JsonSerializerInternalReader _serializerReader;
 
-		/*[Nullable(2)]*/
+		
 		private readonly JsonSerializerInternalWriter _serializerWriter;
 
 		private readonly JsonSerializer _serializer;
 
-		/*[Nullable(2)]*/
+		
 		public override IReferenceResolver ReferenceResolver
 		{
 			/*[NullableContext(2)]*/
@@ -35,7 +35,7 @@ namespace Newtonsoft.Json.Serialization
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public override ITraceWriter TraceWriter
 		{
 			/*[NullableContext(2)]*/
@@ -50,7 +50,7 @@ namespace Newtonsoft.Json.Serialization
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public override IEqualityComparer EqualityComparer
 		{
 			/*[NullableContext(2)]*/

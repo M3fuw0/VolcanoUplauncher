@@ -6,26 +6,26 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal class DynamicProxy</*[Nullable(2)]*/ T>
+	internal class DynamicProxy< T>
 	{
 		public virtual IEnumerable<string> GetDynamicMemberNames(T instance)
 		{
 			return CollectionUtils.ArrayEmpty<string>();
 		}
 
-		public virtual bool TryBinaryOperation(T instance, BinaryOperationBinder binder, object arg, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryBinaryOperation(T instance, BinaryOperationBinder binder, object arg,  out object result)
 		{
 			result = null;
 			return false;
 		}
 
-		public virtual bool TryConvert(T instance, ConvertBinder binder, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryConvert(T instance, ConvertBinder binder,  out object result)
 		{
 			result = null;
 			return false;
 		}
 
-		public virtual bool TryCreateInstance(T instance, CreateInstanceBinder binder, object[] args, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryCreateInstance(T instance, CreateInstanceBinder binder, object[] args,  out object result)
 		{
 			result = null;
 			return false;
@@ -41,25 +41,25 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		public virtual bool TryGetIndex(T instance, GetIndexBinder binder, object[] indexes, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryGetIndex(T instance, GetIndexBinder binder, object[] indexes,  out object result)
 		{
 			result = null;
 			return false;
 		}
 
-		public virtual bool TryGetMember(T instance, GetMemberBinder binder, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryGetMember(T instance, GetMemberBinder binder,  out object result)
 		{
 			result = null;
 			return false;
 		}
 
-		public virtual bool TryInvoke(T instance, InvokeBinder binder, object[] args, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryInvoke(T instance, InvokeBinder binder, object[] args,  out object result)
 		{
 			result = null;
 			return false;
 		}
 
-		public virtual bool TryInvokeMember(T instance, InvokeMemberBinder binder, object[] args, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryInvokeMember(T instance, InvokeMemberBinder binder, object[] args,  out object result)
 		{
 			result = null;
 			return false;
@@ -75,7 +75,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		public virtual bool TryUnaryOperation(T instance, UnaryOperationBinder binder, /*[Nullable(2)]*/ out object result)
+		public virtual bool TryUnaryOperation(T instance, UnaryOperationBinder binder,  out object result)
 		{
 			result = null;
 			return false;

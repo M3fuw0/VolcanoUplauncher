@@ -50,13 +50,14 @@ namespace PatchBuilder
                     var content = File.ReadAllBytes(file);
                     var md5Hasher2 = MD5.Create();
                     
-                    var task = new MetaFileEntry
-                    {
-                        LocalURL = GetRelativePath(file, patchDir + "\\"),
-                        RelativeURL = GetRelativePath(file, patchDir + "\\"),
-                        FileMD5 = Convert.ToBase64String(md5Hasher2.ComputeHash(content)),
-                        FileSize = content.Length,
-                    };
+                    var task =
+                        new MetaFileEntry
+                        {
+                            LocalURL = GetRelativePath(file, patchDir + "\\"),
+                            RelativeURL = GetRelativePath(file, patchDir + "\\"),
+                            FileMD5 = Convert.ToBase64String(md5Hasher2.ComputeHash(content)),
+                            FileSize = content.Length,
+                        };
 
                     md5Hasher2.Dispose();
 

@@ -13,7 +13,7 @@ namespace Newtonsoft.Json
 
 		public int LinePosition { get; }
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public string Path
 		{
@@ -40,7 +40,7 @@ namespace Newtonsoft.Json
 		{
 		}
 
-		public JsonReaderException(string message, string path, int lineNumber, int linePosition, /*[Nullable(2)]*/ Exception innerException)
+		public JsonReaderException(string message, string path, int lineNumber, int linePosition,  Exception innerException)
 			: base(message, innerException)
 		{
 			Path = path;
@@ -53,12 +53,12 @@ namespace Newtonsoft.Json
 			return Create(reader, message, null);
 		}
 
-		internal static JsonReaderException Create(JsonReader reader, string message, /*[Nullable(2)]*/ Exception ex)
+		internal static JsonReaderException Create(JsonReader reader, string message,  Exception ex)
 		{
 			return Create(reader as IJsonLineInfo, reader.Path, message, ex);
 		}
 
-		internal static JsonReaderException Create(/*[Nullable(2)]*/ IJsonLineInfo lineInfo, string path, string message, /*[Nullable(2)]*/ Exception ex)
+		internal static JsonReaderException Create( IJsonLineInfo lineInfo, string path, string message,  Exception ex)
 		{
 			message = JsonPosition.FormatMessage(lineInfo, path, message);
 			int lineNumber;

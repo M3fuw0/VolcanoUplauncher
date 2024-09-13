@@ -14,7 +14,7 @@ namespace Newtonsoft.Json.Utilities
 		internal static DynamicReflectionDelegateFactory Instance { get; } = new DynamicReflectionDelegateFactory();
 
 
-		private static DynamicMethod CreateDynamicMethod(string name, /*[Nullable(2)]*/ Type returnType, Type[] parameterTypes, Type owner)
+		private static DynamicMethod CreateDynamicMethod(string name,  Type returnType, Type[] parameterTypes, Type owner)
 		{
 			if (owner.IsInterface())
 			{
@@ -32,7 +32,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override MethodCall<T, object> CreateMethodCall</*[Nullable(2)]*/ T>(MethodBase method)
+		public override MethodCall<T, object> CreateMethodCall< T>(MethodBase method)
 		{
 			DynamicMethod dynamicMethod = CreateDynamicMethod(method.ToString(), typeof(object), new Type[2]
 			{
@@ -161,7 +161,7 @@ namespace Newtonsoft.Json.Utilities
 			generator.Return();
 		}
 
-		public override Func<T> CreateDefaultConstructor</*[Nullable(2)]*/ T>(Type type)
+		public override Func<T> CreateDefaultConstructor< T>(Type type)
 		{
 			DynamicMethod dynamicMethod = CreateDynamicMethod("Create" + type.FullName, typeof(T), ReflectionUtils.EmptyTypes, type);
 			dynamicMethod.InitLocals = true;
@@ -194,7 +194,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Func<T, object> CreateGet< T>(PropertyInfo propertyInfo)
 		{
 			DynamicMethod dynamicMethod = CreateDynamicMethod("Get" + propertyInfo.Name, typeof(object), new Type[1] { typeof(T) }, propertyInfo.DeclaringType);
 			ILGenerator iLGenerator = dynamicMethod.GetILGenerator();
@@ -219,7 +219,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Func<T, object> CreateGet< T>(FieldInfo fieldInfo)
 		{
 			if (fieldInfo.IsLiteral)
 			{
@@ -248,7 +248,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Action<T, object> CreateSet< T>(FieldInfo fieldInfo)
 		{
 			DynamicMethod dynamicMethod = CreateDynamicMethod("Set" + fieldInfo.Name, null, new Type[2]
 			{
@@ -280,7 +280,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Action<T, object> CreateSet< T>(PropertyInfo propertyInfo)
 		{
 			DynamicMethod dynamicMethod = CreateDynamicMethod("Set" + propertyInfo.Name, null, new Type[2]
 			{

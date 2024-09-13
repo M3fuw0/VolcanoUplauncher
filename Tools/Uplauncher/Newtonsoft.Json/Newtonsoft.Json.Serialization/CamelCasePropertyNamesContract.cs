@@ -18,7 +18,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public CamelCasePropertyNamesContractResolver()
 		{
-			base.NamingStrategy = new CamelCaseNamingStrategy
+			NamingStrategy = new CamelCaseNamingStrategy
 			{
 				ProcessDictionaryKeys = true,
 				OverrideSpecifiedNames = true

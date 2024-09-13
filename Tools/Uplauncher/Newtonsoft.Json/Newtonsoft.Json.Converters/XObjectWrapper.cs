@@ -19,38 +19,22 @@ namespace Newtonsoft.Json.Converters
 		public virtual string LocalName => null;
 
 		/*[Nullable(1)]*/
-		public virtual List<IXmlNode> ChildNodes
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return XmlNodeConverter.EmptyChildNodes;
-			}
-		}
+		public virtual List<IXmlNode> ChildNodes =>
+            /*[NullableContext(1)]*/
+            XmlNodeConverter.EmptyChildNodes;
 
-		/*[Nullable(1)]*/
-		public virtual List<IXmlNode> Attributes
-		{
-			/*[NullableContext(1)]*/
-			get
-			{
-				return XmlNodeConverter.EmptyChildNodes;
-			}
-		}
+        /*[Nullable(1)]*/
+		public virtual List<IXmlNode> Attributes =>
+            /*[NullableContext(1)]*/
+            XmlNodeConverter.EmptyChildNodes;
 
-		public virtual IXmlNode ParentNode => null;
+        public virtual IXmlNode ParentNode => null;
 
 		public virtual string Value
 		{
-			get
-			{
-				return null;
-			}
-			set
-			{
-				throw new InvalidOperationException();
-			}
-		}
+			get => null;
+            set => throw new InvalidOperationException();
+        }
 
 		public virtual string NamespaceUri => null;
 

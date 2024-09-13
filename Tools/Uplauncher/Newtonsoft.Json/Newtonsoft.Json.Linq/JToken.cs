@@ -35,19 +35,19 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		private static JTokenEqualityComparer _equalityComparer;
 
-		/*[Nullable(2)]*/
+		
 		private JContainer _parent;
 
-		/*[Nullable(2)]*/
+		
 		private JToken _previous;
 
-		/*[Nullable(2)]*/
+		
 		private JToken _next;
 
-		/*[Nullable(2)]*/
+		
 		private object _annotations;
 
 		private static readonly JTokenType[] BooleanTypes = new JTokenType[6]
@@ -159,7 +159,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public JContainer Parent
 		{
 			/*[NullableContext(2)]*/
@@ -196,7 +196,7 @@ namespace Newtonsoft.Json.Linq
 
 		public abstract bool HasValues { get; }
 
-		/*[Nullable(2)]*/
+		
 		public JToken Next
 		{
 			/*[NullableContext(2)]*/
@@ -211,7 +211,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public JToken Previous
 		{
 			/*[NullableContext(2)]*/
@@ -268,7 +268,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public virtual JToken this[object key]
 		{
 			/*[return: Nullable(2)]*/
@@ -283,7 +283,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public virtual JToken First
 		{
 			/*[NullableContext(2)]*/
@@ -293,7 +293,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public virtual JToken Last
 		{
 			/*[NullableContext(2)]*/
@@ -324,7 +324,7 @@ namespace Newtonsoft.Json.Linq
 			return ReadFromAsync(reader, null, cancellationToken);
 		}
 
-		public static async Task<JToken> ReadFromAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public static async Task<JToken> ReadFromAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			if (reader.TokenType == JsonToken.None && !(await ((settings != null && settings.CommentHandling == CommentHandling.Ignore) ? reader.ReadAndMoveToContentAsync(cancellationToken) : reader.ReadAsync(cancellationToken)).ConfigureAwait(continueOnCapturedContext: false)))
@@ -381,7 +381,7 @@ namespace Newtonsoft.Json.Linq
 			return LoadAsync(reader, null, cancellationToken);
 		}
 
-		public static Task<JToken> LoadAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public static Task<JToken> LoadAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			return ReadFromAsync(reader, settings, cancellationToken);
 		}
@@ -472,7 +472,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		public virtual T Value</*[Nullable(2)]*/ T>(object key)
+		public virtual T Value< T>(object key)
 		{
 			JToken jToken = this[key];
 			if (jToken != null)
@@ -495,7 +495,7 @@ namespace Newtonsoft.Json.Linq
 			return new JEnumerable<T>(Children().OfType<T>());
 		}
 
-		public virtual IEnumerable<T> Values</*[Nullable(2)]*/ T>()
+		public virtual IEnumerable<T> Values< T>()
 		{
 			throw new InvalidOperationException("Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
 		}
@@ -1466,7 +1466,7 @@ namespace Newtonsoft.Json.Linq
 			return new JValue(value);
 		}
 
-		public static implicit operator JToken(/*[Nullable(2)]*/ string value)
+		public static implicit operator JToken( string value)
 		{
 			return new JValue(value);
 		}
@@ -1488,7 +1488,7 @@ namespace Newtonsoft.Json.Linq
 			return new JValue(value);
 		}
 
-		public static implicit operator JToken(/*[Nullable(2)]*/ Uri value)
+		public static implicit operator JToken( Uri value)
 		{
 			return new JValue(value);
 		}
@@ -1551,8 +1551,8 @@ namespace Newtonsoft.Json.Linq
 			return FromObjectInternal(o, jsonSerializer);
 		}
 
-		[return: MaybeNull]
-		public T ToObject</*[Nullable(2)]*/ T>()
+		
+		public T ToObject< T>()
 		{
 			return (T)ToObject(typeof(T));
 		}
@@ -1666,8 +1666,8 @@ namespace Newtonsoft.Json.Linq
 			return ToObject(objectType, JsonSerializer.CreateDefault());
 		}
 
-		[return: MaybeNull]
-		public T ToObject</*[Nullable(2)]*/ T>(JsonSerializer jsonSerializer)
+		
+		public T ToObject< T>(JsonSerializer jsonSerializer)
 		{
 			return (T)ToObject(typeof(T), jsonSerializer);
 		}
@@ -1687,7 +1687,7 @@ namespace Newtonsoft.Json.Linq
 			return ReadFrom(reader, null);
 		}
 
-		public static JToken ReadFrom(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public static JToken ReadFrom(JsonReader reader,  JsonLoadSettings settings)
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			if (!((reader.TokenType == JsonToken.None) ? ((settings != null && settings.CommentHandling == CommentHandling.Ignore) ? reader.ReadAndMoveToContent() : reader.Read()) : (reader.TokenType != JsonToken.Comment || settings == null || settings.CommentHandling != 0 || reader.ReadAndMoveToContent())))
@@ -1744,7 +1744,7 @@ namespace Newtonsoft.Json.Linq
 			return Parse(json, null);
 		}
 
-		public static JToken Parse(string json, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public static JToken Parse(string json,  JsonLoadSettings settings)
 		{
 			using (JsonReader jsonReader = new JsonTextReader(new StringReader(json)))
 			{
@@ -1756,7 +1756,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		public static JToken Load(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public static JToken Load(JsonReader reader,  JsonLoadSettings settings)
 		{
 			return ReadFrom(reader, settings);
 		}

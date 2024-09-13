@@ -92,7 +92,7 @@ namespace Newtonsoft.Json.Utilities
 			new ImmutableCollectionTypeInfo("System.Collections.Immutable.ImmutableDictionary`2", "System.Collections.Immutable.ImmutableDictionary`2", "System.Collections.Immutable.ImmutableDictionary")
 		};
 
-		internal static bool TryBuildImmutableForArrayContract(Type underlyingType, Type collectionItemType, /*[Nullable(2)]*/[NotNullWhen(true)] out Type createdType, /*[Nullable(new byte[] { 2, 1 })]*/[NotNullWhen(true)] out ObjectConstructor<object> parameterizedCreator)
+		internal static bool TryBuildImmutableForArrayContract(Type underlyingType, Type collectionItemType, out Type createdType, /*[Nullable(new byte[] { 2, 1 })]*/out ObjectConstructor<object> parameterizedCreator)
 		{
 			if (underlyingType.IsGenericType())
 			{
@@ -121,7 +121,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		internal static bool TryBuildImmutableForDictionaryContract(Type underlyingType, Type keyItemType, Type valueItemType, /*[Nullable(2)]*/[NotNullWhen(true)] out Type createdType, /*[Nullable(new byte[] { 2, 1 })]*/[NotNullWhen(true)] out ObjectConstructor<object> parameterizedCreator)
+		internal static bool TryBuildImmutableForDictionaryContract(Type underlyingType, Type keyItemType, Type valueItemType, out Type createdType, /*[Nullable(new byte[] { 2, 1 })]*/out ObjectConstructor<object> parameterizedCreator)
 		{
 			if (underlyingType.IsGenericType())
 			{

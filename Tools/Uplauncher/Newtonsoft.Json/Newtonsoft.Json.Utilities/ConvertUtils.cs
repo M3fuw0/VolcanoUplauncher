@@ -369,7 +369,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		private static bool TryConvert(/*[Nullable(2)]*/ object initialValue, CultureInfo culture, Type targetType, /*[Nullable(2)]*/ out object value)
+		private static bool TryConvert( object initialValue, CultureInfo culture, Type targetType,  out object value)
 		{
 			try
 			{
@@ -387,7 +387,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		private static ConvertResult TryConvertInternal(/*[Nullable(2)]*/ object initialValue, CultureInfo culture, Type targetType, /*[Nullable(2)]*/ out object value)
+		private static ConvertResult TryConvertInternal( object initialValue, CultureInfo culture, Type targetType,  out object value)
 		{
 			if (initialValue == null)
 			{
@@ -516,7 +516,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(2)]*/
-		public static object ConvertOrCast(/*[Nullable(2)]*/ object initialValue, CultureInfo culture, Type targetType)
+		public static object ConvertOrCast( object initialValue, CultureInfo culture, Type targetType)
 		{
 			if (targetType == typeof(object))
 			{
@@ -534,7 +534,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(2)]*/
-		private static object EnsureTypeAssignable(/*[Nullable(2)]*/ object value, Type initialType, Type targetType)
+		private static object EnsureTypeAssignable( object value, Type initialType, Type targetType)
 		{
 			if (value != null)
 			{
@@ -556,7 +556,7 @@ namespace Newtonsoft.Json.Utilities
 			throw new ArgumentException("Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialType?.ToString() ?? "{null}", targetType));
 		}
 
-		public static bool VersionTryParse(string input, /*[Nullable(2)]*/[NotNullWhen(true)] out Version result)
+		public static bool VersionTryParse(string input, out Version result)
 		{
 			return Version.TryParse(input, out result);
 		}

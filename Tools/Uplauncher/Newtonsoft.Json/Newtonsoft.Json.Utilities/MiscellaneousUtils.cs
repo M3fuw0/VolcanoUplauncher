@@ -13,7 +13,7 @@ namespace Newtonsoft.Json.Utilities
 	{
 		/*[NullableContext(2)]*/
 		[Conditional("DEBUG")]
-		public static void Assert([DoesNotReturnIf(false)] bool condition, string message = null)
+		public static void Assert(bool condition, string message = null)
 		{
 		}
 
@@ -49,7 +49,7 @@ namespace Newtonsoft.Json.Utilities
 			return new ArgumentOutOfRangeException(paramName, message2);
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ object value)
+		public static string ToString( object value)
 		{
 			if (value == null)
 			{
@@ -93,7 +93,7 @@ namespace Newtonsoft.Json.Utilities
 			return localName;
 		}
 
-		public static void GetQualifiedNameParts(string qualifiedName, /*[Nullable(2)]*/ out string prefix, out string localName)
+		public static void GetQualifiedNameParts(string qualifiedName,  out string prefix, out string localName)
 		{
 			int num = qualifiedName.IndexOf(':');
 			if (num == -1 || num == 0 || qualifiedName.Length - 1 == num)

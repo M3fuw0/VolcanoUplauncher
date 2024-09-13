@@ -50,7 +50,7 @@ namespace Newtonsoft.Json.Bson
 		{
 			base.WriteEnd(token);
 			RemoveParent();
-			if (base.Top == 0)
+			if (Top == 0)
 			{
 				_writer.WriteToken(_root);
 			}
@@ -97,7 +97,7 @@ namespace Newtonsoft.Json.Bson
 		public override void Close()
 		{
 			base.Close();
-			if (base.CloseOutput)
+			if (CloseOutput)
 			{
 				_writer?.Close();
 			}
@@ -268,7 +268,7 @@ namespace Newtonsoft.Json.Bson
 		public override void WriteValue(DateTime value)
 		{
 			base.WriteValue(value);
-			value = DateTimeUtils.EnsureDateTime(value, base.DateTimeZoneHandling);
+			value = DateTimeUtils.EnsureDateTime(value, DateTimeZoneHandling);
 			AddValue(value, BsonType.Date);
 		}
 

@@ -116,7 +116,7 @@ namespace Newtonsoft.Json.Serialization
 			return _typeCache.Get(typeNameKey);
 		}
 
-		public override Type BindToType(/*[Nullable(2)]*/ string assemblyName, string typeName)
+		public override Type BindToType( string assemblyName, string typeName)
 		{
 			return GetTypeByName(new StructMultiKey<string, string>(assemblyName, typeName));
 		}

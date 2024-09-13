@@ -16,16 +16,16 @@ namespace Newtonsoft.Json.Linq
 	/*[Nullable(0)]*/
 	public abstract class JContainer : JToken, IList<JToken>, ICollection<JToken>, IEnumerable<JToken>, IEnumerable, ITypedList, IBindingList, IList, ICollection, INotifyCollectionChanged
 	{
-		/*[Nullable(2)]*/
+		
 		internal ListChangedEventHandler _listChanged;
 
-		/*[Nullable(2)]*/
+		
 		internal AddingNewEventHandler _addingNew;
 
-		/*[Nullable(2)]*/
+		
 		internal NotifyCollectionChangedEventHandler _collectionChanged;
 
-		/*[Nullable(2)]*/
+		
 		private object _syncRoot;
 
 		private bool _busy;
@@ -34,7 +34,7 @@ namespace Newtonsoft.Json.Linq
 
 		public override bool HasValues => ChildrenTokens.Count > 0;
 
-		/*[Nullable(2)]*/
+		
 		public override JToken First
 		{
 			/*[NullableContext(2)]*/
@@ -49,7 +49,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public override JToken Last
 		{
 			/*[NullableContext(2)]*/
@@ -121,7 +121,7 @@ namespace Newtonsoft.Json.Linq
 
 		ListSortDirection IBindingList.SortDirection => ListSortDirection.Ascending;
 
-		/*[Nullable(2)]*/
+		
 		PropertyDescriptor IBindingList.SortProperty
 		{
 			/*[NullableContext(2)]*/
@@ -173,7 +173,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		internal async Task ReadTokenFromAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings options, CancellationToken cancellationToken = default(CancellationToken))
+		internal async Task ReadTokenFromAsync(JsonReader reader,  JsonLoadSettings options, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			ValidationUtils.ArgumentNotNull(reader, "reader");
 			int startDepth = reader.Depth;
@@ -188,7 +188,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		private async Task ReadContentFromAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		private async Task ReadContentFromAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			IJsonLineInfo lineInfo = reader as IJsonLineInfo;
 			JContainer parent = this;
@@ -401,7 +401,7 @@ namespace Newtonsoft.Json.Linq
 			return new JEnumerable<JToken>(ChildrenTokens);
 		}
 
-		public override IEnumerable<T> Values</*[Nullable(2)]*/ T>()
+		public override IEnumerable<T> Values< T>()
 		{
 			return ChildrenTokens.Convert<JToken, T>();
 		}
@@ -437,7 +437,7 @@ namespace Newtonsoft.Json.Linq
 		}
 
 		/*[NullableContext(2)]*/
-		internal bool IsMultiContent([NotNull] object content)
+		internal bool IsMultiContent(object content)
 		{
 			if (content is IEnumerable && !(content is string) && !(content is JToken))
 			{
@@ -446,7 +446,7 @@ namespace Newtonsoft.Json.Linq
 			return false;
 		}
 
-		internal JToken EnsureParentToken(/*[Nullable(2)]*/ JToken item, bool skipParentCheck)
+		internal JToken EnsureParentToken( JToken item, bool skipParentCheck)
 		{
 			if (item == null)
 			{
@@ -456,7 +456,7 @@ namespace Newtonsoft.Json.Linq
 			{
 				return item;
 			}
-			if (item.Parent != null || item == this || (item.HasValues && base.Root == item))
+			if (item.Parent != null || item == this || (item.HasValues && Root == item))
 			{
 				item = item.CloneToken();
 			}
@@ -666,7 +666,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		internal static bool IsTokenUnchanged(JToken currentValue, /*[Nullable(2)]*/ JToken newValue)
+		internal static bool IsTokenUnchanged(JToken currentValue,  JToken newValue)
 		{
 			if (currentValue is JValue jValue)
 			{
@@ -679,7 +679,7 @@ namespace Newtonsoft.Json.Linq
 			return false;
 		}
 
-		internal virtual void ValidateToken(JToken o, /*[Nullable(2)]*/ JToken existing)
+		internal virtual void ValidateToken(JToken o,  JToken existing)
 		{
 			ValidationUtils.ArgumentNotNull(o, "o");
 			if (o.Type == JTokenType.Property)
@@ -725,7 +725,7 @@ namespace Newtonsoft.Json.Linq
 			InsertItem(index, item, skipParentCheck);
 		}
 
-		internal static JToken CreateFromContent(/*[Nullable(2)]*/ object content)
+		internal static JToken CreateFromContent( object content)
 		{
 			if (content is JToken result)
 			{
@@ -750,19 +750,19 @@ namespace Newtonsoft.Json.Linq
 			ClearItems();
 		}
 
-		internal abstract void MergeItem(object content, /*[Nullable(2)]*/ JsonMergeSettings settings);
+		internal abstract void MergeItem(object content,  JsonMergeSettings settings);
 
 		public void Merge(object content)
 		{
 			MergeItem(content, null);
 		}
 
-		public void Merge(object content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		public void Merge(object content,  JsonMergeSettings settings)
 		{
 			MergeItem(content, settings);
 		}
 
-		internal void ReadTokenFrom(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings options)
+		internal void ReadTokenFrom(JsonReader reader,  JsonLoadSettings options)
 		{
 			int depth = reader.Depth;
 			if (!reader.Read())
@@ -776,7 +776,7 @@ namespace Newtonsoft.Json.Linq
 			}
 		}
 
-		internal void ReadContentFrom(JsonReader r, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		internal void ReadContentFrom(JsonReader r,  JsonLoadSettings settings)
 		{
 			ValidationUtils.ArgumentNotNull(r, "r");
 			IJsonLineInfo lineInfo = r as IJsonLineInfo;
@@ -1079,7 +1079,7 @@ namespace Newtonsoft.Json.Linq
 			throw new NotSupportedException();
 		}
 
-		internal static void MergeEnumerableContent(JContainer target, IEnumerable content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		internal static void MergeEnumerableContent(JContainer target, IEnumerable content,  JsonMergeSettings settings)
 		{
 			switch (settings?.MergeArrayHandling ?? MergeArrayHandling.Concat)
 			{
@@ -1093,7 +1093,7 @@ namespace Newtonsoft.Json.Linq
 			}
 			case MergeArrayHandling.Union:
 			{
-				HashSet<JToken> hashSet = new HashSet<JToken>(target, JToken.EqualityComparer);
+				HashSet<JToken> hashSet = new HashSet<JToken>(target, EqualityComparer);
 				{
 					foreach (JToken item2 in content)
 					{

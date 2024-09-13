@@ -12,13 +12,13 @@ namespace Newtonsoft.Json.Utilities
 	internal static class CollectionUtils
 	{
 		/*[NullableContext(0)]*/
-		private static class EmptyArrayContainer</*[Nullable(2)]*/ T>
+		private static class EmptyArrayContainer< T>
 		{
 			/*[Nullable(1)]*/
 			public static readonly T[] Empty = new T[0];
 		}
 
-		public static bool IsNullOrEmpty</*[Nullable(2)]*/ T>(ICollection<T> collection)
+		public static bool IsNullOrEmpty< T>(ICollection<T> collection)
 		{
 			if (collection != null)
 			{
@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Utilities
 			return true;
 		}
 
-		public static void AddRange</*[Nullable(2)]*/ T>(this IList<T> initial, IEnumerable<T> collection)
+		public static void AddRange< T>(this IList<T> initial, IEnumerable<T> collection)
 		{
 			if (initial == null)
 			{
@@ -94,12 +94,12 @@ namespace Newtonsoft.Json.Utilities
 			return constructorInfo;
 		}
 
-		public static bool AddDistinct</*[Nullable(2)]*/ T>(this IList<T> list, T value)
+		public static bool AddDistinct< T>(this IList<T> list, T value)
 		{
 			return list.AddDistinct(value, EqualityComparer<T>.Default);
 		}
 
-		public static bool AddDistinct</*[Nullable(2)]*/ T>(this IList<T> list, T value, IEqualityComparer<T> comparer)
+		public static bool AddDistinct< T>(this IList<T> list, T value, IEqualityComparer<T> comparer)
 		{
 			if (list.ContainsValue(value, comparer))
 			{
@@ -109,7 +109,7 @@ namespace Newtonsoft.Json.Utilities
 			return true;
 		}
 
-		public static bool ContainsValue</*[Nullable(2)]*/ TSource>(this IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
+		public static bool ContainsValue< TSource>(this IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
 		{
 			if (comparer == null)
 			{
@@ -129,7 +129,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		public static bool AddRangeDistinct</*[Nullable(2)]*/ T>(this IList<T> list, IEnumerable<T> values, IEqualityComparer<T> comparer)
+		public static bool AddRangeDistinct< T>(this IList<T> list, IEnumerable<T> values, IEqualityComparer<T> comparer)
 		{
 			bool result = true;
 			foreach (T value in values)
@@ -142,7 +142,7 @@ namespace Newtonsoft.Json.Utilities
 			return result;
 		}
 
-		public static int IndexOf</*[Nullable(2)]*/ T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+		public static int IndexOf< T>(this IEnumerable<T> collection, Func<T, bool> predicate)
 		{
 			int num = 0;
 			foreach (T item in collection)
@@ -156,7 +156,7 @@ namespace Newtonsoft.Json.Utilities
 			return -1;
 		}
 
-		public static bool Contains</*[Nullable(2)]*/ T>(this List<T> list, T value, IEqualityComparer comparer)
+		public static bool Contains< T>(this List<T> list, T value, IEqualityComparer comparer)
 		{
 			for (int i = 0; i < list.Count; i++)
 			{
@@ -168,7 +168,7 @@ namespace Newtonsoft.Json.Utilities
 			return false;
 		}
 
-		public static int IndexOfReference</*[Nullable(2)]*/ T>(this List<T> list, T item)
+		public static int IndexOfReference< T>(this List<T> list, T item)
 		{
 			for (int i = 0; i < list.Count; i++)
 			{
@@ -180,7 +180,7 @@ namespace Newtonsoft.Json.Utilities
 			return -1;
 		}
 
-		public static void FastReverse</*[Nullable(2)]*/ T>(this List<T> list)
+		public static void FastReverse< T>(this List<T> list)
 		{
 			int num = 0;
 			int num2 = list.Count - 1;
@@ -262,7 +262,7 @@ namespace Newtonsoft.Json.Utilities
 			return array;
 		}
 
-		public static T[] ArrayEmpty</*[Nullable(2)]*/ T>()
+		public static T[] ArrayEmpty< T>()
 		{
 			return EmptyArrayContainer<T>.Empty;
 		}

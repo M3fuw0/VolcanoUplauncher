@@ -60,7 +60,7 @@ namespace Newtonsoft.Json.Utilities
 			return SingleQuoteCharEscapeFlags;
 		}
 
-		public static bool ShouldEscapeJavaScriptString(/*[Nullable(2)]*/ string s, bool[] charEscapeFlags)
+		public static bool ShouldEscapeJavaScriptString( string s, bool[] charEscapeFlags)
 		{
 			if (s == null)
 			{
@@ -215,7 +215,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		public static string ToEscapedJavaScriptString(/*[Nullable(2)]*/ string value, char delimiter, bool appendDelimiters, StringEscapeHandling stringEscapeHandling)
+		public static string ToEscapedJavaScriptString( string value, char delimiter, bool appendDelimiters, StringEscapeHandling stringEscapeHandling)
 		{
 			bool[] charEscapeFlags = GetCharEscapeFlags(stringEscapeHandling, delimiter);
 			using (StringWriter stringWriter = StringUtils.CreateStringWriter(value?.Length ?? 16))
@@ -417,7 +417,7 @@ namespace Newtonsoft.Json.Utilities
 			}
 		}
 
-		public static bool TryGetDateFromConstructorJson(JsonReader reader, out DateTime dateTime, /*[Nullable(2)]*/[NotNullWhen(false)] out string errorMessage)
+		public static bool TryGetDateFromConstructorJson(JsonReader reader, out DateTime dateTime, out string errorMessage)
 		{
 			dateTime = default(DateTime);
 			errorMessage = null;
@@ -463,7 +463,7 @@ namespace Newtonsoft.Json.Utilities
 			return true;
 		}
 
-		private static bool TryGetDateConstructorValue(JsonReader reader, out long? integer, /*[Nullable(2)]*/ out string errorMessage)
+		private static bool TryGetDateConstructorValue(JsonReader reader, out long? integer,  out string errorMessage)
 		{
 			integer = null;
 			errorMessage = null;

@@ -20,10 +20,10 @@ namespace Uplauncher.Exceptions
 
         public void RegisterException(Exception ex)
         {
-            if (App.IsExceptionLoggerEnabled)
-            {
-                _ravenClient.Capture(new SentryEvent(ex));
-            }
+            //if (App.IsExceptionLoggerEnabled)
+            //{
+            //    _ravenClient.Capture(new SentryEvent(ex));
+            //}
             // m_exceptions.Add(ex);
         }
     }

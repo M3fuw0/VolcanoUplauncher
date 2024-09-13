@@ -10,15 +10,15 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal class CollectionWrapper</*[Nullable(2)]*/ T> : ICollection<T>, IEnumerable<T>, IEnumerable, IWrappedCollection, IList, ICollection
+	internal class CollectionWrapper< T> : ICollection<T>, IEnumerable<T>, IEnumerable, IWrappedCollection, IList, ICollection
 	{
-		/*[Nullable(2)]*/
+		
 		private readonly IList _list;
 
 		/*[Nullable(new byte[] { 2, 1 })]*/
 		private readonly ICollection<T> _genericCollection;
 
-		/*[Nullable(2)]*/
+		
 		private object _syncRoot;
 
 		public virtual int Count

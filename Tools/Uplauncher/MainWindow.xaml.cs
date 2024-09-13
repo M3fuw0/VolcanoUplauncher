@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiscordRPC;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using DiscordRPC;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Uplauncher.Helpers;
@@ -19,7 +19,7 @@ using Button = DiscordRPC.Button;
 namespace Uplauncher
 {
     /// <summary>
-    ///     Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
@@ -27,8 +27,10 @@ namespace Uplauncher
         private DispatcherTimer _timer;
         private static DateTime _startTime;
         private DispatcherTimer _processCheckTimer;
-        private static string _gameDetails = "Joue à Pyrasis 2.10";
+        private static string _gameDetails = "Joue à Pyrasis 2.51";
         private static string _websiteUrl = "Allez sur https://pyrasis.cc";
+        //private Mutex mutex;
+        //private const string MutexId = "Global\\KarashiUplauncherMultiDofus";
 
         public MainWindow()
         {
@@ -43,6 +45,7 @@ namespace Uplauncher
             //    //Process.Start(Constants.PatchPath, "-restart");
             //}
 
+
             if (ApplicationRunningHelper.AlreadyRunning())
             {
                 MessageBoxResult result = MessageBox.Show(
@@ -53,7 +56,10 @@ namespace Uplauncher
 
                 if (result == MessageBoxResult.No)
                 {
+                    //Application.Current.Shutdown();
+                    //Form2.ShutdownApp();
                     System.Diagnostics.Process.GetCurrentProcess().Kill();
+                    //return true; // Indique que l'application doit se terminer
                 }
                 else
                 {
@@ -64,9 +70,26 @@ namespace Uplauncher
 
             InitializeComponent();
             InitializeDiscordRpc();
+
+            UplauncherModelView model = new UplauncherModelView();
+            //model.LoadConfiguration();
+
+            //// Essayez de créer un Mutex global en utilisant un nom unique.
+            //mutex = new Mutex(true, MutexId, out bool createdNew);
+
+            //// Si le Mutex existe déjà, c'est que l'application est déjà en cours d'exécution.
+            //if (!createdNew)
+            //{
+            //    // Manipuler la situation, par exemple en affichant un message ou en terminant l'opération.
+            //    MessageBox.Show("Form1 est déjà en cours d'exécution.");
+            //}
         }
 
-        public UplauncherModelView ModelView { get; set; }
+        public UplauncherModelView ModelView
+        {
+            get;
+            set;
+        }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -86,26 +109,87 @@ namespace Uplauncher
             ModelView.HideWindowInTrayIcon();
         }
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            DragMove();
+        }
+
+        //private void NumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (DataContext is UplauncherModelView uplauncherModelView)
+        //    {
+        //        if (NumberComboBox.SelectedItem != null)
+        //        {
+        //            string selectedItem = ((ComboBoxItem)NumberComboBox.SelectedItem).Content.ToString();
+        //            if (int.TryParse(selectedItem, out int numberOfClients))
+        //            {
+        //                uplauncherModelView.NumberOfClientsToStart = numberOfClients;
+        //                uplauncherModelView.StartClients(numberOfClients);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //private void NumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (this.DataContext is UplauncherModelView uplauncherModelView)
+        //    {
+        //        if (NumberComboBox.SelectedItem != null)
+        //        {
+        //            string selectedItem = ((ComboBoxItem)NumberComboBox.SelectedItem).Content.ToString();
+        //            if (int.TryParse(selectedItem, out int numberOfClients))
+        //            {
+        //                //numberOfClients = numberOfClients /*> 1 ? numberOfClients - 1 : numberOfClients*/;
+        //                uplauncherModelView.NumberOfClientsToStart = numberOfClients;
+        //                //uplauncherModelView.StartClients(numberOfClients);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //private void NumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (DataContext is UplauncherModelView uplauncherModelView)
+        //    {
+        //        if (NumberComboBox.SelectedItem != null)
+        //        {
+        //            string selectedItem = ((ComboBoxItem)NumberComboBox.SelectedItem).Content.ToString();
+        //            if (int.TryParse(selectedItem, out int numberOfClients))
+        //            {
+        //                numberOfClients = numberOfClients < 10 ? numberOfClients + 0 : numberOfClients;
+        //                uplauncherModelView.NumberOfClientsToStart = numberOfClients;
+        //            }
+        //        }
+        //    }
+        //}
 
         private void NumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //if (CheckAndHandleMultipleInstances())
+            //{
+            //    return;
+            //}
             if (DataContext is UplauncherModelView uplauncherModelView)
             {
-                if (NumberComboBox.SelectedItem is ComboBoxItem selectedItem)
-                {
-                    if (int.TryParse(selectedItem.Content.ToString(), out int numberOfClients))
-                    {
-                        // Add 1 to numberOfClients if it is 2 or more
-                        if (numberOfClients >= 2)
-                        {
-                            numberOfClients += 1;
-                        }
-                        // Now numberOfClients will be incremented by 1 if it was 2 or more
-                        uplauncherModelView.NumberOfClientsToStart = numberOfClients;
-                        // Uncomment if needed for debugging
-                        // MessageBox.Show($"Nombre de clients sélectionné : {numberOfClients}");
-                    }
-                }
+                //if (NumberComboBox.SelectedItem is ComboBoxItem selectedItem)
+                //{
+                //    if (int.TryParse(selectedItem.Content.ToString(), out int numberOfClients))
+                //    {
+                //        // Add 1 to numberOfClients if it is 2 or more
+                //        if (numberOfClients >= 2)
+                //        {
+                //            numberOfClients += 1;
+                //        }
+
+                //        // Now numberOfClients will be incremented by 1 if it was 2 or more
+                //        uplauncherModelView.NumberOfClientsToStart = numberOfClients;
+
+                //        // Uncomment if needed for debugging
+                //        // MessageBox.Show($"Nombre de clients sélectionné : {numberOfClients}");
+                //    }
+                //}
             }
         }
 
@@ -135,18 +219,25 @@ namespace Uplauncher
             return false; // Continuer l'exécution normale
         }
 
-        private void OpenSelectDofusClientsWindow(object sender, RoutedEventArgs e)
-        {
-            SelectDofusClientsWindow selectWindow = new SelectDofusClientsWindow();
-            selectWindow.DataContext = ModelView;
-            selectWindow.ShowDialog();
-        }
+        //private void TerminateOtherInstances()
+        //{
+        //    var currentProcess = Process.GetCurrentProcess();
+        //    var uplauncherProcesses = Process.GetProcessesByName("Uplauncher");
+
+        //    foreach (var process in uplauncherProcesses)
+        //    {
+        //        if (process.Id != currentProcess.Id)
+        //        {
+        //            process.Kill();
+        //        }
+        //    }
+        //}
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedLanguage = ((ComboBoxItem)LanguageComboBox.SelectedItem).Content.ToString();
             string newLanguageCode;
-
+            //en,es,de,nl,pt,cz,sk,pl,ro,tr
             // Convertir le texte sélectionné en code de langue approprié
             switch (selectedLanguage)
             {
@@ -221,12 +312,18 @@ namespace Uplauncher
             }
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
+        //public void LoadConfiguration()
+        //{
+        //    var configPath = "karashi_app/config.xml";
+        //    var xdoc = XDocument.Load(configPath);
+        //    var legacyEntry = xdoc.Descendants("entry")
+        //        .FirstOrDefault(e => (string)e.Attribute("key") == "legacy");
 
-            DragMove();
-        }
+        //    if (legacyEntry != null)
+        //    {
+        //        IsLegacyModeEnabled = bool.Parse(legacyEntry.Value);
+        //    }
+        //}
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
@@ -304,7 +401,7 @@ namespace Uplauncher
             {
                 Details = details,
                 State = state,
-                Assets = new Assets
+                Assets = new Assets()
                 {
                     LargeImageKey = largeImageKey,
                     //SmallImageKey = smallImageKey
@@ -364,6 +461,8 @@ namespace Uplauncher
                 _client.ClearPresence();
                 _client.Dispose();
             }
+
+            //mutex?.ReleaseMutex();
         }
     }
 }

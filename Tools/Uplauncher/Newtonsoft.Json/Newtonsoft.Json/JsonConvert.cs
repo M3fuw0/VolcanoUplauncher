@@ -224,7 +224,7 @@ namespace Newtonsoft.Json
 			return ToString(value.ToString(), quoteChar);
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ Uri value)
+		public static string ToString( Uri value)
 		{
 			if (value == null)
 			{
@@ -238,17 +238,17 @@ namespace Newtonsoft.Json
 			return ToString(value.OriginalString, quoteChar);
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ string value)
+		public static string ToString( string value)
 		{
 			return ToString(value, '"');
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ string value, char delimiter)
+		public static string ToString( string value, char delimiter)
 		{
 			return ToString(value, delimiter, StringEscapeHandling.Default);
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ string value, char delimiter, StringEscapeHandling stringEscapeHandling)
+		public static string ToString( string value, char delimiter, StringEscapeHandling stringEscapeHandling)
 		{
 			if (delimiter != '"' && delimiter != '\'')
 			{
@@ -257,7 +257,7 @@ namespace Newtonsoft.Json
 			return JavaScriptUtils.ToEscapedJavaScriptString(value, delimiter, appendDelimiters: true, stringEscapeHandling);
 		}
 
-		public static string ToString(/*[Nullable(2)]*/ object value)
+		public static string ToString( object value)
 		{
 			if (value == null)
 			{
@@ -313,19 +313,19 @@ namespace Newtonsoft.Json
 		}
 
 		[DebuggerStepThrough]
-		public static string SerializeObject(/*[Nullable(2)]*/ object value)
+		public static string SerializeObject( object value)
 		{
 			return SerializeObject(value, (Type)null, (JsonSerializerSettings)null);
 		}
 
 		[DebuggerStepThrough]
-		public static string SerializeObject(/*[Nullable(2)]*/ object value, Formatting formatting)
+		public static string SerializeObject( object value, Formatting formatting)
 		{
 			return SerializeObject(value, formatting, (JsonSerializerSettings)null);
 		}
 
 		[DebuggerStepThrough]
-		public static string SerializeObject(/*[Nullable(2)]*/ object value, params JsonConverter[] converters)
+		public static string SerializeObject( object value, params JsonConverter[] converters)
 		{
 			JsonSerializerSettings settings = ((converters != null && converters.Length != 0) ? new JsonSerializerSettings
 			{
@@ -335,7 +335,7 @@ namespace Newtonsoft.Json
 		}
 
 		[DebuggerStepThrough]
-		public static string SerializeObject(/*[Nullable(2)]*/ object value, Formatting formatting, params JsonConverter[] converters)
+		public static string SerializeObject( object value, Formatting formatting, params JsonConverter[] converters)
 		{
 			JsonSerializerSettings settings = ((converters != null && converters.Length != 0) ? new JsonSerializerSettings
 			{
@@ -345,7 +345,7 @@ namespace Newtonsoft.Json
 		}
 
 		[DebuggerStepThrough]
-		public static string SerializeObject(/*[Nullable(2)]*/ object value, JsonSerializerSettings settings)
+		public static string SerializeObject( object value, JsonSerializerSettings settings)
 		{
 			return SerializeObject(value, null, settings);
 		}
@@ -377,7 +377,7 @@ namespace Newtonsoft.Json
 			return SerializeObjectInternal(value, type, jsonSerializer);
 		}
 
-		private static string SerializeObjectInternal(/*[Nullable(2)]*/ object value, /*[Nullable(2)]*/ Type type, JsonSerializer jsonSerializer)
+		private static string SerializeObjectInternal( object value,  Type type, JsonSerializer jsonSerializer)
 		{
 			StringWriter stringWriter = new StringWriter(new StringBuilder(256), CultureInfo.InvariantCulture);
 			using (JsonTextWriter jsonTextWriter = new JsonTextWriter(stringWriter))
@@ -410,33 +410,31 @@ namespace Newtonsoft.Json
 		}
 
 		[DebuggerStepThrough]
-		public static T DeserializeObject</*[Nullable(2)]*/ T>(string value)
+		public static T DeserializeObject< T>(string value)
 		{
-			return JsonConvert.DeserializeObject<T>(value, (JsonSerializerSettings)null);
+			return DeserializeObject<T>(value, (JsonSerializerSettings)null);
 		}
 
 		[DebuggerStepThrough]
-		public static T DeserializeAnonymousType</*[Nullable(2)]*/ T>(string value, T anonymousTypeObject)
+		public static T DeserializeAnonymousType< T>(string value, T anonymousTypeObject)
 		{
 			return DeserializeObject<T>(value);
 		}
 
 		[DebuggerStepThrough]
-		public static T DeserializeAnonymousType</*[Nullable(2)]*/ T>(string value, T anonymousTypeObject, JsonSerializerSettings settings)
+		public static T DeserializeAnonymousType< T>(string value, T anonymousTypeObject, JsonSerializerSettings settings)
 		{
 			return DeserializeObject<T>(value, settings);
 		}
 
-		[DebuggerStepThrough]
-		[return: MaybeNull]
-		public static T DeserializeObject</*[Nullable(2)]*/ T>(string value, params JsonConverter[] converters)
+		
+		public static T DeserializeObject< T>(string value, params JsonConverter[] converters)
 		{
 			return (T)DeserializeObject(value, typeof(T), converters);
 		}
 
-		[DebuggerStepThrough]
-		[return: MaybeNull]
-		public static T DeserializeObject</*[Nullable(2)]*/ T>(string value, /*[Nullable(2)]*/ JsonSerializerSettings settings)
+		
+		public static T DeserializeObject< T>(string value,  JsonSerializerSettings settings)
 		{
 			return (T)DeserializeObject(value, typeof(T), settings);
 		}
@@ -473,7 +471,7 @@ namespace Newtonsoft.Json
 			PopulateObject(value, target, null);
 		}
 
-		public static void PopulateObject(string value, object target, /*[Nullable(2)]*/ JsonSerializerSettings settings)
+		public static void PopulateObject(string value, object target,  JsonSerializerSettings settings)
 		{
 			JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
 			using (JsonReader jsonReader = new JsonTextReader(new StringReader(value)))
@@ -493,18 +491,18 @@ namespace Newtonsoft.Json
 			}
 		}
 
-		public static string SerializeXmlNode(/*[Nullable(2)]*/ XmlNode node)
+		public static string SerializeXmlNode( XmlNode node)
 		{
 			return SerializeXmlNode(node, Formatting.None);
 		}
 
-		public static string SerializeXmlNode(/*[Nullable(2)]*/ XmlNode node, Formatting formatting)
+		public static string SerializeXmlNode( XmlNode node, Formatting formatting)
 		{
 			XmlNodeConverter xmlNodeConverter = new XmlNodeConverter();
 			return SerializeObject(node, formatting, xmlNodeConverter);
 		}
 
-		public static string SerializeXmlNode(/*[Nullable(2)]*/ XmlNode node, Formatting formatting, bool omitRootObject)
+		public static string SerializeXmlNode( XmlNode node, Formatting formatting, bool omitRootObject)
 		{
 			XmlNodeConverter xmlNodeConverter = new XmlNodeConverter
 			{
@@ -541,17 +539,17 @@ namespace Newtonsoft.Json
 			return (XmlDocument)DeserializeObject(value, typeof(XmlDocument), xmlNodeConverter);
 		}
 
-		public static string SerializeXNode(/*[Nullable(2)]*/ XObject node)
+		public static string SerializeXNode( XObject node)
 		{
 			return SerializeXNode(node, Formatting.None);
 		}
 
-		public static string SerializeXNode(/*[Nullable(2)]*/ XObject node, Formatting formatting)
+		public static string SerializeXNode( XObject node, Formatting formatting)
 		{
 			return SerializeXNode(node, formatting, omitRootObject: false);
 		}
 
-		public static string SerializeXNode(/*[Nullable(2)]*/ XObject node, Formatting formatting, bool omitRootObject)
+		public static string SerializeXNode( XObject node, Formatting formatting, bool omitRootObject)
 		{
 			XmlNodeConverter xmlNodeConverter = new XmlNodeConverter
 			{

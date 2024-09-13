@@ -7,7 +7,7 @@ namespace Newtonsoft.Json.Utilities
 {
 	/*[NullableContext(1)]*/
 	/*[Nullable(0)]*/
-	internal class BidirectionalDictionary</*[Nullable(2)]*/ TFirst, /*[Nullable(2)]*/ TSecond>
+	internal class BidirectionalDictionary< TFirst,  TSecond>
 	{
 		private readonly IDictionary<TFirst, TSecond> _firstToSecond;
 

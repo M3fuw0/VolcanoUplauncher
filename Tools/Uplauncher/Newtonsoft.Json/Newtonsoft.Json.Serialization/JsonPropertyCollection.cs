@@ -21,7 +21,7 @@ namespace Newtonsoft.Json.Serialization
 		{
 			ValidationUtils.ArgumentNotNull(type, "type");
 			_type = type;
-			_list = (List<JsonProperty>)base.Items;
+			_list = (List<JsonProperty>)Items;
 		}
 
 		protected override string GetKeyForItem(JsonProperty item)
@@ -75,14 +75,14 @@ namespace Newtonsoft.Json.Serialization
 			return property;
 		}
 
-		private bool TryGetValue(string key, /*[Nullable(2)]*/[NotNullWhen(true)] out JsonProperty item)
+		private bool TryGetValue(string key, out JsonProperty item)
 		{
-			if (base.Dictionary == null)
+			if (Dictionary == null)
 			{
 				item = null;
 				return false;
 			}
-			return base.Dictionary.TryGetValue(key, out item);
+			return Dictionary.TryGetValue(key, out item);
 		}
 
 		/*[return: Nullable(2)]*/

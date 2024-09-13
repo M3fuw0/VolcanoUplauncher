@@ -10,7 +10,7 @@ namespace Newtonsoft.Json.Converters
 	/*[Nullable(0)]*/
 	internal class XDocumentWrapper : XContainerWrapper, IXmlDocument, IXmlNode
 	{
-		private XDocument Document => (XDocument)base.WrappedNode;
+		private XDocument Document => (XDocument)WrappedNode;
 
 		public override List<IXmlNode> ChildNodes
 		{
@@ -37,7 +37,7 @@ namespace Newtonsoft.Json.Converters
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		public IXmlElement DocumentElement
 		{
 			/*[NullableContext(2)]*/
@@ -56,27 +56,27 @@ namespace Newtonsoft.Json.Converters
 		{
 		}
 
-		public IXmlNode CreateComment(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateComment( string text)
 		{
 			return new XObjectWrapper(new XComment(text));
 		}
 
-		public IXmlNode CreateTextNode(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateTextNode( string text)
 		{
 			return new XObjectWrapper(new XText(text));
 		}
 
-		public IXmlNode CreateCDataSection(/*[Nullable(2)]*/ string data)
+		public IXmlNode CreateCDataSection( string data)
 		{
 			return new XObjectWrapper(new XCData(data));
 		}
 
-		public IXmlNode CreateWhitespace(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateWhitespace( string text)
 		{
 			return new XObjectWrapper(new XText(text));
 		}
 
-		public IXmlNode CreateSignificantWhitespace(/*[Nullable(2)]*/ string text)
+		public IXmlNode CreateSignificantWhitespace( string text)
 		{
 			return new XObjectWrapper(new XText(text));
 		}
@@ -95,7 +95,7 @@ namespace Newtonsoft.Json.Converters
 			return new XDocumentTypeWrapper(new XDocumentType(name, publicId, systemId, internalSubset));
 		}
 
-		public IXmlNode CreateProcessingInstruction(string target, /*[Nullable(2)]*/ string data)
+		public IXmlNode CreateProcessingInstruction(string target,  string data)
 		{
 			return new XProcessingInstructionWrapper(new XProcessingInstruction(target, data));
 		}
@@ -110,12 +110,12 @@ namespace Newtonsoft.Json.Converters
 			return new XElementWrapper(new XElement(XName.Get(MiscellaneousUtils.GetLocalName(qualifiedName), namespaceUri)));
 		}
 
-		public IXmlNode CreateAttribute(string name, /*[Nullable(2)]*/ string value)
+		public IXmlNode CreateAttribute(string name,  string value)
 		{
 			return new XAttributeWrapper(new XAttribute(name, value));
 		}
 
-		public IXmlNode CreateAttribute(string qualifiedName, string namespaceUri, /*[Nullable(2)]*/ string value)
+		public IXmlNode CreateAttribute(string qualifiedName, string namespaceUri,  string value)
 		{
 			return new XAttributeWrapper(new XAttribute(XName.Get(MiscellaneousUtils.GetLocalName(qualifiedName), namespaceUri), value));
 		}

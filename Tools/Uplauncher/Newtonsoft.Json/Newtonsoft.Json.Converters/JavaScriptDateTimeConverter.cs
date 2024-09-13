@@ -9,7 +9,7 @@ namespace Newtonsoft.Json.Converters
 	/*[Nullable(0)]*/
 	public class JavaScriptDateTimeConverter : DateTimeConverterBase
 	{
-		public override void WriteJson(JsonWriter writer, /*[Nullable(2)]*/ object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer,  object value, JsonSerializer serializer)
 		{
 			long value2;
 			if (value is DateTime dateTime)
@@ -30,7 +30,7 @@ namespace Newtonsoft.Json.Converters
 		}
 
 		/*[return: Nullable(2)]*/
-		public override object ReadJson(JsonReader reader, Type objectType, /*[Nullable(2)]*/ object existingValue, JsonSerializer serializer)
+		public override object ReadJson(JsonReader reader, Type objectType,  object existingValue, JsonSerializer serializer)
 		{
 			if (reader.TokenType == JsonToken.Null)
 			{

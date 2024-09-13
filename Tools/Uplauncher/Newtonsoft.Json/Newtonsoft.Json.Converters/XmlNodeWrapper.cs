@@ -107,15 +107,9 @@ namespace Newtonsoft.Json.Converters
 
 		public string Value
 		{
-			get
-			{
-				return _node.Value;
-			}
-			set
-			{
-				_node.Value = value;
-			}
-		}
+			get => _node.Value;
+            set => _node.Value = value;
+        }
 
 		public string NamespaceUri => _node.NamespaceURI;
 

@@ -245,7 +245,7 @@ namespace Newtonsoft.Json
 
 		private void OnValidationEvent(JsonSchemaException exception)
 		{
-			ValidationEventHandler validationEventHandler = this.ValidationEventHandler;
+			ValidationEventHandler validationEventHandler = ValidationEventHandler;
 			if (validationEventHandler != null)
 			{
 				validationEventHandler(this, new ValidationEventArgs(exception));
@@ -264,7 +264,7 @@ namespace Newtonsoft.Json
 		public override void Close()
 		{
 			base.Close();
-			if (base.CloseInput)
+			if (CloseInput)
 			{
 				_reader?.Close();
 			}

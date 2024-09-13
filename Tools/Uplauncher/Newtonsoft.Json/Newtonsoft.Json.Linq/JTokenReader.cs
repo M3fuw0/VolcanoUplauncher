@@ -10,16 +10,16 @@ namespace Newtonsoft.Json.Linq
 	{
 		private readonly JToken _root;
 
-		/*[Nullable(2)]*/
+		
 		private string _initialPath;
 
-		/*[Nullable(2)]*/
+		
 		private JToken _parent;
 
-		/*[Nullable(2)]*/
+		
 		private JToken _current;
 
-		/*[Nullable(2)]*/
+		
 		public JToken CurrentToken
 		{
 			/*[NullableContext(2)]*/
@@ -33,7 +33,7 @@ namespace Newtonsoft.Json.Linq
 		{
 			get
 			{
-				if (base.CurrentState == State.Start)
+				if (CurrentState == State.Start)
 				{
 					return 0;
 				}
@@ -45,7 +45,7 @@ namespace Newtonsoft.Json.Linq
 		{
 			get
 			{
-				if (base.CurrentState == State.Start)
+				if (CurrentState == State.Start)
 				{
 					return 0;
 				}
@@ -88,7 +88,7 @@ namespace Newtonsoft.Json.Linq
 
 		public override bool Read()
 		{
-			if (base.CurrentState != 0)
+			if (CurrentState != 0)
 			{
 				if (_current == null)
 				{
@@ -221,7 +221,7 @@ namespace Newtonsoft.Json.Linq
 				object obj = ((JValue)token).Value;
 				if (obj is DateTime value2)
 				{
-					obj = DateTimeUtils.EnsureDateTime(value2, base.DateTimeZoneHandling);
+					obj = DateTimeUtils.EnsureDateTime(value2, DateTimeZoneHandling);
 				}
 				SetToken(JsonToken.Date, obj);
 				break;
@@ -257,7 +257,7 @@ namespace Newtonsoft.Json.Linq
 
 		bool IJsonLineInfo.HasLineInfo()
 		{
-			if (base.CurrentState == State.Start)
+			if (CurrentState == State.Start)
 			{
 				return false;
 			}

@@ -7,7 +7,7 @@ namespace Newtonsoft.Json.Serialization
 	/*[Nullable(0)]*/
 	public class ErrorEventArgs : EventArgs
 	{
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public object CurrentObject
 		{
@@ -17,7 +17,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public ErrorContext ErrorContext { get; }
 
-		public ErrorEventArgs(/*[Nullable(2)]*/ object currentObject, ErrorContext errorContext)
+		public ErrorEventArgs( object currentObject, ErrorContext errorContext)
 		{
 			CurrentObject = currentObject;
 			ErrorContext = errorContext;

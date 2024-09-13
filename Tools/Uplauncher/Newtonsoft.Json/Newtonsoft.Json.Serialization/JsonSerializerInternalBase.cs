@@ -24,7 +24,7 @@ namespace Newtonsoft.Json.Serialization
 			}
 		}
 
-		/*[Nullable(2)]*/
+		
 		private ErrorContext _currentErrorContext;
 
 		/*[Nullable(new byte[] { 2, 1, 1 })]*/
@@ -32,10 +32,10 @@ namespace Newtonsoft.Json.Serialization
 
 		internal readonly JsonSerializer Serializer;
 
-		/*[Nullable(2)]*/
+		
 		internal readonly ITraceWriter TraceWriter;
 
-		/*[Nullable(2)]*/
+		
 		protected JsonSerializerProxy InternalSerializer;
 
 		internal BidirectionalDictionary<string, object> DefaultReferenceMappings
@@ -57,12 +57,12 @@ namespace Newtonsoft.Json.Serialization
 			TraceWriter = serializer.TraceWriter;
 		}
 
-		protected NullValueHandling ResolvedNullValueHandling(/*[Nullable(2)]*/ JsonObjectContract containerContract, JsonProperty property)
+		protected NullValueHandling ResolvedNullValueHandling( JsonObjectContract containerContract, JsonProperty property)
 		{
 			return property.NullValueHandling ?? containerContract?.ItemNullValueHandling ?? Serializer._nullValueHandling;
 		}
 
-		private ErrorContext GetErrorContext(/*[Nullable(2)]*/ object currentObject, /*[Nullable(2)]*/ object member, string path, Exception error)
+		private ErrorContext GetErrorContext( object currentObject,  object member, string path, Exception error)
 		{
 			if (_currentErrorContext == null)
 			{

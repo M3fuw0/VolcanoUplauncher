@@ -7,7 +7,7 @@ namespace Newtonsoft.Json.Utilities
 	internal static class BufferUtils
 	{
 		/*[NullableContext(1)]*/
-		public static char[] RentBuffer(/*[Nullable(2)]*/ IArrayPool<char> bufferPool, int minSize)
+		public static char[] RentBuffer( IArrayPool<char> bufferPool, int minSize)
 		{
 			if (bufferPool == null)
 			{

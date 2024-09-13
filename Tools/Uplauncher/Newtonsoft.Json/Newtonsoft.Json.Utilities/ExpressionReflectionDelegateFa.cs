@@ -42,7 +42,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override MethodCall<T, object> CreateMethodCall</*[Nullable(2)]*/ T>(MethodBase method)
+		public override MethodCall<T, object> CreateMethodCall< T>(MethodBase method)
 		{
 			ValidationUtils.ArgumentNotNull(method, "method");
 			Type typeFromHandle = typeof(object);
@@ -52,7 +52,7 @@ namespace Newtonsoft.Json.Utilities
 			return (MethodCall<T, object>)Expression.Lambda(typeof(MethodCall<T, object>), body, parameterExpression, parameterExpression2).Compile();
 		}
 
-		private Expression BuildMethodCall(MethodBase method, Type type, /*[Nullable(2)]*/ ParameterExpression targetParameterExpression, ParameterExpression argsParameterExpression)
+		private Expression BuildMethodCall(MethodBase method, Type type,  ParameterExpression targetParameterExpression, ParameterExpression argsParameterExpression)
 		{
 			ParameterInfo[] parameters = method.GetParameters();
 			Expression[] array;
@@ -108,7 +108,7 @@ namespace Newtonsoft.Json.Utilities
 			return expression3;
 		}
 
-		public override Func<T> CreateDefaultConstructor</*[Nullable(2)]*/ T>(Type type)
+		public override Func<T> CreateDefaultConstructor< T>(Type type)
 		{
 			ValidationUtils.ArgumentNotNull(type, "type");
 			if (type.IsAbstract())
@@ -129,7 +129,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Func<T, object> CreateGet< T>(PropertyInfo propertyInfo)
 		{
 			ValidationUtils.ArgumentNotNull(propertyInfo, "propertyInfo");
 			Type typeFromHandle = typeof(T);
@@ -146,7 +146,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Func<T, object> CreateGet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Func<T, object> CreateGet< T>(FieldInfo fieldInfo)
 		{
 			ValidationUtils.ArgumentNotNull(fieldInfo, "fieldInfo");
 			ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "source");
@@ -156,7 +156,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(FieldInfo fieldInfo)
+		public override Action<T, object> CreateSet< T>(FieldInfo fieldInfo)
 		{
 			ValidationUtils.ArgumentNotNull(fieldInfo, "fieldInfo");
 			if (fieldInfo.DeclaringType.IsValueType() || fieldInfo.IsInitOnly)
@@ -172,7 +172,7 @@ namespace Newtonsoft.Json.Utilities
 		}
 
 		/*[return: Nullable(new byte[] { 1, 1, 2 })]*/
-		public override Action<T, object> CreateSet</*[Nullable(2)]*/ T>(PropertyInfo propertyInfo)
+		public override Action<T, object> CreateSet< T>(PropertyInfo propertyInfo)
 		{
 			ValidationUtils.ArgumentNotNull(propertyInfo, "propertyInfo");
 			if (propertyInfo.DeclaringType.IsValueType())

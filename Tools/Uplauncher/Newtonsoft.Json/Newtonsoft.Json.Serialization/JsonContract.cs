@@ -65,7 +65,7 @@ namespace Newtonsoft.Json.Serialization
 
 		public bool? IsReference { get; set; }
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public JsonConverter Converter
 		{
@@ -75,7 +75,7 @@ namespace Newtonsoft.Json.Serialization
 			set;
 		}
 
-		/*[Nullable(2)]*/
+		
 		/*[field: Nullable(2)]*/
 		public JsonConverter InternalConverter
 		{

@@ -52,7 +52,7 @@ namespace Newtonsoft.Json.Utilities
 			}, cancellationToken);
 		}
 
-		public static Task<T> FromCanceled</*[Nullable(2)]*/ T>(this CancellationToken cancellationToken)
+		public static Task<T> FromCanceled< T>(this CancellationToken cancellationToken)
 		{
 			return new Task<T>(() => default(T), cancellationToken);
 		}
@@ -66,7 +66,7 @@ namespace Newtonsoft.Json.Utilities
 			return cancellationToken.FromCanceled();
 		}
 
-		public static Task WriteAsync(this TextWriter writer, /*[Nullable(2)]*/ string value, CancellationToken cancellationToken)
+		public static Task WriteAsync(this TextWriter writer,  string value, CancellationToken cancellationToken)
 		{
 			if (!cancellationToken.IsCancellationRequested)
 			{

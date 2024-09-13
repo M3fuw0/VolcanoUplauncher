@@ -20,7 +20,7 @@ namespace Newtonsoft.Json.Linq
 
 		public override JTokenType Type => JTokenType.Array;
 
-		/*[Nullable(2)]*/
+		
 		public override JToken this[object key]
 		{
 			/*[return: Nullable(2)]*/
@@ -74,7 +74,7 @@ namespace Newtonsoft.Json.Linq
 			return LoadAsync(reader, null, cancellationToken);
 		}
 
-		public new static async Task<JArray> LoadAsync(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
+		public new static async Task<JArray> LoadAsync(JsonReader reader,  JsonLoadSettings settings, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (reader.TokenType == JsonToken.None && !(await reader.ReadAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false)))
 			{
@@ -129,7 +129,7 @@ namespace Newtonsoft.Json.Linq
 			return Load(reader, null);
 		}
 
-		public new static JArray Load(JsonReader reader, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JArray Load(JsonReader reader,  JsonLoadSettings settings)
 		{
 			if (reader.TokenType == JsonToken.None && !reader.Read())
 			{
@@ -151,7 +151,7 @@ namespace Newtonsoft.Json.Linq
 			return Parse(json, null);
 		}
 
-		public new static JArray Parse(string json, /*[Nullable(2)]*/ JsonLoadSettings settings)
+		public new static JArray Parse(string json,  JsonLoadSettings settings)
 		{
 			using (JsonReader jsonReader = new JsonTextReader(new StringReader(json)))
 			{
@@ -170,7 +170,7 @@ namespace Newtonsoft.Json.Linq
 
 		public new static JArray FromObject(object o, JsonSerializer jsonSerializer)
 		{
-			JToken jToken = JToken.FromObjectInternal(o, jsonSerializer);
+			JToken jToken = FromObjectInternal(o, jsonSerializer);
 			if (jToken.Type != JTokenType.Array)
 			{
 				throw new ArgumentException("Object serialized to {0}. JArray instance expected.".FormatWith(CultureInfo.InvariantCulture, jToken.Type));
@@ -198,12 +198,12 @@ namespace Newtonsoft.Json.Linq
 			return _values.IndexOfReference(item);
 		}
 
-		internal override void MergeItem(object content, /*[Nullable(2)]*/ JsonMergeSettings settings)
+		internal override void MergeItem(object content,  JsonMergeSettings settings)
 		{
 			IEnumerable enumerable = ((IsMultiContent(content) || content is JArray) ? ((IEnumerable)content) : null);
 			if (enumerable != null)
 			{
-				JContainer.MergeEnumerableContent(this, enumerable, settings);
+				MergeEnumerableContent(this, enumerable, settings);
 			}
 		}
 
