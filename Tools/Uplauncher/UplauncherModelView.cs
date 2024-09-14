@@ -110,7 +110,7 @@ namespace Uplauncher
             }
 
             //int numberOfClientsToStart = (int)parameter;
-            int numberOfClientsToStart = NumberOfClientsToStart;
+            int numberOfClientsToStart = 1;//NumberOfClientsToStart;
 
             if (!m_lastUpdateCheck.HasValue || DateTime.Now - m_lastUpdateCheck.Value > TimeSpan.FromMinutes(5.0))
             {
