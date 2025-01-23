@@ -70,9 +70,8 @@ namespace Uplauncher
 
             InitializeComponent();
             InitializeDiscordRpc();
-            LoadConfiguration();
 
-            //UplauncherModelView model = new UplauncherModelView();
+            UplauncherModelView model = new UplauncherModelView();
             //model.LoadConfiguration();
 
             //// Essayez de créer un Mutex global en utilisant un nom unique.
@@ -90,29 +89,6 @@ namespace Uplauncher
         {
             get;
             set;
-        }
-
-        public void LoadConfiguration()
-        {
-            UplauncherModelView model = new UplauncherModelView();
-            string configPath = Constants.ConfigPath;
-            if (File.Exists(configPath))
-            {
-                XDocument configDoc = XDocument.Load(configPath);
-                XElement isNotHidenEntry = configDoc.Descendants("entry")
-                    .FirstOrDefault(e => (string)e.Attribute("key") == "isNotHidenEnabled");
-
-                if (isNotHidenEntry != null)
-                {
-                    //IsLegacyModeEnabled = bool.Parse(legacyEntry.Value);
-                    model.IsNotHidenEnabled = isNotHidenEntry.Value.Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-                else
-                {
-                    // Si l'entrée "legacy" n'existe pas, initialisez à une valeur par défaut, ici false par exemple.
-                    model.IsNotHidenEnabled = false;
-                }
-            }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -351,10 +327,10 @@ namespace Uplauncher
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            string gameDirectoryPath = "vulcano_app";
-            string checksumFilePath = ".\\checksum.volcano";
+            string gameDirectoryPath = "pyrasis_app";
+            string checksumFilePath = ".\\checksum.pyrasis";
 
-            // Supprime le dossier vulcano_app s'il existe
+            // Supprime le dossier pyrasis_app s'il existe
             if (Directory.Exists(gameDirectoryPath))
             {
                 Directory.Delete(gameDirectoryPath, true);

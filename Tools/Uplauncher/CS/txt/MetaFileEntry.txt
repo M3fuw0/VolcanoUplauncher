@@ -34,7 +34,7 @@ namespace Uplauncher.Patcher
     {
         // Assume you have a list of URLs:
         List<string> serverUrls = new List<string> { Constants.UpdateSiteURL, Constants.SecondaryUpdateSiteURL};
-        private string _fastestServerUrl;
+
 
         public event Action<MetaFileEntry> Downloaded;
 
@@ -77,7 +77,6 @@ namespace Uplauncher.Patcher
             var fullPath = Path.GetFullPath("./" + LocalURL);
             var isUplauncherExeFile = fullPath.Equals(Path.GetFullPath(Constants.CurrentExePath),
                 StringComparison.InvariantCultureIgnoreCase);
-            _fastestServerUrl = App.FastestServerUrl;
 #if DEBUG
             if (isUplauncherExeFile)
             {
@@ -109,32 +108,47 @@ namespace Uplauncher.Patcher
             //uplauncher.SetState(string.Format("Download {0} ...", RelativeURL));
             //14/05/2023
             //
+
+            //foreach (var url in serverUrls)//multiurl
+            //{
+            //    try
+            //    {
+            //        // Créer une nouvelle instance de WebClient pour chaque téléchargement
+            //        using (var webClient = new WebClient())
+            //        {
+            //            if (isUplauncherExeFile)
+            //            {
+            //                webClient.DownloadFileCompleted += OnUplauncherDownloaded;
+            //                webClient.DownloadFileAsync(new Uri(url + RelativeURL),
+            //                    "./" + Constants.ExeReplaceTempPath, Constants.ExeReplaceTempPath);
+            //            }
+            //            else
+            //            {
+            //                webClient.DownloadFileCompleted += OnFileDownloaded;
+            //                webClient.DownloadFileAsync(new Uri(url + RelativeURL), "./" + LocalURL, LocalURL);
+            //            }
+            //        }
+            //        // Si le téléchargement démarre, sortir de la boucle
+            //        break;
+            //    }
+            //    catch (WebException)
+            //    {
+            //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+            //        // If this was the last server, you might want to display an error message.
+            //        MessageBox.Show("Aucun serveur est disponible.");
+            //    }
+            //}
             if (isUplauncherExeFile)
             {
                 uplauncher.WebClient.DownloadFileCompleted += OnUplauncherDownloaded;
-
-                // Utiliser _fastestServerUrl à la place de Constants.UpdateSiteURL
-                uplauncher.WebClient.DownloadFileAsync(new Uri(_fastestServerUrl + RelativeURL), 
+                uplauncher.WebClient.DownloadFileAsync(new Uri(Constants.UpdateSiteURL + RelativeURL),
                     "./" + Constants.ExeReplaceTempPath, Constants.ExeReplaceTempPath);
             }
             else
             {
                 uplauncher.WebClient.DownloadFileCompleted += OnFileDownloaded;
-
-                // Utiliser _fastestServerUrl à la place de Constants.UpdateSiteURL
-                uplauncher.WebClient.DownloadFileAsync(new Uri(_fastestServerUrl + RelativeURL), "./" + LocalURL, LocalURL);
+                uplauncher.WebClient.DownloadFileAsync(new Uri(Constants.UpdateSiteURL + RelativeURL), "./" + LocalURL, LocalURL);
             }
-            //if (isUplauncherExeFile)
-            //{
-            //    uplauncher.WebClient.DownloadFileCompleted += OnUplauncherDownloaded;
-            //    uplauncher.WebClient.DownloadFileAsync(new Uri(Constants.UpdateSiteURL + RelativeURL),
-            //        "./" + Constants.ExeReplaceTempPath, Constants.ExeReplaceTempPath);
-            //}
-            //else
-            //{
-            //    uplauncher.WebClient.DownloadFileCompleted += OnFileDownloaded;
-            //    uplauncher.WebClient.DownloadFileAsync(new Uri(Constants.UpdateSiteURL + RelativeURL), "./" + LocalURL, LocalURL);
-            //}
         }
 
         private void OnFileDownloaded(object sender, AsyncCompletedEventArgs e)

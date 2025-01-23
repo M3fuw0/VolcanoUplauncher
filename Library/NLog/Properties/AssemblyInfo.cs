@@ -66,8 +66,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("NLog")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NLog")]
-[assembly: AssemblyCopyright("Copyright (c) 2004-2010 by Jaroslaw Kowalski")]
+[assembly: AssemblyCompany("Volcano Games Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2024 Volcano Games Inc. Tous droits réservés. - Copyright (c) 2004-2010 by Jaroslaw Kowalski")]
 [assembly: AssemblyCulture("")]
 
 [assembly: CLSCompliant(true)]

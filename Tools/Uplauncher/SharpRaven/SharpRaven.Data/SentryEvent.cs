@@ -52,7 +52,7 @@ namespace SharpRaven.Data
 			Message = message;
 		}
 
-		private SentryEvent()
+		public SentryEvent()
 		{
 			Tags = new Dictionary<string, string>();
 			Fingerprint = new List<string>();

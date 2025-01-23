@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("UplauncherReplacer")]
 [assembly: AssemblyDescription("Official Pyrasis UplauncherReplacer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Pyrasis Games Inc.")]
+[assembly: AssemblyCompany("Volcano Games Inc.")]
 [assembly: AssemblyProduct("UplauncherReplacer")]
-[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyCopyright("Copyright © 2024 Volcano Games Inc. - Tous droits réservés.")]
 [assembly: AssemblyTrademark("Pyrasis")]
 [assembly: AssemblyCulture("")]
 

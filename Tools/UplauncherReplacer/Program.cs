@@ -12,11 +12,11 @@ namespace UplauncherReplacer
         {
             bool restart = args.Any(arg => arg.Equals("-restart", StringComparison.OrdinalIgnoreCase));
 
-            string upLauncherPath = @".\\majs\\UpLauncher.exe";
-            string targetPath = @".\\UpLauncher.exe";
-            string root = @".\\majs";
-            string checksum = @".\\checksum.karashi";
-            string errorFilePath = @".\\error.txt";
+            string upLauncherPath = @".\majs\UpLauncher.exe";
+            string targetPath = @".\UpLauncher.exe";
+            string root = @".\majs";
+            string checksum = @".\checksum.vulcano";
+            string errorFilePath = @".\error.txt";
 
             try
             {

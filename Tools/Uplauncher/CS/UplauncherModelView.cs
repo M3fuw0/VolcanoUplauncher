@@ -62,19 +62,11 @@ namespace Uplauncher
 
         private readonly BackgroundWorker m_MD5Worker = new BackgroundWorker();
         private MainWindow _mainWindow;
-        private string _fastestServerUrl;
 
         public UplauncherModelView(DateTime? lastUpdateCheck, MainWindow mainWindow)
         {
             m_lastUpdateCheck = lastUpdateCheck;
             _mainWindow = mainWindow;
-            // Récupérer l'URL du serveur le plus rapide depuis App.xaml.cs
-            _fastestServerUrl = App.FastestServerUrl;
-
-            if (string.IsNullOrEmpty(_fastestServerUrl))
-            {
-                SetState("Aucun serveur disponible.");
-            }
             NotifyIcon = new NotifyIcon
             {
                 Visible = true,
@@ -112,7 +104,6 @@ namespace Uplauncher
 
         private void OnPlay(object parameter)
         {
-            //MessageBox.Show(_fastestServerUrl);
             if (!CanPlay(parameter))
             {
                 return;
@@ -177,11 +168,7 @@ namespace Uplauncher
             }
             SetState("Jeu lancé.");
             _mainWindow.InitializeProcessCheckTimer(); // Initialiser le timer après les mises à jour
-            //HideWindowInTrayIcon();
-            if (!IsNotHidenEnabled)
-            {
-                HideWindowInTrayIcon();
-            }
+            HideWindowInTrayIcon();
         }
 
         //private void ClientNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -388,9 +375,9 @@ namespace Uplauncher
             }
         }
 
-        private DelegateCommand m_isNotHidenEnabledCommand;
+        private DelegateCommand m_multiDofusCommand;
 
-        public DelegateCommand IsNotHidenEnabledCommand => m_isNotHidenEnabledCommand ?? (m_isNotHidenEnabledCommand = new DelegateCommand(OpenMultiDofus, CanPlay));
+        public DelegateCommand MultiDofusCommand => m_multiDofusCommand ?? (m_multiDofusCommand = new DelegateCommand(OpenMultiDofus, CanPlay));
 
         private void OpenMultiDofus(object parameter)
         {
@@ -407,16 +394,16 @@ namespace Uplauncher
                 XElement legacyEntry = configDoc.Descendants("entry")
                     .FirstOrDefault(e => (string)e.Attribute("key") == "lang.current");
 
-                if (legacyEntry != null)
-                {
-                    //IsLegacyModeEnabled = bool.Parse(legacyEntry.Value);
-                    IsNotHidenEnabled = legacyEntry.Value.Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-                else
-                {
-                    // Si l'entrée "legacy" n'existe pas, initialisez à une valeur par défaut, ici false par exemple.
-                    IsNotHidenEnabled = false;
-                }
+                //if (legacyEntry != null)
+                //{
+                //    //IsLegacyModeEnabled = bool.Parse(legacyEntry.Value);
+                //    IsLegacyModeEnabled = legacyEntry.Value.Equals("true", StringComparison.OrdinalIgnoreCase);
+                //}
+                //else
+                //{
+                //    // Si l'entrée "legacy" n'existe pas, initialisez à une valeur par défaut, ici false par exemple.
+                //    IsLegacyModeEnabled = false;
+                //}
             }
         }
 
@@ -432,16 +419,18 @@ namespace Uplauncher
             {
                 xdoc = new XDocument(new XElement("config"));
             }
+
             XElement legacyElement = xdoc.Descendants("entry")
-                .FirstOrDefault(e => (string)e.Attribute("key") == "isNotHidenEnabled");
+                .FirstOrDefault(e => (string)e.Attribute("key") == "legacy");
             if (legacyElement != null)
             {
-                legacyElement.Value = IsNotHidenEnabled.ToString().ToLower();
+                legacyElement.Value = IsLegacyModeEnabled.ToString().ToLower();
             }
             else
             {
-                xdoc.Root.Add(new XElement("entry", new XAttribute("key", "isNotHidenEnabled"), IsNotHidenEnabled.ToString().ToLower()));
+                xdoc.Root.Add(new XElement("entry", new XAttribute("key", "legacy"), IsLegacyModeEnabled.ToString().ToLower()));
             }
+
             xdoc.Save(configPath);
         }
 
@@ -587,26 +576,99 @@ namespace Uplauncher
                 m_client.DownloadStringCompleted += OnPatchDownloaded;
                 try
                 {
-                    //m_client.DownloadStringAsync(new Uri(Constants.UpdateSiteURL + Constants.RemotePatchFile), Constants.RemotePatchFile);
-                    m_client.DownloadStringAsync(new Uri(_fastestServerUrl + Constants.RemotePatchFile), Constants.RemotePatchFile);
+                    m_client.DownloadStringAsync(new Uri(Constants.UpdateSiteURL + Constants.RemotePatchFile), Constants.RemotePatchFile);
                 }
                 catch (SocketException)
                 {
                     SetState("Le serveur est indisponible.");
                     _mainWindow.UpdateGameDetails("Le serveur est indisponible", "Réessayez plus tard"); // Mise à jour des détails
                 }
+                //
+                //            foreach (var url in serverUrls)//multiurl
+                //            {
+                //                try
+                //                {
+                //                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + Constants.RemotePatchURL);
+                //                    request.Timeout = 15000; // Timeout set to 15 seconds
+
+                //                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                //                    {
+                //                        if (response.StatusCode == HttpStatusCode.OK)
+                //                        {
+                //                            m_client.DownloadStringAsync(new Uri(url + Constants.RemotePatchFile), Constants.RemotePatchFile);
+                //                        }
+
+                //                        break;//
+                //                    }
+                //                }
+                //                catch (SocketException)
+                //                {
+                //                    // If an exception occurs, don't do anything. The loop will move on to the next server.
+                //		SetState("Le serveur est indisponible.");
+                //                    _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+                //                }
+                //}
             }
             //uplauncher
             else if (Directory.Exists("majs"))
             {
-                //DownloadUpLauncher(Constants.UplauncherURL, Constants.UplauncherMaj);
-                DownloadUpLauncher(_fastestServerUrl + Constants.UplauncherURLs, Constants.UplauncherMaj);
+                //foreach (var url in serverUrls)//multiurl
+                //{
+                //    try
+                //    {
+                //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + Constants.RemotePatchFile);
+                //        request.Timeout = 15000; // Timeout set to 15 seconds
+
+                //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                //        {
+                //            if (response.StatusCode == HttpStatusCode.OK)
+                //            {
+                //                //MessageBox.Show(url + Constants.UplauncherURLs);
+                //                DownloadUpLauncher(url + Constants.UplauncherURLs, Constants.UplauncherMaj);
+                //            }
+
+                //            //break;//
+                //        }
+                //    }
+                //    catch (SocketException)
+                //    {
+                //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+                //        SetState("Le serveur est indisponible.");
+                //        _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+                //    }
+                //}
+                DownloadUpLauncher(Constants.UplauncherURL, Constants.UplauncherMaj);
             }
             else
             {
+                //foreach (var url in serverUrls)//multiurl
+                //{
+                //    try
+                //    {
+                //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + Constants.RemotePatchFile);
+                //        request.Timeout = 15000; // Timeout set to 15 seconds
+
+                //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                //        {
+                //            if (response.StatusCode == HttpStatusCode.OK)
+                //            {
+                //                Directory.CreateDirectory("majs");
+                //                //MessageBox.Show(url + Constants.UplauncherURLs);
+                //                DownloadUpLauncher(url + Constants.UplauncherURLs, Constants.UplauncherMaj);
+                //            }
+
+                //            //break;
+                //        }
+                //    }
+                //    catch (SocketException)
+                //    {
+                //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+                //        SetState("Le serveur est indisponible.");
+                //        _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+                //    }
+                //}
                 Directory.CreateDirectory("majs");
-                //DownloadUpLauncher(Constants.UplauncherURL, Constants.UplauncherMaj);
-                DownloadUpLauncher(_fastestServerUrl + Constants.UplauncherURLs, Constants.UplauncherMaj);
+                DownloadUpLauncher(Constants.UplauncherURL, Constants.UplauncherMaj);
             }
         }
 
@@ -743,10 +805,96 @@ namespace Uplauncher
             }
             catch (Exception ex)
             {
-                //HandleDownloadError(false, ex, Constants.UpdateSiteURL + Constants.RemotePatchFile);
-                HandleDownloadError(false, ex, _fastestServerUrl + Constants.RemotePatchFile);
+                HandleDownloadError(false, ex, Constants.UpdateSiteURL + Constants.RemotePatchFile);
             }
         }
+
+        //private void CompareChecksums()//multiurl
+        //{
+        //    foreach (var url in serverUrls)
+        //    {
+        //        try
+        //        {
+        //            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + Constants.VersionURLs);
+        //            request.Timeout = 15000; // Timeout set to 15 seconds
+
+        //            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //            {
+        //                if (response.StatusCode == HttpStatusCode.OK)
+        //                {
+        //                    //MessageBox.Show(url);
+        //                    CompareChecksumsForServer(url);
+        //                }
+
+        //                //break;
+        //            }
+        //        }
+        //        catch (SocketException ex)
+        //        {
+        //            // If an exception occurs, don't do anything. The loop will move on to the next server.
+        //            SetState("Le serveur est indisponible.");
+        //            _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+        //            HandleDownloadError(false, ex, url + Constants.RemotePatchFile);
+        //        }
+        //    }
+        //    //foreach (var url in serverUrls)
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        CompareChecksumsForServer(url);
+        //    //        // If the comparison is successful, break out of the loop
+        //    //        break;
+        //    //    }
+        //    //    catch (Exception ex)
+        //    //    {
+        //    //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+        //    //        // If this was the last server, you might want to display an error message.
+        //    //        HandleDownloadError(false, ex, url + Constants.RemotePatchFile);
+        //    //    }
+        //    //}
+        //}
+
+        //private void CompareChecksumsForServer(string serverUrl)
+        //{
+        //    try
+        //    {
+        //        if (m_metaFile != null && m_metaFile.FolderChecksum != LocalChecksum)
+        //        {
+        //            IsUpToDate = false;
+        //            m_playCommand.RaiseCanExecuteChanged();
+
+        //            m_currentTasks = new Stack<MetaFileEntry>(m_metaFile.Tasks);
+        //            GlobalDownloadProgress = true;
+        //            TotalBytesToDownload = m_metaFile.Tasks.Sum(x => x.FileSize);
+        //            DownloadProgress = 0.00;
+        //            ProgressDownloadSpeedInfo = string.Empty;
+        //            ProcessTask();
+        //        }
+        //        else
+        //        {
+        //            File.WriteAllText(Constants.LocalChecksumFile, LocalChecksum);
+        //            SetState("Le jeu est à jour.", Colors.Red);
+        //            _mainWindow.UpdateGameDetails("Le jeu est à jour", "Prêt à jouer sur Pyrasis !"); // Mise à jour des détails
+        //            IsUpdating = false;
+        //            IsUpToDate = true;
+
+        //            View.Dispatcher.BeginInvoke( /*(Action)delegate*/new Action(() =>
+        //            {
+        //                m_playCommand.RaiseCanExecuteChanged();
+        //                m_repairGameCommand.RaiseCanExecuteChanged();
+        //                //m_consoleCommand.RaiseCanExecuteChanged(); //
+        //                IsNumberComboBoxEnabled = true;
+        //                IsLanguageComboBoxEnabled = true;
+        //                IsStatusTextBoxVisible = true;
+        //            })); //);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        /*throw ex;*/ HandleDownloadError(false, ex, serverUrl + Constants.RemotePatchFile);
+        //    }
+        //}
+
 
         private void ProcessTask()
         {
@@ -872,6 +1020,64 @@ namespace Uplauncher
             //_mainWindow.UpdateGameDetails("Téléchargement en cours ...", $"{DownloadProgress:F0}% terminé");
         }
 
+        //private void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        //{
+        //    if (!GlobalDownloadProgress)
+        //    {
+        //        if (e.TotalBytesToReceive > 0) // Vérification pour éviter la division par zéro
+        //        {
+        //            DownloadProgress = (double)e.BytesReceived / e.TotalBytesToReceive * 100.00;
+        //        }
+        //        else
+        //        {
+        //            DownloadProgress = 0; // Si TotalBytesToReceive est 0, on fixe la progression à 0
+        //        }
+
+        //        if (m_lastProgressChange != null && (DateTime.Now - m_lastProgressChange.Value) > TimeSpan.FromSeconds(1))
+        //        {
+        //            ProgressDownloadSpeedInfo = string.Format(m_bytesFormatProvider, "{0:fs} / {1:fs} ({2:fs}/s)",
+        //                e.BytesReceived, e.TotalBytesToReceive,
+        //                (e.BytesReceived - m_lastFileDownloadedBytes) /
+        //                (DateTime.Now - m_lastProgressChange.Value).TotalSeconds);
+
+        //            m_lastProgressChange = DateTime.Now;
+        //            m_lastFileDownloadedBytes = e.BytesReceived;
+        //        }
+        //        _mainWindow.UpdateGameDetails("Téléchargement en cours...", $"{DownloadProgress:F0}% terminé");
+        //        //_mainWindow.UpdateGameDetails("Téléchargement en cours ...", $"{DownloadProgress:F2}% terminé");
+        //    }
+        //    else
+        //    {
+        //        if (TotalBytesToDownload > 0) // Vérification pour éviter la division par zéro
+        //        {
+        //            if (m_lastProgressChange != null && (DateTime.Now - m_lastProgressChange.Value) > TimeSpan.FromSeconds(1))
+        //            {
+        //                ProgressDownloadSpeedInfo = string.Format(m_bytesFormatProvider, "{0:fs} / {1:fs} ({2:fs}/s)",
+        //                    TotalDownloadedBytes + e.BytesReceived, TotalBytesToDownload,
+        //                    (TotalDownloadedBytes + e.BytesReceived - m_lastGlobalDownloadedBytes) /
+        //                    (DateTime.Now - m_lastProgressChange.Value).TotalSeconds);
+
+        //                m_lastProgressChange = DateTime.Now;
+        //                m_lastGlobalDownloadedBytes = TotalDownloadedBytes + e.BytesReceived;
+        //                DownloadProgress = (double)TotalDownloadedBytes / TotalBytesToDownload * 100.00;
+        //                _mainWindow.UpdateGameDetails("Vérification en cours...", $"{DownloadProgress:F0}% terminé");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            DownloadProgress = 0; // Si TotalBytesToDownload est 0, on fixe la progression à 0
+        //        }
+        //    }
+
+        //    if (m_lastProgressChange == null)
+        //        m_lastProgressChange = DateTime.Now;
+
+        //    // Mise à jour du Rich Presence avec le pourcentage formaté
+        //    //DownloadProgress = ((double)TotalDownloadedBytes / (double)TotalBytesToDownload) * 100.00;
+        //    //_mainWindow.UpdateGameDetails("Téléchargement en cours ...", $"{DownloadProgress:F0}% terminé");
+        //}
+
+
 
         //Uplauncher
 
@@ -941,20 +1147,20 @@ namespace Uplauncher
             }
         }
 
-        private bool _isNotHidenEnabled; // Supposons que ceci soit la propriété liée à votre CheckBox
+        private bool _isLegacyModeEnabled; // Supposons que ceci soit la propriété liée à votre CheckBox
 
-        public bool IsNotHidenEnabled
+        public bool IsLegacyModeEnabled
         {
-            get => _isNotHidenEnabled;
+            get => _isLegacyModeEnabled;
             set
             {
-                if (_isNotHidenEnabled != value)
+                if (_isLegacyModeEnabled != value)
                 {
-                    _isNotHidenEnabled = value;
-                    RaisePropertyChanged("IsNotHidenEnabled"); // Assurez-vous d'implémenter INotifyPropertyChanged
+                    _isLegacyModeEnabled = value;
+                    RaisePropertyChanged("IsLegacyModeEnabled"); // Assurez-vous d'implémenter INotifyPropertyChanged
                     // Mettre à jour la possibilité d'exécuter la commande en fonction du nouveau statut
-                    //IsNotHidenEnabledCommand?.RaiseCanExecuteChanged();
-                    SaveConfiguration();
+                    m_multiDofusCommand?.RaiseCanExecuteChanged();
+                    //SaveConfiguration();
                 }
             }
         }
@@ -976,8 +1182,37 @@ namespace Uplauncher
                 StreamReader streamReader = new StreamReader(Constants.VersionPath);
                 string b = streamReader.ReadToEnd();
                 streamReader.Close();
-                //currentversion = ReadRemoteTextFile(Constants.VersionURL);
-                currentversion = ReadRemoteTextFile(_fastestServerUrl + Constants.VersionURLs);
+                //foreach (var url in serverUrls) //multiURL
+                //{
+                //    try
+                //    {
+                //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + Constants.VersionURLs);
+                //        request.Timeout = 15000; // Timeout set to 15 seconds
+
+                //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                //        {
+                //            if (response.StatusCode == HttpStatusCode.OK)
+                //            {
+                //                //Console.WriteLine(url + Constants.UplauncherURLs);
+                //                currentversion = ReadRemoteTextFile(url + Constants.VersionURLs);
+                //                // Vérifie que currentversion a une valeur correcte avant de sortir de la boucle
+                //                //if (!string.IsNullOrEmpty(currentversion))
+                //                //{
+                //                //    break; // Sortir seulement si la version a bien été récupérée
+                //                //}
+                //            }
+
+                //            //break;
+                //        }
+                //    }
+                //    catch (SocketException)
+                //    {
+                //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+                //        SetState("Le serveur est indisponible.");
+                //        _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+                //    }
+                //}
+                currentversion = ReadRemoteTextFile(Constants.VersionURL);
                 if (currentversion == b)
                 {
                     return true;
@@ -987,8 +1222,38 @@ namespace Uplauncher
             StreamReader streamReader2 = new StreamReader(Constants.VersionPath);
             string b2 = streamReader2.ReadToEnd();
             streamReader2.Close();
-            //currentversion = ReadRemoteTextFile(Constants.VersionURL);
-            currentversion = ReadRemoteTextFile(_fastestServerUrl + Constants.VersionURLs);
+            //foreach (var url in serverUrls) //multiURL
+            //{
+            //    try
+            //    {
+            //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //        //MessageBox.Show(url);
+            //        request.Timeout = 15000; // Timeout set to 15 seconds
+
+            //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            //        {
+            //            if (response.StatusCode == HttpStatusCode.OK)
+            //            {
+            //                //MessageBox.Show(url + Constants.UplauncherURLs);
+            //                currentversion = ReadRemoteTextFile(url + Constants.VersionURLs);
+            //                // Vérifie que currentversion a une valeur correcte avant de sortir de la boucle
+            //                //if (!string.IsNullOrEmpty(currentversion))
+            //                //{
+            //                //    break; // Sortir seulement si la version a bien été récupérée
+            //                //}
+            //            }
+
+            //            //break;
+            //        }
+            //    }
+            //    catch (SocketException)
+            //    {
+            //        // If an exception occurs, don't do anything. The loop will move on to the next server.
+            //        SetState("Le serveur est indisponible.");
+            //        _mainWindow.UpdateGameDetails("Erreur : Le serveur est indisponible.", "Veuillez contacter le support !");
+            //    }
+            //}
+            currentversion = ReadRemoteTextFile(Constants.VersionURL);
             if (currentversion == b2)
             {
                 return true;
@@ -1047,8 +1312,7 @@ namespace Uplauncher
             WebClient webClient = new WebClient();
             webClient.DownloadProgressChanged += UpdateProgressChange;
             webClient.DownloadFileCompleted += UpdateDone;
-            //webClient.DownloadFileAsync(new Uri(Url), DownloadTo);
-            webClient.DownloadFileAsync(new Uri(_fastestServerUrl + Constants.UplauncherURLs), DownloadTo);
+            webClient.DownloadFileAsync(new Uri(Url), DownloadTo);
         }
         private string ReadRemoteTextFile(string Url)
         {

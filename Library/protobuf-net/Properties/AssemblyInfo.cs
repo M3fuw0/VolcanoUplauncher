@@ -9,9 +9,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("protobuf-net")]
 [assembly: AssemblyDescription("Protocol Buffers for .NET")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Marc Gravell")]
+[assembly: AssemblyCompany("Volcano Games Inc. - Marc Gravell")]
 [assembly: AssemblyProduct("protobuf-net")]
-[assembly: AssemblyCopyright("See http://code.google.com/p/protobuf-net/")]
+[assembly: AssemblyCopyright("Copyright © 2024 Volcano Games Inc. - Tous droits réservés.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

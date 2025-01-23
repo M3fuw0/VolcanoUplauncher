@@ -1,5 +1,5 @@
 ﻿#region License GNU GPL
-// Program.cs
+// Patch.cs
 // 
 // Copyright (C) 2013 - BehaviorIsManaged
 // 
@@ -14,16 +14,25 @@
 // if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #endregion
 
-using System;
+using System.Xml.Serialization;
 
-namespace Uplauncher
+namespace Uplauncher.Patcher
 {
-    public static class Program
+    public class MetaFile
     {
-        [STAThreadAttribute]
-        public static void Main()
+
+        [XmlArray("Tasks")]
+        public MetaFileEntry[] Tasks
         {
-            App.Main();
+            get;
+            set;
+        }
+
+        [XmlAttribute("checksum")]
+        public string FolderChecksum
+        {
+            get;
+            set;
         }
     }
 }

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Stump.BaseCore.Framework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Volcano Games Inc.")]
 [assembly: AssemblyProduct("Stump.BaseCore.Framework")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCopyright("Copyright © 2024 Volcano Games Inc. - Tous droits réservés.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -18,7 +18,7 @@ namespace Uplauncher.Exceptions
             _ravenClient = ravenClient;
         }
 
-        public void RegisterException(Exception ex)
+        public static void RegisterException(Exception ex)
         {
             //if (App.IsExceptionLoggerEnabled)
             //{

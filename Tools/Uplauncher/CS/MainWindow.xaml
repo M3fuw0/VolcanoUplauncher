@@ -71,11 +71,6 @@
                 <ComboBoxItem Content="Dansk"/>
                 <ComboBoxItem Content="Suomalainen"/>
             </ComboBox>
-            <CheckBox x:Name="LegacyCheckBox" Content="Ne pas fermer l'Uplauncher après avoir cliqué sur Jouer"
-                      Canvas.Left="425" Canvas.Top="563" 
-                      IsChecked="{Binding IsNotHidenEnabled, Mode=TwoWay}"
-                      Visibility="{Binding IsStatusTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                      IsEnabled="{Binding IsNumberComboBoxEnabled}" />
             <Button BorderBrush="Transparent" BorderThickness="0" Background="Transparent"  Canvas.Left="1" Canvas.Top="207" Style="{StaticResource ImageButton}" 
                     Command="{Binding PlayCommand}" Width="170" Height="170">
                 <UI:OpaqueClickableImage Stretch="Fill" Style="{StaticResource GlowingImage}" Margin="0,0,-9,-7">

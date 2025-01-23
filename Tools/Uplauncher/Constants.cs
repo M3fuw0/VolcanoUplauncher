@@ -20,50 +20,50 @@ namespace Uplauncher
 {
     public static class Constants
     {
-        public const string SiteURL = "https://pyrasis.cc/";
-        public const string UpdateSiteURL = "https://update.pyrasis.cc/";
-        //public const string UpdateSiteURL = "https://support.pyrasis.cc/";
-        public const string SecondaryUpdateSiteURL = "https://support.pyrasis.cc/";
+        public /*const*/ static string SiteURL = "https://pyrasis.cc/";
+        public /*const*/ static string UpdateSiteURL = "https://update.sulax.vg/";
+        //public /*const*/ static string UpdateSiteURL = "https://support.pyrasis.cc/";
+        public /*const*/ static string SecondaryUpdateSiteURL = "https://update.sulax.vg/";
         //public static readonly Uri RSSNewsURL = new Uri("https://update.pyrasis.cc/rss/rss.xml");
-        public const string VoteURL = "https://pyrasis.cc/vote";
-        public const string DiscordURL = "https://discord.gg/ZYSuGp3dxY";
-        public const string UplauncherURL = "https://update.pyrasis.cc/uplauncher/Uplauncher.exe";
-        public const string UplauncherURLs = "uplauncher/Uplauncher.exe";
-        public const string VersionURL = "https://update.pyrasis.cc/version/VERSION";
-        public const string VersionURLs = "version/VERSION";
+        public /*const*/ static string VoteURL = "https://pyrasis.cc/vote";
+        public /*const*/ static string DiscordURL = "https://discord.gg/ZYSuGp3dxY";
+        public /*const*/ static string UplauncherURL = "https://update.sulax.vg/uplauncher/Uplauncher.exe";
+        public /*const*/ static string UplauncherURLs = "uplauncher/Uplauncher.exe";
+        public /*const*/ static string VersionURL = "https://update.sulax.vg/version/VERSION";
+        public /*const*/ static string VersionURLs = "version/VERSION";
 
-        public const string DofusExePath = "pyrasis_app\\Dofus.exe";
-        public const string DofusRegExePath = "pyrasis_app\\reg\\Reg.exe";
-        public const string LocalChecksumFile = "checksum.pyrasis";
-        public const string RemotePatchFile = "patch.xml";
-        public const string RemotePatchURL = "/patch.xml";
-        public const string UplauncherMaj = ".\\majs\\Uplauncher.exe";
-        public const string RegExePath = "reg/Reg.exe";
-        public const string Version = "VERSION";
-        public const string VersionPath = ".\\VERSION";
-        public const string PatchPath = ".\\UplauncherReplacer.exe";
+        public /*const*/ static string DofusExePath = @".\\vulcano_app\\Dofus.exe";
+        public /*const*/ static string DofusRegExePath = @".\\vulcano_app\\reg\\Reg.exe";
+        public /*const*/ static string LocalChecksumFile = "checksum.vulcano";
+        public /*const*/ static string RemotePatchFile = "patch.xml";
+        public /*const*/ static string RemotePatchURL = ".\\patch.xml";
+        public /*const*/ static string UplauncherMaj = @".\majs\Uplauncher.exe";
+        public /*const*/ static string RegExePath = "reg/Reg.exe";
+        public /*const*/ static string Version = "VERSION";
+        public /*const*/ static string VersionPath = ".\\VERSION";
+        public /*const*/ static string PatchPath = ".\\UplauncherReplacer.exe";
 
-        public const string GameDirPath = ".\\pyrasis_app";
-        public const string ChecksumFilePath = ".\\UplauncherReplacer.exe";
-        public const string ConfigFile = "config.xml";
-        public const string ConfigPath = "pyrasis_app/config.xml";
+        public /*const*/ static string GameDirPath = ".\\vulcano_app";
+        public /*const*/ static string ChecksumFilePath = ".\\UplauncherReplacer.exe";
+        public /*const*/ static string ConfigFile = "config.xml";
+        public /*const*/ static string ConfigPath = @".\\vulcano_app\\config.xml";
 
-        public const string ClientId = "1271211381873705164";
-        public const string GameDetails = "Joue à Pyrasis 2.51 Cheat";
-        public const string WebsiteUrl = "Allez sur https://pyrasis.cc";
-        public const string LargeImageKey = "large"; //large
-        public const string SmallImageKey = "small"; //small
-        public const string LabelButton1 = "Site \ud83d\udc12";
-        public const string UrlButton1 = "https://pyrasis.cc";
-        public const string LabelButton2 = "Discord ";
-        public const string UrlButton2 = "https://discord.gg/ZYSuGp3dxY";
+        public /*const*/ static string ClientId = "1271211381873705164";
+        public /*const*/ static string GameDetails = "Joue à Pyrasis 2.51 Cheat";
+        public /*const*/ static string WebsiteUrl = "Allez sur https://pyrasis.cc";
+        public /*const*/ static string LargeImageKey = "large"; //large
+        public /*const*/ static string SmallImageKey = "small"; //small
+        public /*const*/ static string LabelButton1 = "Site \ud83d\udc12";
+        public /*const*/ static string UrlButton1 = "https://pyrasis.cc";
+        public /*const*/ static string LabelButton2 = "Discord ";
+        public /*const*/ static string UrlButton2 = "https://discord.gg/ZYSuGp3dxY";
 
-        public const string ExeReplaceTempPath = "temp_upl.exe";
+        public /*const*/ static string ExeReplaceTempPath = "temp_upl.exe";
 
         public static string CurrentExePath => System.Reflection.Assembly.GetExecutingAssembly().Location;
 
 	    public static string ApplicationVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-	    public static string ApplicationName => "Uplauncher Pyrasis";
+	    public static string ApplicationName => "Uplauncher Vulcano";
     }
 }

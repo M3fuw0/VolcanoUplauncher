@@ -255,36 +255,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Icon.resx</DependentUpon>
     </Compile>
-    <Compile Include="MultiCompte2\Composants\Api.cs" />
-    <Compile Include="MultiCompte2\Composants\Core.cs" />
-    <Compile Include="MultiCompte2\Composants\HotKey.cs" />
-    <Compile Include="MultiCompte2\Composants\Logger.cs" />
-    <Compile Include="MultiCompte2\Composants\Struct.cs" />
-    <Compile Include="MultiCompte2\Composants\Toggle.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MultiCompte2\Configuration.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MultiCompte2\Configuration.Designer.cs">
-      <DependentUpon>Configuration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MultiCompte2\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MultiCompte2\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MultiCompte2\Program.cs" />
-    <Compile Include="MultiCompte2\Sound\Client.cs" />
-    <Compile Include="MultiCompte2\Sound\GameClient.cs" />
-    <Compile Include="MultiCompte2\Sound\GameServer.cs" />
-    <Compile Include="MultiCompte2\Sound\ManagerSound.cs" />
-    <Compile Include="MultiCompte2\Sound\RegClient.cs" />
-    <Compile Include="MultiCompte2\Sound\RegServer.cs" />
-    <Compile Include="MultiCompte2\Sound\Server.cs" />
-    <Compile Include="MultiCompte2\Sound\SimpleClient.cs" />
-    <Compile Include="MultiCompte2\Sound\SimpleServer.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonArray.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonBinary.cs" />
     <Compile Include="Newtonsoft.Json\Newtonsoft.Json.Bson\BsonBinaryType.cs" />
@@ -621,6 +591,7 @@
     <Compile Include="Sound\Reg\RegServer.cs" />
     <Compile Include="Sound\UplSound\UpClient.cs" />
     <Compile Include="Sound\UplSound\UpServer.cs" />
+    <Compile Include="Updater\UpdaterConnexionHandler.cs" />
     <Compile Include="UplauncherModelView.cs" />
     <Compile Include="Utils\Cryptography.cs" />
     <Compile Include="Utils\FileSizeFormatProvider.cs" />
@@ -658,12 +629,6 @@
     <EmbeddedResource Include="Icon.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Icon.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MultiCompte2\Configuration.resx">
-      <DependentUpon>Configuration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MultiCompte2\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

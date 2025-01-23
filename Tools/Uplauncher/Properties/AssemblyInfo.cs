@@ -3,13 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("Uplauncher Pyrasis")]
-[assembly: AssemblyDescription("Official Pyrasis Uplauncher")]
+[assembly: AssemblyTitle("Uplauncher Vulcano")]
+[assembly: AssemblyDescription("Official Vulcano Uplauncher")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Pyrasis Games Inc.")]
-[assembly: AssemblyProduct("Uplauncher Pyrasis")]
-[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
-[assembly: AssemblyTrademark("Pyrasis")]
+[assembly: AssemblyCompany("Volcano Games Inc.")]
+[assembly: AssemblyProduct("Uplauncher Vulcano")]
+[assembly: AssemblyCopyright("Copyright © 2025 Vulcano Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyTrademark("Vulcano")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -43,7 +43,7 @@ using System.Windows;
 //      Build Number
 //      Revision
 
-[assembly: AssemblyVersion("1.0.1.6")]
-[assembly: AssemblyFileVersion("1.0.1.6")]
+[assembly: AssemblyVersion("1.0.1.7")]
+[assembly: AssemblyFileVersion("1.0.1.7")]
 
 [assembly: GuidAttribute("6ee2c45c-7a4c-49df-b088-83f6514b3550")]

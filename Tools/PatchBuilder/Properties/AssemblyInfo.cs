@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PatchBuilder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Volcano Games Inc.")]
 [assembly: AssemblyProduct("PatchBuilder")]
-[assembly: AssemblyCopyright("Copyright © 2024 Pyrasis Games Inc. - Tous droits réservés.")]
+[assembly: AssemblyCopyright("Copyright © 2024 Volcano Games Inc. - Tous droits réservés.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
